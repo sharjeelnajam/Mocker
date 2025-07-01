@@ -746,6 +746,7 @@ namespace MockerProject.ViewModels
                 SmallScreens.RemoveAt(0);
                 m_lstWorkScreen.RemoveAt(0);
             }
+            createPage(null);
         }
         public void setPlatform(int platformId)
         {  
