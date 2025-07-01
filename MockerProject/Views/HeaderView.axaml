@@ -61,6 +61,15 @@
 					<Button Margin=" 1 5 " ToolTip.Tip="New Screen" Command="{Binding onNewScreen}" >
 						<Image Source="/Assets/New.png" Height="20"/>
 					</Button>
+          <Button Margin=" 1 5 " ToolTip.Tip="Screen Part"  >
+            <Image Source="/Assets/New.png" Height="20"/>
+          </Button>
+          <Button Margin=" 1 5 " ToolTip.Tip="StyleSheet"  >
+            <Image Source="/Assets/New.png" Height="20"/>
+          </Button>
+          <Button Margin=" 1 5 " ToolTip.Tip="Story Board" >
+            <Image Source="/Assets/New.png" Height="20"/>
+          </Button>
 					<Button Margin="1 5" ToolTip.Tip="Open Project" Command="{Binding onOpenProject}">
 						<Image Source="/Assets/Open.png" Height="20"/>
 					</Button>

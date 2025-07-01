@@ -184,7 +184,7 @@ namespace MockerProject.ViewModels
 
         /// </ScreenView>
         /// <PlatformView>
-        public bool w_IsPlatForm1 = true; public bool IsPlatForm1 { get => w_IsPlatForm1; set => this.RaiseAndSetIfChanged(ref w_IsPlatForm1, value); }
+        public bool w_IsPlatForm1 = false; public bool IsPlatForm1 { get => w_IsPlatForm1; set => this.RaiseAndSetIfChanged(ref w_IsPlatForm1, value); }
         public bool w_IsPlatForm2 = false; public bool IsPlatForm2 { get => w_IsPlatForm2; set => this.RaiseAndSetIfChanged(ref w_IsPlatForm2, value); }
         public bool w_IsPlatForm3 = false; public bool IsPlatForm3 { get => w_IsPlatForm3; set => this.RaiseAndSetIfChanged(ref w_IsPlatForm3, value); }
         public bool w_IsPlatForm4 = false; public bool IsPlatForm4 { get => w_IsPlatForm4; set => this.RaiseAndSetIfChanged(ref w_IsPlatForm4, value); }
@@ -304,10 +304,10 @@ namespace MockerProject.ViewModels
                 {
                     
                     IsProjectView = false;
-                   
+
 
                     WorkScreen = m_lstWorkScreen[value];
-                    
+
                     PG_RW = WorkScreen.m_Size.Width;
                     PG_RH = WorkScreen.m_Size.Height;
                     setOrientation(WorkScreen.m_Orientation);
