@@ -1,0 +1,75 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MockerProject.Views.UIProperties.UITreeViewProperty"	
+		xmlns:v="clr-namespace:MockerProject.Views.UIProperties"
+		xmlns:vm="clr-namespace:MockerProject.ViewModels.UIViewModels"
+		xmlns:colorpicker="clr-namespace:AvaloniaColorPicker;assembly=AvaloniaColorPicker"
+        x:CompileBindings="True"
+		 SizeToContent="WidthAndHeight"
+		x:DataType="vm:TreeViewViewModel"
+		Title="{Binding Control_Name}"
+		CanResize="False"
+		ShowInTaskbar="False"
+		 Opacity="0.95" Background="#252525" FontSize="12"
+		
+		>
+	<StackPanel Orientation="Vertical">
+		<v:UIPropertyBase Name="BaseProperty"/>
+		<StackPanel IsVisible="{Binding !IterationVisible}">
+			<StackPanel Grid.Row="2" Orientation="Horizontal"  Background="#555555" Margin="5 5 5 0">
+				<TextBlock Text="Actions" TextAlignment="Left" ></TextBlock>
+			</StackPanel>
+			<StackPanel Background="#505050" Orientation="Vertical" Margin="5 0 5 5">
+				<Button Name="AddItem" Content="Add Item" Command="{Binding AddItems}" Width="240" FontStyle="Oblique" Margin="10, 5"  >
+					<Button.Styles>
+						<Style Selector="Button:pointerover">
+							<Setter Property="Foreground" Value="DimGray"/>
+						</Style>
+					</Button.Styles>
+				</Button>
+			</StackPanel>
+			<StackPanel Grid.Row="2" Orientation="Horizontal"  Background="#555555" Margin="5 5 5 0">
+				<TextBlock Text="Item Property" TextAlignment="Left" ></TextBlock>
+			</StackPanel>
+			<StackPanel Background="#505050" Orientation="Horizontal" Margin="5 0 5 5">
+				<TextBlock Text="ItemBackground" VerticalAlignment="Center" FontSize="10" Margin="1" Foreground="DarkGray" Width="60"  ></TextBlock>
+				<colorpicker:ColorButton Name="ItemBGButton" Color="{Binding itemBackground.Color}" Margin="0 0 5 0"  ></colorpicker:ColorButton>
+			</StackPanel>
+		</StackPanel>
+		<StackPanel Name="SelectStack" IsVisible="{Binding IterationVisible}">
+			<StackPanel Grid.Row="2" Orientation="Horizontal"  Background="#555555" Margin="5 5 5 0">
+				<TextBlock Text="Selected Item" TextAlignment="Left" ></TextBlock>
+			</StackPanel>
+			<StackPanel Background="#505050" Orientation="Horizontal" Margin="5 0 5 5">
+				<TextBlock Text="Selects" VerticalAlignment="Center" Margin="15 10"></TextBlock>
+				
+				<TreeView Name="SelectItems"
+				  IsEnabled="{Binding isEnabled}"
+				  ItemsSource="{Binding Items}"	 
+				  SelectionChanged="onSelectItems"
+				 >
+					<TreeView.ItemTemplate>
+						<TreeDataTemplate ItemsSource="{Binding SubItems}" >
+							<Border   CornerRadius="4" Padding="4">
+								<Grid ColumnDefinitions="75*,25*" RowDefinitions="25*" Margin="0"  >
+									<TextBlock FontSize="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).fontSize}"
+									  FontWeight="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).fontWeight}"  Foreground="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).foreground}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0" IsVisible="{Binding Visible}" Text="{Binding text}" />
+								</Grid>
+							</Border>
+						</TreeDataTemplate>
+					</TreeView.ItemTemplate>
+					<TreeView.Styles>
+						<Style Selector="TreeView">
+							<Setter Property="Background" Value="White" />
+						</Style>
+					</TreeView.Styles>
+					</TreeView>
+
+
+			</StackPanel>
+		</StackPanel>
+	</StackPanel>
+</Window>

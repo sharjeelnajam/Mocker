@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MockerProject.Views.ButtonControl"
+			 xmlns:vm="clr-namespace:MockerProject.ViewModels"
+             x:CompileBindings="True" x:DataType="vm:UIControlViewModel" Background="Transparent">
+	<!--<UserControl.Styles>
+		<Style Selector="Button">
+			<Style.Resources>
+				<SolidColorBrush x:Key="ButtonBackgroundPointerOver">#505050</SolidColorBrush>
+				<SolidColorBrush x:Key="ButtonBackgroundPressed">#373737</SolidColorBrush>
+				<SolidColorBrush x:Key="ButtonBorderBrushPressed">#777777</SolidColorBrush>
+				<SolidColorBrush x:Key="ButtonForegroundPointerOver"></SolidColorBrush>
+			</Style.Resources>
+		</Style>
+	</UserControl.Styles>-->
+	<Button Name="button" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0"
+	        Content="{Binding text}"
+	        ToolTip.Tip="{Binding Control_Tip}"
+	        Opacity="{Binding opacity}"
+	        IsEnabled="{Binding isEnabled}"
+	        Width="{Binding width}"
+	        Height="{Binding height}"
+	        BorderBrush="{Binding borderColor}"
+	        BorderThickness="{Binding borderThickness}"
+	        CornerRadius="{Binding borderRound}"
+	        FontSize="{Binding fontSize}"
+	        FontWeight="{Binding fontWeight}"
+	        FontStyle="{Binding fontStyle}"
+	        FontFamily="{Binding fontFamily}"
+	        FontStretch="Expanded"
+	>
+	        <Button.Styles>
+		        <Style Selector="Button:pointerover /template/ ContentPresenter">
+			        <Setter Property="Background" Value="{Binding backgroundOver}"/>
+			        <Setter Property="Foreground" Value="{Binding foreground}"/>
+		        </Style>
+		        <Style Selector="Button">
+			        <Setter Property="Background" Value="{Binding background}"/>
+			        <Setter Property="Foreground" Value="{Binding foreground}"/>
+		        </Style>
+	        </Button.Styles>
+        </Button>
+</UserControl>

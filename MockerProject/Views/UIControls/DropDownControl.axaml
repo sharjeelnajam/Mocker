@@ -1,0 +1,89 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MockerProject.Views.UIControls.DropDownControl"
+			 xmlns:vm="clr-namespace:MockerProject.ViewModels.UIViewModels"
+             x:CompileBindings="True" x:DataType="vm:ListBoxViewModel">
+
+	<StackPanel>
+	
+		<Border Background="{Binding background}"
+				  BorderBrush="{Binding borderColor}"
+				  BorderThickness="{Binding borderThickness}"
+				  CornerRadius="{Binding borderRound}"
+				  IsEnabled="{Binding isEnabled}">
+
+			<Grid ColumnDefinitions="80*,8*,12*"  Width="{Binding width}"
+			  Height="{Binding height}" >
+					<TextBlock Foreground="{Binding foreground}"  FontSize="{Binding fontSize}"
+				  FontWeight="{Binding fontWeight}"
+				  FontStyle="{Binding fontStyle}"
+				  FontFamily="{Binding fontFamily}"
+				  FontStretch="Expanded" Grid.Column="0" VerticalAlignment="Center" Name="SelectText"></TextBlock>
+					<TextBlock Grid.Column="1" Foreground="Gray" VerticalAlignment="Center" Margin="3">|</TextBlock>
+				<Button Grid.Column="2" Height="{Binding height}" Margin="0" Padding="0" Click="ClickDropDown">
+					<Image  Source="/Assets/arrow-down-bottom.png"   Height="{Binding height}" />
+				</Button>
+				</Grid>
+		</Border>
+
+		<ListBox Name="listBox"
+				  ToolTip.Tip="{Binding Control_Tip}"
+				  Opacity="{Binding opacity}"
+				  Background="{Binding background}"
+				  Foreground="{Binding foreground}"
+				  BorderBrush="{Binding borderColor}"
+				  BorderThickness="{Binding borderThickness}"
+				 
+				  FontSize="{Binding fontSize}"
+				  FontWeight="{Binding fontWeight}"
+				  FontStyle="{Binding fontStyle}"
+				  FontFamily="{Binding fontFamily}"
+				  FontStretch="Expanded"
+				  IsEnabled="{Binding isEnabled}"
+			      ItemsSource="{Binding Items}"
+				 
+				  SelectionChanged="Selected_Item"
+				  
+			 >
+				  <!--SelectedIndex="{Binding SelectedIndex}"-->
+
+		
+		<ListBox.ItemTemplate>
+			<DataTemplate>
+				<!-- Define your DataTemplate here -->
+				<Border  CornerRadius="4" Padding="4">
+					<Grid ColumnDefinitions="75*,25*" RowDefinitions="25*" Margin="0"  >
+						<TextBlock FontSize="{Binding $parent[ListBox].((vm:ListBoxViewModel)DataContext).fontSize}"
+				  FontWeight="{Binding $parent[ListBox].((vm:ListBoxViewModel)DataContext).fontWeight}" Text="{Binding text}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0" IsVisible="{Binding Visible}"/>
+						<TextBox FontSize="{Binding $parent[ListBox].((vm:ListBoxViewModel)DataContext).fontSize}"
+				  FontWeight="{Binding $parent[ListBox].((vm:ListBoxViewModel)DataContext).fontWeight}" Text="{Binding text}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0" IsVisible="{Binding !Visible}"   BorderThickness="0" />
+						<Grid Grid.Row="0" Grid.Column="1" RowDefinitions="15,15" ColumnDefinitions="Auto" Margin="3"  >
+							<Button Padding="0" Content="+" Margin="0" Grid.Row="0" Grid.Column="0" IsVisible="{Binding !Visible}" Background="YellowGreen" Command="{Binding $parent[ListBox].((vm:ListBoxViewModel)DataContext).InsertBefore}"  />
+							<Button Padding="0" Content="+" Margin="0" Grid.Row="1" Grid.Column="0" IsVisible="{Binding !Visible}" Background="YellowGreen" Command="{Binding $parent[ListBox].((vm:ListBoxViewModel)DataContext).InsertAfter}"  />
+						</Grid>
+					</Grid>
+
+				</Border>
+			</DataTemplate>
+		</ListBox.ItemTemplate>
+		<ListBox.Styles>
+			<Style Selector="ListBoxItem">
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Background" Value="{Binding $parent[ListBox].((vm:ListBoxViewModel)DataContext).itemBackground}" />
+
+			</Style>
+
+			<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+				<Setter Property="Background" Value="LightBlue" />
+				<Setter Property="Foreground" Value="White" />
+			</Style>
+
+		</ListBox.Styles>
+
+
+	</ListBox>
+	</StackPanel>
+</UserControl>

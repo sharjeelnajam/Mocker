@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MockerProject.Views.UIControls.ContainerBoxRunControl"
+			 xmlns:vm="clr-namespace:MockerProject.ViewModels"
+             x:CompileBindings="True" x:DataType="vm:UIControlViewModel"
+			 Width="{Binding width}"
+			 Height="{Binding height}"
+			 Background="Transparent"
+			 IsVisible="True"
+			 >
+	<Canvas Name="backCanvas"
+			   ToolTip.Tip="{Binding Control_Tip}"
+			   Background="Transparent"
+			   Width="{Binding width}"
+			   Height="{Binding height}"
+			>
+		<Border
+			 Name="border"
+			 Background="{Binding background}"
+			 BorderBrush="{Binding borderColor}"
+			 BorderThickness="{Binding borderThickness}"
+			 CornerRadius="{Binding borderRound}"
+			 IsEnabled="{Binding isEnabled}"
+			 Width="{Binding width}"
+			 Height="{Binding height}"
+		>
+			<Canvas
+				Name="container"
+				Width="{Binding width}"
+				Height="{Binding height}"
+				Background="Transparent"
+				Opacity="1"
+				
+				>
+			</Canvas>
+		</Border>
+	</Canvas>
+</UserControl>

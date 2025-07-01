@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MockerProject.Views.UIControls.PositionLineControl"
+			 xmlns:vm="clr-namespace:MockerProject.ViewModels"
+             x:CompileBindings="True" x:DataType="vm:UIControlViewModel">
+	<Canvas Width="300" Height="300" Background="Chartreuse">
+		<Line Name="lineY1" Stroke="Blue" StrokeThickness="1"></Line>
+		<TextBlock Text="250" Background="White" Foreground="Blue"></TextBlock>
+		<Line Name="lineX1" Stroke="Blue" StrokeThickness="1" ></Line>
+		<TextBlock Text="250"  Background="White" Foreground="Blue"></TextBlock>
+	</Canvas>
+</UserControl>
