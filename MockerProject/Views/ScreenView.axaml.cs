@@ -4,11 +4,14 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
-using Avalonia.Remote.Protocol.Input;
+//using Avalonia.Remote.Protocol.Input;
 using MockerProject.ViewModels;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
 using MockerProject.Models;
+using Avalonia.Interactivity;
+using MockerProject.Action;
+using Avalonia.VisualTree;
 
 
 namespace MockerProject.Views
@@ -33,10 +36,50 @@ namespace MockerProject.Views
         public Size m_Size = new Size(375, 647);
         public SolidColorBrush m_background = new SolidColorBrush(new Color(255, 255, 255, 255));
         public double m_Opacity = 0.33;
+        private Control? selectedElement;
+        private MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext!;
         public ScreenView()
         {
             InitializeComponent();
             //this.PointerMoved += onMouseMove;
+            this.AttachedToVisualTree += (_, _) => this.Focus(); // or screenCanvas.Focus();
+
+            this.AddHandler(KeyDownEvent, OnKeyDown, RoutingStrategies.Tunnel);
+
+        }
+
+
+        private void OnKeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete && selectedElement != null)
+            {
+                var deleteAction = new DeleteCommand(screenCanvas, selectedElement);
+                ViewModel.ExecuteAction(deleteAction);
+                selectedElement = null;
+            }
+            else if (e.KeyModifiers == KeyModifiers.Control && e.Key == Key.Z)
+            {
+                ViewModel.Undo();
+            }
+            else if (e.KeyModifiers == KeyModifiers.Control && e.Key == Key.Y)
+            {
+                ViewModel.Redo();
+            }
+        }
+
+        private void OnElementSelected(object sender, PointerPressedEventArgs e)
+        {
+            if (e.Source is Control clickedControl)
+            {
+                // Traverse up to find the draggable container (e.g. LayoutTransformControl)
+                var rootControl = FindDraggableParent((Control)clickedControl.Parent);
+
+                if (rootControl != null)
+                {
+                    selectedElement = rootControl;
+                    e.Handled = true;
+                }
+            }
         }
         private void onMousePressed(object sender, PointerPressedEventArgs e)
         {
@@ -54,6 +97,24 @@ namespace MockerProject.Views
         private void onMouseReleased(object sender, PointerReleasedEventArgs e)
         {
             m_MainViewModel.m_UIControlType = 0;
+        }
+
+        private Control? FindDraggableParent(Control control)
+        {
+            Visual? current = control;
+
+            while (current != null)
+            {
+               // if (current is LayoutTransformControl || current is Border) // or any root drag container
+               // {
+                    //return (Control)current;
+               // }
+
+                //current = current.GetVisualParent();
+                return (Control)current;
+            }
+
+            return null;
         }
     }
 }

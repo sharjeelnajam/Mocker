@@ -35,6 +35,7 @@ using MockerProject.Views.UIControls;
 using Avalonia.Interactivity;
 using MockerProject.ViewModels.UIViewModels;
 using System.Text.Json.Nodes;
+using MockerProject.Action;
 
 namespace MockerProject.ViewModels
 {
@@ -46,6 +47,36 @@ namespace MockerProject.ViewModels
         public UIPropertyWindow m_wndUIProperty;
         public PlatformView m_PlatformView;
         private SaveProjectWindow m_SaveWindow;
+
+        private Stack<IAction> _undoStack = new Stack<IAction>();
+        private Stack<IAction> _redoStack = new Stack<IAction>();
+
+        public void ExecuteAction(IAction action)
+        {
+            action.Execute();
+            _undoStack.Push(action);
+            _redoStack.Clear();
+        }
+
+        public void Undo()
+        {
+            if (_undoStack.Any())
+            {
+                var action = _undoStack.Pop();
+                action.UnExecute();
+                _redoStack.Push(action);
+            }
+        }
+
+        public void Redo()
+        {
+            if (_redoStack.Any())
+            {
+                var action = _redoStack.Pop();
+                action.Execute();
+                _undoStack.Push(action);
+            }
+        }
 
         public bool m_IsProjectPath = false;
 
