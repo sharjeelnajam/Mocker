@@ -44,7 +44,7 @@ namespace MockerProject.Views
             //this.PointerMoved += onMouseMove;
             this.AttachedToVisualTree += (_, _) => this.Focus(); // or screenCanvas.Focus();
 
-            this.AddHandler(KeyDownEvent, OnKeyDown, RoutingStrategies.Tunnel);
+            this.AddHandler(KeyUpEvent, OnKeyDown, RoutingStrategies.Tunnel);
 
         }
 
@@ -64,6 +64,15 @@ namespace MockerProject.Views
             else if (e.KeyModifiers == KeyModifiers.Control && e.Key == Key.Y)
             {
                 ViewModel.Redo();
+            }
+            if (e.Key == Key.S && e.KeyModifiers == KeyModifiers.Control)
+            {
+                
+                    // Execute the Save command
+                    var vm = this.DataContext as MainWindowViewModel;
+                    vm?.onSaveProject?.Execute(null);
+
+                    e.Handled = true;
             }
         }
 

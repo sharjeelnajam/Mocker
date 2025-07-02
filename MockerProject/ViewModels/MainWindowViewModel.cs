@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
+//using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -861,16 +861,17 @@ namespace MockerProject.ViewModels
             strPlatFormTitle = m_PlatFormInfo[m_nSelectedPlatFormIndex].Type;
 
             string m_strImgPath = "./Assets/Platforms/"+strPlatFormTitle+"/";
-            Img_PF_TL = new Avalonia.Media.Imaging.Bitmap(m_strImgPath + "Top_Left.png");
-            Img_PF_TM = new Avalonia.Media.Imaging.Bitmap(m_strImgPath + "Top_Middle.png");
-            Img_PF_TR = new Avalonia.Media.Imaging.Bitmap(m_strImgPath + "Top_Right.png");
-            Img_PF_BL = new Avalonia.Media.Imaging.Bitmap(m_strImgPath + "Bottom_Left.png");
-            Img_PF_BM = new Avalonia.Media.Imaging.Bitmap(m_strImgPath + "Bottom_Middle.png");
-            Img_PF_BR = new Avalonia.Media.Imaging.Bitmap(m_strImgPath + "Bottom_Right.png");
-            Img_PF_L = new Avalonia.Media.Imaging.Bitmap(m_strImgPath + "Left.png");
-            Img_PF_R = new Avalonia.Media.Imaging.Bitmap(m_strImgPath + "Right.png");
-            Img_PF_TL0 = new Avalonia.Media.Imaging.Bitmap(m_strImgPath + "Top_Label.png");
-            Img_PF_BL0 = new Avalonia.Media.Imaging.Bitmap(m_strImgPath + "Bottom_Label.png");
+            Img_PF_TL = LoadBitmapOrError("Top_Left.png", m_strImgPath);
+            Img_PF_TM = LoadBitmapOrError("Top_Middle.png", m_strImgPath);
+            Img_PF_TR = LoadBitmapOrError("Top_Right.png", m_strImgPath);
+            Img_PF_BL = LoadBitmapOrError("Bottom_Left.png", m_strImgPath);
+            Img_PF_BM = LoadBitmapOrError("Bottom_Middle.png", m_strImgPath);
+            Img_PF_BR = LoadBitmapOrError("Bottom_Right.png", m_strImgPath);
+            Img_PF_L = LoadBitmapOrError("Left.png", m_strImgPath);
+            Img_PF_R = LoadBitmapOrError("Right.png", m_strImgPath);
+            Img_PF_TL0 = LoadBitmapOrError("Top_Label.png", m_strImgPath);
+            Img_PF_BL0 = LoadBitmapOrError("Bottom_Label.png", m_strImgPath);
+
 
             PG_W = m_PlatFormInfo[m_nSelectedPlatFormIndex].PG_Size[0].W;
             PG_H = m_PlatFormInfo[m_nSelectedPlatFormIndex].PG_Size[0].H;
@@ -891,6 +892,23 @@ namespace MockerProject.ViewModels
             PG_RW = PG_W;
             PG_RH = PG_H;
         }
+
+
+        private Bitmap? LoadBitmapOrError(string fileName, string imagePath)
+        {
+            string path = Path.Combine(imagePath, fileName);
+
+            if (File.Exists(path))
+            {
+                return new Bitmap(path);
+            }
+            else
+            {
+               
+                return null; // or return fallback image if you have one
+            }
+        }
+
         public void setOrientation(bool p_Orientation)
         {
 

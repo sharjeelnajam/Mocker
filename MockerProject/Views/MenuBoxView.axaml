@@ -5,7 +5,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MockerProject.Views.MenuBoxView"
              xmlns:vm="clr-namespace:MockerProject.ViewModels"
-             x:DataType="vm:MainWindowViewModel">
+             x:DataType="vm:MainWindowViewModel" KeyDown="OnKeyDown"
+    Focusable="True"
+    IsTabStop="True">
 	
 	<Design.DataContext>
 		<vm:MainWindowViewModel />
