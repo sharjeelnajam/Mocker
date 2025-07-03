@@ -516,7 +516,7 @@ namespace MockerProject.ViewModels
             SubPlatform.Add("iPhone 7 - 375X647");
             SubPlatform.Add("iPhone 7 Plus - 414X716");
             SubPlatformId = 0;
-            //onSaveProject = new AsyncRelayCommand(async () => await SaveProjFile());
+            onSaveProject = new AsyncRelayCommand(async () => await SaveProjFile());
             onOpenProject = new AsyncRelayCommand(async () => await OpenProjFile());
 
             DataContent = new TabItemModel[] {
@@ -1090,7 +1090,8 @@ namespace MockerProject.ViewModels
         private async Task OpenProjFile()
         {
             IsMenuOpened = false;
-            if (!IsStartMocker)
+           // if (!IsStartMocker)
+            if (IsStartMocker)
             {
                 return;
             }
