@@ -1050,21 +1050,42 @@ namespace MockerProject.ViewModels
         }
         private async Task OpenProjFolder()
         {
-            var openFileDialog = new OpenFolderDialog
+            try
             {
-                Title = "Select Folder",
-                Directory = strProjectLocation
-            };
-            var result = await openFileDialog.ShowAsync(m_MainWindow);
-            if (result == null) return;
-            strProjectPath = result + "\\" + strProjectTitle;
-            int id = 1;
-            while (Directory.Exists(strProjectPath))
-            {
-                strProjectPath = result + "\\" + strProjectTitle+"-"+id.ToString();
-                id++;
+                // Check if the default directory exists, if not use a sensible fallback
+                string initialDirectory = strProjectLocation;
+                if (!Directory.Exists(initialDirectory))
+                {
+                    initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                }
+
+                var openFileDialog = new OpenFolderDialog
+                {
+                    Title = "Select Folder",
+                    Directory = initialDirectory
+                };
+
+                var result = await openFileDialog.ShowAsync(m_MainWindow);
+                if (string.IsNullOrEmpty(result)) return;
+
+                // Combine paths properly using Path.Combine
+                strProjectPath = Path.Combine(result, strProjectTitle);
+
+                int id = 1;
+                while (Directory.Exists(strProjectPath))
+                {
+                    strProjectPath = Path.Combine(result, $"{strProjectTitle}-{id}");
+                    id++;
+                }
+
+                strProjectLocation = Path.GetDirectoryName(strProjectPath);
             }
-            strProjectLocation = Path.GetDirectoryName(strProjectPath);
+            catch (Exception ex)
+            {
+                // Handle or log the exception appropriately
+                Console.WriteLine($"Error opening project folder: {ex.Message}");
+                // You might want to show a message to the user here
+            }
         }
         private async Task OpenProjFile()
         {
