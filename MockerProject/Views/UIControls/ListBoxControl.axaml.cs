@@ -9,7 +9,6 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.VisualTree;
-using Microsoft.CodeAnalysis.Text;
 using MockerProject.Models;
 using MockerProject.ViewModels;
 using MockerProject.ViewModels.UIViewModels;

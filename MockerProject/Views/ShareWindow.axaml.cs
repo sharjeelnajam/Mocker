@@ -27,7 +27,6 @@ using Brushes = System.Drawing.Brushes;
 using Image = Avalonia.Controls.Image;
 using MockerProject.ViewModels;
 using System.IO.Compression;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Tmds.DBus.Protocol;
 using Rectangle = System.Drawing.Rectangle;
 

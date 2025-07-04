@@ -1089,12 +1089,12 @@ namespace MockerProject.ViewModels
         }
         private async Task OpenProjFile()
         {
-            IsMenuOpened = false;
-           // if (!IsStartMocker)
-            if (IsStartMocker)
-            {
-                return;
-            }
+           // IsMenuOpened = false;
+           //// if (!IsStartMocker)
+           // if (IsStartMocker)
+           // {
+           //     return;
+           // }
             var storageProvider = StorageService.GetStorageProvider();
             if (storageProvider is null)
             {
