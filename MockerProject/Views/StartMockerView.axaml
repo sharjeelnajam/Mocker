@@ -1,3 +1,4 @@
+<!--
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -62,7 +63,7 @@
 							</Style>
 						</Button.Styles>
 					</Button>
-					<!--<Button HorizontalAlignment="Right" Foreground="Silver" FontSize="15" Width="200" Height="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="5,5,5,5">
+					<Button HorizontalAlignment="Right" Foreground="Silver" FontSize="15" Width="200" Height="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="5,5,5,5">
 						Go to main window
 						<Button.Styles>
 							<Style>
@@ -74,10 +75,181 @@
 								</Style.Resources>
 							</Style>
 						</Button.Styles>
-					</Button>-->
-				</StackPanel>
-				
-			</Grid>
-		</Grid>
-	</Panel>
+					</Button>
+</StackPanel>
+
+</Grid>
+</Grid>
+</Panel>
+</UserControl>
+-->
+
+
+
+<!--new design-->
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="801"
+             x:Class="MockerProject.Views.StartMockerView"
+             xmlns:vm="clr-namespace:MockerProject.ViewModels"
+             x:DataType="vm:MainWindowViewModel"
+             MaxHeight="701">
+  <UserControl.Resources>
+    <LinearGradientBrush x:Key="DesignStudioGradient" StartPoint="0%,50%" EndPoint="100%,50%">
+      <GradientStop Color="#000000" Offset="0"/>
+      <GradientStop Color="#A855F7" Offset="1"/>
+    </LinearGradientBrush>
+  </UserControl.Resources>
+  <Border CornerRadius="15" Background="White" Margin="30">
+    <StackPanel Margin="30">
+      <TextBlock Text="Design Studio"
+                 Margin="0,0,0,30"
+                 FontSize="30"
+                 HorizontalAlignment="Center"
+                 FontWeight="Bold"
+                 Foreground="{StaticResource DesignStudioGradient}"/>
+
+      <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, *, Auto" VerticalAlignment="Stretch">
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,20">
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+            <Border Width="24" Height="24" CornerRadius="6" VerticalAlignment="Center" Margin="0,0,10,0">
+              <Border.Background>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                  <GradientStop Color="#6366F1" Offset="0"/>
+                  <GradientStop Color="#8B5CF6" Offset="1"/>
+                </LinearGradientBrush>
+              </Border.Background>
+              <Image Source="/Assets/NewIcons/folder-3-line.png" Width="16" Height="16" Stretch="UniformToFill"/>
+            </Border>
+            <TextBlock Text="Open recent" FontSize="18" FontWeight="SemiBold" Foreground="#333333" VerticalAlignment="Center"/>
+          </StackPanel>
+
+          <Border CornerRadius="8" BorderBrush="#E0E0E0" BorderThickness="1" Background="#F8F8F8">
+            <Grid ColumnDefinitions="*, Auto" VerticalAlignment="Center" Margin="10,5">
+              <TextBox Grid.Column="0"
+                Text=""
+                Watermark="design"
+                FontSize="14"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Foreground="#333333">
+                <TextBox.Styles>
+                  <Style Selector="TextBox">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="CaretBrush" Value="#333"/>
+                    <Setter Property="FocusAdorner" Value="{x:Null}"/>
+                  </Style>
+                  <Style Selector="TextBox:pointerover">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <!-- FIXED -->
+                    <Setter Property="Foreground" Value="#333333"/>
+                  </Style>
+                  <Style Selector="TextBox:focus">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <!-- FIXED -->
+                    <Setter Property="Foreground" Value="#333333"/>
+                  </Style>
+                </TextBox.Styles>
+              </TextBox>
+
+              <Image Grid.Column="1"
+                     Source="/Assets/NewIcons/search.png"
+                     Width="16"
+                     Height="16"
+                     Margin="8,0,4,0"
+                     VerticalAlignment="Center"/>
+            </Grid>
+          </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,30">
+          <!-- Design Item 1 -->
+          <Border CornerRadius="8" BorderBrush="#E0E0E0" BorderThickness="1" Background="#F8F8F8" Margin="0,0,0,10"
+                  Classes="RecentDesignItem">
+            <Grid ColumnDefinitions="*,Auto" Margin="10">
+              <StackPanel Grid.Column="0">
+                <TextBlock Text="Test design2" FontSize="16" FontWeight="SemiBold" Foreground="#333333"/>
+                <TextBlock Text="15/7/2023 08:34" FontSize="12" Foreground="#888888"/>
+              </StackPanel>
+              <Button Grid.Column="1" Width="36" Height="36" Padding="8" Background="#1F29371A"
+                      HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Image Source="/Assets/NewIcons/dots.png" Width="16" Height="16"/>
+              </Button>
+            </Grid>
+          </Border>
+
+          <!-- Design Item 2 -->
+          <Border CornerRadius="8" BorderBrush="#E0E0E0" BorderThickness="1" Background="#F8F8F8"
+                  Classes="RecentDesignItem">
+            <Grid ColumnDefinitions="*,Auto" Margin="10">
+              <StackPanel Grid.Column="0">
+                <TextBlock Text="Test design1" FontSize="16" FontWeight="SemiBold" Foreground="#333333"/>
+                <TextBlock Text="13/7/2023 13:57" FontSize="12" Foreground="#888888"/>
+              </StackPanel>
+              <Button Grid.Column="1" Width="36" Height="36" Padding="8" Background="#1F29371A"
+                      HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Image Source="/Assets/NewIcons/dots.png" Width="16" Height="16"/>
+              </Button>
+            </Grid>
+          </Border>
+        </StackPanel>
+
+        <Button Command="{Binding onOpenProject}" Grid.Row="3" Grid.Column="0"
+        Margin="0,0,10,0" Padding="0" Background="Transparent" BorderThickness="0">
+          <Border CornerRadius="10"
+                  BorderBrush="#E0E0E0"
+                  BorderThickness="1"
+                  Background="#F8F8F8"
+                  Padding="20">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+              <Border Width="40" Height="40" Background="#1F29371A" CornerRadius="6" Margin="0,0,0,10">
+                <Image Source="/Assets/NewIcons/folders-fill.png" Width="16" Height="16" />
+              </Border>
+              <TextBlock Text="Open a project"
+                         FontSize="16"
+                         FontWeight="SemiBold"
+                         Foreground="#333333"
+                         HorizontalAlignment="Center"/>
+              <TextBlock Text="Browse and open existing design projects from your workspace"
+                         TextWrapping="Wrap"
+                         TextAlignment="Center"
+                         FontSize="12"
+                         Foreground="#888888"
+                         Margin="0,5,0,0"/>
+            </StackPanel>
+          </Border>
+        </Button>
+
+        <Button Command="{Binding onNewProject}" Grid.Row="3" Grid.Column="1"
+                Margin="10,0,0,0" Padding="0" Background="Transparent" BorderThickness="0">
+          <Border CornerRadius="10"
+                  BorderBrush="#E0E0E0"
+                  BorderThickness="1"
+                  Background="#F8F8F8"
+                  Padding="20">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+              <Border Width="40" Height="40" Background="#1F29371A" CornerRadius="6" Margin="0,0,0,10">
+                <Image Source="/Assets/NewIcons/add-circle-line.png" Width="16" Height="16" />
+              </Border>
+              <TextBlock Text="Create a new project"
+                         FontSize="16"
+                         FontWeight="SemiBold"
+                         Foreground="#333333"
+                         HorizontalAlignment="Center"/>
+              <TextBlock Text="Start fresh with a new design project and bring your ideas to life"
+                         TextWrapping="Wrap"
+                         TextAlignment="Center"
+                         FontSize="12"
+                         Foreground="#888888"
+                         Margin="0,5,0,0"/>
+            </StackPanel>
+          </Border>
+        </Button>
+      </Grid>
+    </StackPanel>
+  </Border>
 </UserControl>
