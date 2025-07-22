@@ -12,12 +12,13 @@ namespace MockerProject.Views
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowState = WindowState.Maximized;
             //m_ShareWindowContainer = ShareWindowContainer;
             this.Closing += MainWindow_Closing;
             NewProjectView = new StartMockerView();
             StartMockerControl.Content = NewProjectView;
-            StartMockerControl.Width = 550;
-            
+            StartMockerControl.Width = 600;
+
             g_MenuBox = new MenuBoxView();
             MenuContentControl.Content = g_MenuBox;
             MenuContentControl.Width = 250;

@@ -8,7 +8,6 @@
         x:Class="MockerProject.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         TransparencyLevelHint="AcrylicBlur"
-        Background="Black"
         Icon="/Assets/avalonia-logo.ico"
         Title="Mocker">
 

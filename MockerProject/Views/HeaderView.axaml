@@ -1,3 +1,4 @@
+<!--
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +7,7 @@
              xmlns:vm="clr-namespace:MockerProject.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MockerProject.Views.HeaderView"
-             Background="#313131" 
+             Background="#FFFFFFE5"
              x:CompileBindings="True" x:DataType="vm:MainWindowViewModel">
 	
 	<UserControl.Resources>
@@ -130,4 +131,149 @@
 
 		</StackPanel>
 	</Grid>
+</UserControl>
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:v="clr-namespace:MockerProject.Views"
+             xmlns:vm="clr-namespace:MockerProject.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MockerProject.Views.HeaderView"
+             Background="#FFFFFF"  x:CompileBindings="True" x:DataType="vm:MainWindowViewModel">
+
+  <UserControl.Resources>
+  </UserControl.Resources>
+
+  <UserControl.Styles>
+    <Style Selector="Button">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="CornerRadius" Value="0"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Style.Resources>
+        <SolidColorBrush x:Key="ButtonBackgroundPointerOver">#F0F0F0</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver">Transparent</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBackgroundPressed">#E0E0E0</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBorderBrushPressed">Transparent</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonForegroundPointerOver">Black</SolidColorBrush>
+      </Style.Resources>
+    </Style>
+    <Style Selector="Button.ColoredButton">
+      <Setter Property="Background" Value="#673AB7"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Padding" Value="10,0"/>
+      <Style.Resources>
+        <SolidColorBrush x:Key="ButtonBackgroundPointerOver">#7E57C2</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBackgroundPressed">#5E35B1</SolidColorBrush>
+      </Style.Resources>
+    </Style>
+    <Style Selector="ToggleButton">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderBrush" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="CornerRadius" Value="0"/>
+      <Style.Resources>
+        <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver">#F0F0F0</SolidColorBrush>
+        <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver">Transparent</SolidColorBrush>
+        <SolidColorBrush x:Key="ToggleButtonBackgroundPressed">#E0E0E0</SolidColorBrush>
+        <SolidColorBrush x:Key="ToggleButtonBorderBrushPressed">Transparent</SolidColorBrush>
+      </Style.Resources>
+    </Style>
+    <Style Selector="ToggleButton:checked">
+      <Setter Property="Background" Value="#E0E0E0"/>
+      <Setter Property="BorderBrush" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="ToggleButton:checked /template/ ContentPresenter">
+      <Setter Property="Background" Value="#E0E0E0"/>
+      <Setter Property="BorderBrush" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="ToggleButton:pointerover /template/ ContentPresenter">
+      <Setter Property="BorderBrush" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style Selector="TextBox#search">
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Background" Value="#F0F0F0"/>
+      <Setter Property="CornerRadius" Value="3"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+  </UserControl.Styles>
+
+  <Grid ColumnDefinitions="Auto,*,Auto" Height="42">
+    
+    <DockPanel Grid.Column="0">
+      <Button Name="Menu" Width="42" Height="42" Command="{Binding onMenuOpen}">
+        <Image Source="/Assets/New/Icons/menu-01.png" Height="16" Width="16" />
+      </Button>
+    </DockPanel>
+
+    <DockPanel Grid.Column="1" IsEnabled="{Binding IsProjectOpened}">
+      <Grid ColumnDefinitions="Auto,Auto,*">
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="5 0">
+          <Button Margin="1 0" ToolTip.Tip="New Screen" Command="{Binding onNewScreen}" Height="36">
+            <Image Source="/Assets/New/Icons/file-02.png" Height="16" Width="16" />
+          </Button>
+          <Button Margin="1 0" ToolTip.Tip="Open Project" Command="{Binding onOpenProject}" Height="36">
+            <Image Source="/Assets/New/Icons/folder-02.png" Height="16" Width="16" />
+          </Button>
+          <Button Margin="1 0" ToolTip.Tip="Story Board" Height="36">
+            <Image Source="/Assets/New/Icons/clipboard.png" Height="16" Width="16" />
+          </Button>
+          <Button Margin="1 0" ToolTip.Tip="Save Project" Command="{Binding onSaveProject}" Height="36">
+            <Image Source="/Assets/New/Icons/floppy-disk.png" Height="16" Width="16" />
+          </Button>
+          <Button Margin="1 0" ToolTip.Tip="Save All Project" Command="{Binding onSaveAllProject}" Height="36">
+            <Image Source="/Assets/New/Icons/floppy-disk.png" Height="16" Width="16" />
+          </Button>
+
+          <StackPanel Orientation="Horizontal" Margin="5 0" IsEnabled="{Binding IsWorkView}">
+            <ToggleButton Name="Ruler" Margin="1 0" ToolTip.Tip="Show Ruler" Height="36" Width="36">
+              <DockPanel>
+                <Image Source="/Assets/New/Icons/ruler.png" Height="16" Width="16" IsVisible="{Binding !#Ruler.IsChecked}"/>
+                <Image Source="/Assets/New/Icons/ruler.png" Height="16" Width="16" IsVisible="{Binding #Ruler.IsChecked}"/>
+              </DockPanel>
+            </ToggleButton>
+            <Button Margin="1 0" ToolTip.Tip="Colors" Height="36" Width="36">
+              <Image Source="/Assets/New/Icons/colors.png" Height="16" Width="16"/>
+            </Button>
+            <Button Margin="1 0" ToolTip.Tip="Settings" Height="36" Width="36">
+              <Image Source="/Assets/New/Icons/setting-01.png" Height="16" Width="16"/>
+            </Button>
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal" Margin="5 0" IsEnabled="{Binding IsWorkView}">
+            <Button Margin="1 0" ToolTip.Tip="Undo" Height="36" Width="36" Command="{Binding onUndo}">
+              <Image Source="/Assets/New/Icons/undo.png" Height="16" Width="16" />
+            </Button>
+            <Button Margin="1 0" ToolTip.Tip="Redo" Height="36" Width="36" Command="{Binding onRedo}">
+              <Image Source="/Assets/New/Icons/redo.png" Height="16" Width="16" />
+            </Button>
+          </StackPanel>
+        </StackPanel>
+      </Grid>
+    </DockPanel>
+    
+    <StackPanel Grid.Column="2" Orientation="Horizontal" IsEnabled="{Binding IsWorkView}" VerticalAlignment="Center" Margin="0,0,10,0">
+      <Button Classes="ColoredButton" Margin="5 0" ToolTip.Tip="Run Project" Command="{Binding onRun}" Height="32">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+          <Image Source="/Assets/New/Icons/play.png" Height="16" Width="16" Margin="0,0,5,0"/>
+          <TextBlock Text="Run" VerticalAlignment="Center" Background="#6366F1" Foreground="White"/>
+        </StackPanel>
+      </Button>
+      <Button Classes="ColoredButton" Margin="5 0" ToolTip.Tip="Share Project" Command="{Binding onShare}" Height="32">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+          <Image Source="/Assets/New/Icons/share-01.png" Height="16" Margin="0,0,5,0"/>
+          <TextBlock Text="Share" VerticalAlignment="Center" Background="#1F29371A" Foreground="#1F2937"/>
+        </StackPanel>
+      </Button>
+      <TextBox Name="search" Watermark="Search" Width="150" Height="32" Margin="10 0 0 0" VerticalAlignment="Center"/>
+    </StackPanel>
+  
+  </Grid>
 </UserControl>
