@@ -21,7 +21,7 @@ namespace MockerProject.Views
 
             g_MenuBox = new MenuBoxView();
             MenuContentControl.Content = g_MenuBox;
-            MenuContentControl.Width = 250;
+            //MenuContentControl.Width = 600;
             
             this.PointerPressed += (sender, e) =>
             {

@@ -13,193 +13,147 @@
     <vm:MainWindowViewModel />
   </Design.DataContext>
 
+  <UserControl.Styles>
+    <Style Selector="Button">
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Padding" Value="0,4"/>
+      <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+
+    <Style Selector="Button:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#F0F0F0"/>
+      <Setter Property="CornerRadius" Value="5"/>
+    </Style>
+
+    <Style Selector="Button:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="#E5E5E5"/>
+    </Style>
+  </UserControl.Styles>
+
   <Grid>
     <Border Width="271"
             Height="365"
             CornerRadius="20"
             BorderThickness="1"
-            BorderBrush="#E0E0E0" Background="White" Margin="24,75,0,0" HorizontalAlignment="Left"
+            BorderBrush="#E0E0E0"
+            Background="White"
+            Margin="20,60,0,0"
+            HorizontalAlignment="Left"
             VerticalAlignment="Top">
-      
 
       <StackPanel Orientation="Vertical"
-                  Spacing="20">
+                  Margin="10,20,20,20">
         <TextBlock Text="Project Menu"
-                           FontSize="18"
-                           FontWeight="Bold"
-                           Foreground="#333333"  HorizontalAlignment="Left"
-                           Margin="0,0,0,10"/>
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Foreground="#1F2937"
+                   HorizontalAlignment="Left"
+                   Margin="8,0,0,20"/>
+
         <Button Name="NewBtn"
-                        Command="{Binding onNewProject}"
-                        HorizontalContentAlignment="Stretch" Background="Transparent"
-                        Foreground="#333333">
-          <Grid ColumnDefinitions="Auto,*,Auto">
-            <Image Grid.Column="0" Source="/Assets/New/Icons/file-02.png" Height="20" Margin="0,0,15,0"/>
-            <TextBlock Grid.Column="1" Text="New" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Text="Ctrl+N" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-          </Grid>
-          <Button.Styles>
-            <Style Selector="Button">
-              <Setter Property="BorderThickness" Value="0"/>
-              <Setter Property="Padding" Value="0"/>
-            </Style>
-            <Style Selector="Button:pointerover /template/ ContentPresenter">
-              <Setter Property="Background" Value="#F0F0F0"/>
-              <Setter Property="CornerRadius" Value="5"/>
-            </Style>
-            <Style Selector="Button:pressed /template/ ContentPresenter">
-              <Setter Property="Background" Value="#E5E5E5"/>
-            </Style>
-          </Button.Styles>
+                Command="{Binding onNewProject}"
+                Background="Transparent"
+                Padding="0,4"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch">
+          <Border Padding="0,6" Background="Transparent" CornerRadius="5">
+            <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
+              <Image Grid.Column="0" Source="/Assets/New/Icons/file-02.png" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="New" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937" />
+              <TextBlock Grid.Column="2" Text="Ctrl+N" TextAlignment="Right" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="#888888" Margin="0,0,8,0"/>
+            </Grid>
+          </Border>
         </Button>
 
         <Button Name="OpenBtn"
                 Command="{Binding onOpenProject}"
-                HorizontalContentAlignment="Stretch"
                 Background="Transparent"
-                Foreground="#333333">
-          <Grid ColumnDefinitions="Auto,*,Auto">
-            <Image Grid.Column="0" Source="/Assets/New/Icons/folder-02.png" Height="20" Margin="0,0,15,0"/>
-            <TextBlock Grid.Column="1" Text="Open" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Text="Ctrl+O" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-          </Grid>
-          <Button.Styles>
-            <Style Selector="Button">
-              <Setter Property="BorderThickness" Value="0"/>
-              <Setter Property="Padding" Value="0"/>
-            </Style>
-            <Style Selector="Button:pointerover /template/ ContentPresenter">
-              <Setter Property="Background" Value="#F0F0F0"/>
-              <Setter Property="CornerRadius" Value="5"/>
-            </Style>
-            <Style Selector="Button:pressed /template/ ContentPresenter">
-              <Setter Property="Background" Value="#E5E5E5"/>
-            </Style>
-          </Button.Styles>
+                Padding="0,4"
+                HorizontalContentAlignment="Stretch"
+                HorizontalAlignment="Stretch">
+          <Border Padding="0,6" Background="Transparent" CornerRadius="5">
+            <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
+              <Image Grid.Column="0" Source="/Assets/New/Icons/folder-02.png" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="Open" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
+              <TextBlock Grid.Column="2" Text="Ctrl+O" TextAlignment="Right" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+            </Grid>
+          </Border>          
         </Button>
-
+        
         <Button Name="SaveBtn"
                 Command="{Binding onSaveProject}"
                 HorizontalContentAlignment="Stretch"
                 Background="Transparent"
-                Foreground="#333333">
-          <Grid ColumnDefinitions="Auto,*,Auto">
-            <Image Grid.Column="0" Source="/Assets/New/Icons/floppy-disk.png" Height="20" Margin="0,0,15,0"/>
-            <TextBlock Grid.Column="1" Text="Save" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Text="Ctrl+S" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-          </Grid>
-          <Button.Styles>
-            <Style Selector="Button">
-              <Setter Property="BorderThickness" Value="0"/>
-              <Setter Property="Padding" Value="0"/>
-            </Style>
-            <Style Selector="Button:pointerover /template/ ContentPresenter">
-              <Setter Property="Background" Value="#F0F0F0"/>
-              <Setter Property="CornerRadius" Value="5"/>
-            </Style>
-            <Style Selector="Button:pressed /template/ ContentPresenter">
-              <Setter Property="Background" Value="#E5E5E5"/>
-            </Style>
-          </Button.Styles>
+                HorizontalAlignment="Stretch"
+                Padding="0,4">
+          <Border Padding="0,6" Background="Transparent" CornerRadius="5">
+            <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
+              <Image Grid.Column="0" Source="/Assets/New/Icons/floppy-disk.png" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="Save" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
+              <TextBlock Grid.Column="2" Text="Ctrl+S" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+            </Grid>
+          </Border>
         </Button>
 
         <Button Name="SaveAllBtn"
                 Command="{Binding onSaveAllProject}"
                 HorizontalContentAlignment="Stretch"
+                HorizontalAlignment="Stretch"
                 Background="Transparent"
-                Foreground="#333333"
-                IsEnabled="{Binding IsProjectUnSaved}">
-          <Grid ColumnDefinitions="Auto,*,Auto">
-            <Image Grid.Column="0" Source="/Assets/New/Icons/save-all.png" Height="20" Margin="0,0,15,0"/>
-            <TextBlock Grid.Column="1" Text="Save All" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Text="Ctrl+Shift+S" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-          </Grid>
-          <Button.Styles>
-            <Style Selector="Button">
-              <Setter Property="BorderThickness" Value="0"/>
-              <Setter Property="Padding" Value="0"/>
-            </Style>
-            <Style Selector="Button:pointerover /template/ ContentPresenter">
-              <Setter Property="Background" Value="#F0F0F0"/>
-              <Setter Property="CornerRadius" Value="5"/>
-            </Style>
-            <Style Selector="Button:pressed /template/ ContentPresenter">
-              <Setter Property="Background" Value="#E5E5E5"/>
-            </Style>
-          </Button.Styles>
+                IsEnabled="{Binding IsProjectUnSaved}"
+                Padding="0,4">
+          <Border Padding="0,6" Background="Transparent" CornerRadius="5">
+            <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
+              <Image Grid.Column="0" Source="/Assets/New/Icons/save-all.png" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="Save All" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
+              <TextBlock Grid.Column="2" Text="Ctrl+Shift+S" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+            </Grid>
+          </Border>
         </Button>
 
         <Button Name="CloseBtn"
                 Command="{Binding onCloseProject}"
                 HorizontalContentAlignment="Stretch"
+                HorizontalAlignment="Stretch"
                 Background="Transparent"
-                Foreground="#333333">
-          <Grid ColumnDefinitions="Auto,*,Auto">
-            <Image Grid.Column="0" Source="/Assets/New/Icons/x-circle.png" Height="20" Margin="0,0,15,0"/>
-            <TextBlock Grid.Column="1" Text="Close" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Text="Ctrl+W" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-          </Grid>
-          <Button.Styles>
-            <Style Selector="Button">
-              <Setter Property="BorderThickness" Value="0"/>
-              <Setter Property="Padding" Value="0"/>
-            </Style>
-            <Style Selector="Button:pointerover /template/ ContentPresenter">
-              <Setter Property="Background" Value="#F0F0F0"/>
-              <Setter Property="CornerRadius" Value="5"/>
-            </Style>
-            <Style Selector="Button:pressed /template/ ContentPresenter">
-              <Setter Property="Background" Value="#E5E5E5"/>
-            </Style>
-          </Button.Styles>
+                Padding="0,4">
+          <Border Padding="0,6" Background="Transparent" CornerRadius="5">
+            <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
+              <Image Grid.Column="0" Source="/Assets/New/Icons/x-circle.png" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="Close" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
+              <TextBlock Grid.Column="2" Text="Ctrl+W" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+            </Grid>
+          </Border>
         </Button>
 
         <Button Name="HelpBtn"
                 HorizontalContentAlignment="Stretch"
+                HorizontalAlignment="Stretch"
                 Background="Transparent"
-                Foreground="#333333">
-          <Grid ColumnDefinitions="Auto,*,Auto">
-            <Image Grid.Column="0" Source="/Assets/New/Icons/information-circle.png" Height="20" Margin="0,0,15,0"/>
-            <TextBlock Grid.Column="1" Text="Help" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Text="" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-          </Grid>
-          <Button.Styles>
-            <Style Selector="Button">
-              <Setter Property="BorderThickness" Value="0"/>
-              <Setter Property="Padding" Value="0"/>
-            </Style>
-            <Style Selector="Button:pointerover /template/ ContentPresenter">
-              <Setter Property="Background" Value="#F0F0F0"/>
-              <Setter Property="CornerRadius" Value="5"/>
-            </Style>
-            <Style Selector="Button:pressed /template/ ContentPresenter">
-              <Setter Property="Background" Value="#E5E5E5"/>
-            </Style>
-          </Button.Styles>
+                Padding="0,4">
+          <Border Padding="0,6" Background="Transparent" CornerRadius="5">
+            <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
+              <Image Grid.Column="0" Source="/Assets/New/Icons/information-circle.png" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="Help" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
+              <TextBlock Grid.Column="2" Text="" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+            </Grid>
+          </Border>
         </Button>
 
         <Button Name="AboutBtn"
                 HorizontalContentAlignment="Stretch"
+                HorizontalAlignment="Stretch"
                 Background="Transparent"
-                Foreground="#333333">
-          <Grid ColumnDefinitions="Auto,*,Auto">
-            <Image Grid.Column="0" Source="/Assets/New/Icons/about.png" Height="20" Margin="0,0,15,0"/>
-            <TextBlock Grid.Column="1" Text="About" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Text="" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-          </Grid>
-          <Button.Styles>
-            <Style Selector="Button">
-              <Setter Property="BorderThickness" Value="0"/>
-              <Setter Property="Padding" Value="0"/>
-            </Style>
-            <Style Selector="Button:pointerover /template/ ContentPresenter">
-              <Setter Property="Background" Value="#F0F0F0"/>
-              <Setter Property="CornerRadius" Value="5"/>
-            </Style>
-            <Style Selector="Button:pressed /template/ ContentPresenter">
-              <Setter Property="Background" Value="#E5E5E5"/>
-            </Style>
-          </Button.Styles>
+                Padding="0,4">
+          <Border Padding="0,6" Background="Transparent" CornerRadius="5">
+            <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
+              <Image Grid.Column="0" Source="/Assets/New/Icons/about.png" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="About" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
+              <TextBlock Grid.Column="2" Text="" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+            </Grid>
+          </Border>
         </Button>
       </StackPanel>
     </Border>
