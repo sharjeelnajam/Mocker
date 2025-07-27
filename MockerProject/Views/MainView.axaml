@@ -5,7 +5,7 @@
 						 xmlns:vm="clr-namespace:MockerProject.ViewModels"
              xmlns:v="clr-namespace:MockerProject.Views"
              mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="750"
-             x:Class="MockerProject.Views.MainView" Background="White"
+             x:Class="MockerProject.Views.MainView"
 						 x:CompileBindings="True" x:DataType="vm:MainWindowViewModel">
 	<!-- 
 	<syncfusion:TaskBar x:Name ="taskBar" >

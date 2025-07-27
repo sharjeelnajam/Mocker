@@ -1,13 +1,49 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <!-- Light Theme Colors -->
-  <Color x:Key="HeaderBackgroundColor">#FFFFFFFF</Color>
-  <Color x:Key="BorderBackgroundColor">#1F29370D</Color>
-  <Color x:Key="ButtonBackgroundColor">#F8F8F8</Color>
-  <Color x:Key="ButtonForegroundColor">#1F2937</Color>
+  <x:String x:Key="MainBackgroundImageSource">avares://MockerProject/Assets/New/Background/bg-gradient.png</x:String>
 
-  <SolidColorBrush x:Key="HeaderBackground" Color="{DynamicResource HeaderBackgroundColor}" />
-  <SolidColorBrush x:Key="BorderBackground" Color="{DynamicResource BorderBackgroundColor}" />
-  <SolidColorBrush x:Key="ButtonBackground" Color="{DynamicResource ButtonBackgroundColor}" />
-  <SolidColorBrush x:Key="ButtonForeground" Color="{DynamicResource ButtonForegroundColor}" />
+  <Color x:Key="ThemeHeaderBackgroundColor">#FFFFFF</Color>
+  <Color x:Key="ThemeControlBackgroundColor">#F3F4F6</Color>
+  <Color x:Key="ThemeControlBorderColor">#E5E7EB</Color>
+  <Color x:Key="ThemePrimaryTextColor">#111827</Color>
+  <Color x:Key="ThemeSecondaryTextColor">#000000</Color>
+  <Color x:Key="ThemeControlHoverColor">#E5E7EB</Color>
+  <Color x:Key="ThemeControlPressedColor">#D1D5DB</Color>
+  <Color x:Key="ThemeRunButtonGradientStart">#6366F1</Color>
+  <Color x:Key="ThemeRunButtonGradientEnd">#8B5CF6</Color>
+  <Color x:Key="ThemeRunButtonForegroundColor">#FFFFFF</Color>
+  <Color x:Key="ThemeDisabledForegroundColor">#9CA3AF</Color>
+  <Color x:Key="ThemeMainLeftGradientColor">#3B82F6</Color>
+  <Color x:Key="ThemeMainCenterGradientColor">#8B5CF6</Color>
+  <Color x:Key="ThemeMainRightGradientColor">#6366F1</Color>
+
+  <SolidColorBrush x:Key="HeaderBackground" Color="{DynamicResource ThemeHeaderBackgroundColor}" />
+  <SolidColorBrush x:Key="ControlBackground" Color="{DynamicResource ThemeControlBackgroundColor}" />
+  <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource ThemeControlBorderColor}" />
+  <SolidColorBrush x:Key="PrimaryForeground" Color="{DynamicResource ThemePrimaryTextColor}" />
+  <SolidColorBrush x:Key="SecondaryForeground" Color="{DynamicResource ThemeSecondaryTextColor}" />
+  <SolidColorBrush x:Key="ControlHoverBackground" Color="{DynamicResource ThemeControlHoverColor}" />
+  <SolidColorBrush x:Key="ControlPressedBackground" Color="{DynamicResource ThemeControlPressedColor}" />
+  <SolidColorBrush x:Key="RunButtonForeground" Color="{DynamicResource ThemeRunButtonForegroundColor}" />
+  <SolidColorBrush x:Key="DisabledForeground" Color="{DynamicResource ThemeDisabledForegroundColor}" />
+
+  <LinearGradientBrush x:Key="RunButtonBackground" StartPoint="0%,50%" EndPoint="100%,50%">
+    <GradientStop Color="{DynamicResource ThemeRunButtonGradientStart}" Offset="0.0" />
+    <GradientStop Color="{DynamicResource ThemeRunButtonGradientEnd}" Offset="1.0" />
+  </LinearGradientBrush>
+
+  <RadialGradientBrush x:Key="LeftRadialGradient" Center="0,0.5" Radius="1.0" Opacity="0.5">
+    <GradientStop Color="{DynamicResource ThemeMainLeftGradientColor}" Offset="0" />
+    <GradientStop Color="#3B82F600" Offset="1" />
+  </RadialGradientBrush>
+
+  <RadialGradientBrush x:Key="CenterRadialGradient" Center="0.5,0.5" Radius="1.0" Opacity="0.5">
+    <GradientStop Color="{DynamicResource ThemeMainCenterGradientColor}" Offset="0" />
+    <GradientStop Color="#8B5CF600" Offset="1" />
+  </RadialGradientBrush>
+
+  <RadialGradientBrush x:Key="RightRadialGradient" Center="1,0.5" Radius="1.0" Opacity="0.5">
+    <GradientStop Color="{DynamicResource ThemeMainRightGradientColor}" Offset="0" />
+    <GradientStop Color="#6366F100" Offset="1" />
+  </RadialGradientBrush>
 </ResourceDictionary>
