@@ -15,71 +15,89 @@
     <UserControl.Styles>
 
         <Style Selector="TabControl">
-            <Setter Property="Background" Value="#555555"/>
-            <Setter Property="Margin" Value="1"/>
-            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Background" Value="#D3D1D6"/>
             <Setter Property="BorderBrush" Value="#f0f0f0"/>
             <Setter Property="BorderThickness" Value="1"/>
         </Style>
         <Style Selector="TabControl WrapPanel">
-            <Setter Property="Background" Value="#373737"/>
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="#D3D1D6"/>
+			<Setter Property="Margin" Value="12"/>
+			<Setter Property="Height" Value="50"/>
         </Style>
-        <Style Selector="SelectingItemsControl">
+		<Style Selector="TabItem">
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Border CornerRadius="8"
+							Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Padding="8"
+							Margin="4">
+						<ContentPresenter HorizontalAlignment="Center"
+										  VerticalAlignment="Center"
+										  Content="{TemplateBinding Header}"/>
+					</Border>
+				</ControlTemplate>
+			</Setter>
+
+			<Setter Property="Background" Value="#D3D1D6"/>
+		</Style>
+
+		<Style Selector="SelectingItemsControl">
             <Setter Property="BorderBrush" Value="#f0f0f0"/>
             <Setter Property="BorderThickness" Value="11"/>
         </Style>
 
         <Style Selector="TabItem">
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Height" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+			<Setter Property="FontWeight" Value="Medium"/>
+			<Setter Property="Width" Value="140"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Background" Value="#505050"/>
-            <Setter Property="Foreground" Value="#909090"/>
-            <Setter Property="Margin" Value="1 0"/>
-            <Setter Property="Padding" Value="10 0"/>
+            <Setter Property="Background" Value="#D3D1D6"/>
+            <Setter Property="Foreground" Value="black"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Border
+					  Name="border"
+					  Background="{TemplateBinding Background}"
+					  BorderBrush="{TemplateBinding BorderBrush}"
+					  BorderThickness="{TemplateBinding BorderThickness}"
+					  CornerRadius="8"
+					  Height="33"
+						Padding="10,4"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Center">
+						<ContentPresenter
+						  Name="contentPresenter"
+						  VerticalAlignment="Center"
+						  HorizontalAlignment="Center"
+						  Content="{TemplateBinding Header}"
+						  ContentTemplate="{TemplateBinding HeaderTemplate}" />
+					</Border>
+				</ControlTemplate>
+			</Setter>
+			
         </Style>
-        <Style Selector="TabItem:pointerover">
-            <Setter Property="Foreground" Value="#555555"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Margin" Value="1 0"/>
-            <Setter Property="Padding" Value="10 0"/>
-        </Style>
-        <!--<Style Selector="TabItem:pointerover /template/ Border#PART_SelectedPipe">
-            <Setter Property="ClipToBounds" Value="True"/>
-            <Setter Property="BorderThickness" Value="3"></Setter>
-        </Style>-->
-
-        <Style Selector="TabItem:focus">
-            <Setter Property="Foreground" Value="#000000"/>
-            <Setter Property="Margin" Value="1 0"/>
-            <Setter Property="Padding" Value="10 0"/>
-        </Style>
-        <!--<Style Selector="TabItem:focus /template/ Border#PART_SelectedPipe">
-            <Setter Property="Background" Value="#000000"/>
-            <Setter Property="BorderThickness" Value="3"></Setter>
-        </Style>-->
-
-        <Style Selector="TabItem:selected">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Background" Value="#555555"/>
-            <Setter Property="Margin" Value="1 0"/>
-            <Setter Property="Padding" Value="10 0"/>
+		<Style Selector="TabItem:selected">
+            <Setter Property="Background" Value="#E8E9EA"/>
+			<Setter Property="Foreground" Value="Black"/>
         </Style>
         <Style Selector="TabItem:selected /template/ Border#PART_SelectedPipe">
-            <Setter Property="Background" Value="#555555"/>
+            <Setter Property="Background" Value="#D3D1D6"/>
             <Setter Property="IsVisible" Value="False"/>
-            <Setter Property="Padding" Value="10 0"/>
         </Style>
 
     </UserControl.Styles>
-    
-    <TabControl Margin="0"  IsVisible="{Binding IsProjectOpened}">
-        <TabItem Header="UI CONTROLS" Margin="0">
+
+
+	<Border Background="White"
+        BoxShadow="-6 0 20 #22000000"
+        Margin="3,0,0,0">
+    <TabControl Margin="0"  IsVisible="{Binding IsProjectOpened}" Background="White">
+        <TabItem Header="UI CONTROLS" Margin="8,3">
             <v:UIControlView Name="UIControl"/>
         </TabItem>
-        <TabItem Header="PlATFORMS " Margin="0">
+        <TabItem Header="PlATFORMS " Margin="8,3">
             <v:PlatformView Name="Platform"/>
         </TabItem>
         <!--<TabItem Header="Tab 2">
@@ -89,6 +107,7 @@
             <TextBlock Margin="5">This is tab 3 content</TextBlock>
         </TabItem>-->
     </TabControl>
+	</Border>
     <!--<TabControl Items="{Binding DataContent}" SelectedIndex ="{Binding SelectedTabIndex}">
         <TabControl.ItemTemplate>
             <DataTemplate>

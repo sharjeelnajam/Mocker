@@ -7,7 +7,7 @@
 			 xmlns:vm="clr-namespace:MockerProject.ViewModels"
              x:CompileBindings="True" x:DataType="vm:MainWindowViewModel" >
 	<Canvas Width="2500" Height="2500" Background="#aaaaaa" >
-        <Canvas Focusable="True"  PointerPressed="OnElementSelected" Name = "screenCanvas" Width="2500" Height="2500" Background="#aaaaaa" >
+        <Canvas Focusable="True"  PointerPressed="OnElementSelected" Name = "screenCanvas" Width="2500" Height="2500" Background="#cdd1e7" >
             <LayoutTransformControl Name="PlatformUI" Grid.Column="1" Grid.Row="1" Canvas.Top="{Binding PF_Y}" Canvas.Left="{Binding PF_X}" >
                 <LayoutTransformControl.LayoutTransform>
                     <TransformGroup>

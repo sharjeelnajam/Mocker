@@ -8,7 +8,7 @@
     <DockPanel>
         <!--<ToggleButton Name = "ScreenBtn" Background="Transparent"                        HorizontalAlignment="Center" >-->
         <Panel>
-                <Canvas Width="180" Height="150" Name="SmallCanvas" Background="#aaaaaa">
+                <Canvas Width="180" Height="150" Name="SmallCanvas" Background="white">
                     <Image Name="iamge" Width="180" Height="150" Stretch="Uniform" ></Image>
                 </Canvas>
 			    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
