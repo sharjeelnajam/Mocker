@@ -36,12 +36,26 @@ using Avalonia.Interactivity;
 using MockerProject.ViewModels.UIViewModels;
 using System.Text.Json.Nodes;
 using MockerProject.Action;
+using Avalonia.Styling;
 
 namespace MockerProject.ViewModels
 {
    
     public class MainWindowViewModel : ReactiveObject
     {
+        private bool _isDarkMode = true;
+        public bool IsDarkMode
+        {
+            get => _isDarkMode;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _isDarkMode, value);
+                ThemeChanged?.Invoke(this, value);
+            }
+        }
+
+        public event EventHandler<bool>? ThemeChanged;
+
         public CONTROL_TYPE m_UIControlType = CONTROL_TYPE.NONE;
         public CONTROL_TYPE m_nSelectedUIControl = CONTROL_TYPE.NONE;
         public UIPropertyWindow m_wndUIProperty;

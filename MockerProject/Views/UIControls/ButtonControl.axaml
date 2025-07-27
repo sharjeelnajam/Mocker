@@ -34,12 +34,12 @@
 	>
 	        <Button.Styles>
 		        <Style Selector="Button:pointerover /template/ ContentPresenter">
-			        <Setter Property="Background" Value="{Binding backgroundOver}"/>
-			        <Setter Property="Foreground" Value="{Binding foreground}"/>
+			        <Setter Property="Background" Value="{DynamicResource backgroundOver}"/>
+			        <Setter Property="Foreground" Value="{DynamicResource foreground}"/>
 		        </Style>
 		        <Style Selector="Button">
-			        <Setter Property="Background" Value="{Binding background}"/>
-			        <Setter Property="Foreground" Value="{Binding foreground}"/>
+			        <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
+			        <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}"/>
 		        </Style>
 	        </Button.Styles>
         </Button>

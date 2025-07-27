@@ -142,7 +142,7 @@
              xmlns:vm="clr-namespace:MockerProject.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
              x:Class="MockerProject.Views.HeaderView" Height="50"
-             Background="#FFFFFF"  x:CompileBindings="True" x:DataType="vm:MainWindowViewModel">
+             Background="{DynamicResource HeaderBackground}"  x:CompileBindings="True" x:DataType="vm:MainWindowViewModel">
 
   <UserControl.Resources>
   </UserControl.Resources>
@@ -301,23 +301,13 @@
       <Setter Property="Foreground" Value="#1F2937"/>
     </Style>
     <Style Selector="Border.ButtonGroupBox">
-      <Setter Property="Background" Value="#F8F8F8"/>
-      <Setter Property="BorderBrush" Value="#E0E0E0"/>
+      <Setter Property="Background" Value="{DynamicResource BorderBackground}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderBackground}"/>
       <Setter Property="BorderThickness" Value="1"/>
       <Setter Property="CornerRadius" Value="6"/>
       <Setter Property="Margin" Value="5 0"/>
       <Setter Property="VerticalAlignment" Value="Center"/>
       <Setter Property="Height" Value="36"/>
-    </Style>
-    <Style Selector="Button:disabled">
-      <Setter Property="Opacity" Value="0.5"/>
-      <Setter Property="IsHitTestVisible" Value="False"/>
-    </Style>
-    <Style Selector="Button:disabled TextBlock">
-      <Setter Property="Foreground" Value="Gray"/>
-    </Style>
-    <Style Selector="Button:disabled Image">
-      <Setter Property="Opacity" Value="0.8"/>
     </Style>
 
   </UserControl.Styles>
@@ -416,8 +406,8 @@
                 Height="32"
                 Margin="8 0"
                 IsEnabled="{Binding IsWorkView}"
-                Background="#F8F8F8"
-                BorderBrush="#E0E0E0"
+                Background="{DynamicResource BorderBackground}"
+                BorderBrush="{DynamicResource BorderBackground}"
                 BorderThickness="1">
           <Button Classes="ShareButton"
                   ToolTip.Tip="Share Project"
@@ -437,8 +427,8 @@
                 Margin="10 0 0 0"
                 VerticalAlignment="Center"
                 IsEnabled="{Binding IsWorkView}"
-                Background="#F8F8F8"
-                BorderBrush="#E0E0E0"
+                Background="{DynamicResource BorderBackground}"
+                BorderBrush="{DynamicResource BorderBackground}"
                 BorderThickness="1">
           <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
             <Image Source="/Assets/New/Icons/search.png"
@@ -457,9 +447,10 @@
         </Border>
 
         <ToggleButton Classes="DarkModeToggle"
-                      ToolTip.Tip="Toggle Dark/Light Mode"
-                      Margin="8"
-                      VerticalAlignment="Center"/>
+              ToolTip.Tip="Toggle Dark/Light Mode"
+              Margin="8"
+              VerticalAlignment="Center"
+              IsChecked="{Binding IsDarkMode}" />
       </StackPanel>
 
     </Grid>

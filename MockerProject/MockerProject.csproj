@@ -14,7 +14,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Remove="Styles\Colors.Dark.axaml" />
+    <AvaloniaXaml Remove="Styles\Colors.Light.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\Mocker.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Styles\Colors.Dark.axaml" />
+    <AvaloniaResource Include="Styles\Colors.Light.axaml" />
   </ItemGroup>
 
 
