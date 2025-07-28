@@ -21,7 +21,7 @@
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="TreeView" Source="/Assets/UIControls/tree.png" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						<Image Name="TreeView" Source="/Assets/New/Icons/treeview.png" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 					</Border>
 					<TextBlock Text="Tree View"
 							   Foreground="#1F2937"
@@ -36,7 +36,7 @@
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Tabs" Source="/Assets/UIControls/Tabs.png" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						<Image Name="Tabs" Source="/Assets/New/Icons/tabs.png" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 					</Border>
 					<TextBlock Text="Tabs"
 							   Foreground="#1F2937"
@@ -51,7 +51,7 @@
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="ContainerBox" Source="/Assets/UIControls/Container.png" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						<Image Name="ContainerBox" Source="/Assets/New/Icons/containernew.png" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 					</Border>
 					<TextBlock Text="Container"
 							   Foreground="#1F2937"
@@ -68,21 +68,21 @@
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Button" Source="/Assets/UIControls/Button.png" Stretch="Uniform" />
+						<Image Name="Button" Source="/Assets/New/Icons/button.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Button" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="TextBox" Source="/Assets/UIControls/TextField.png" Stretch="Uniform" />
+						<Image Name="TextBox" Source="/Assets/New/Icons/text.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="TextBox" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Label" Source="/Assets/UIControls/Label.png" Stretch="Uniform" />
+						<Image Name="Label" Source="/Assets/New/Icons/text.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Label" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
@@ -91,21 +91,21 @@
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Title" Source="/Assets/UIControls/Title.png" Stretch="Uniform" />
+						<Image Name="Title" Source="/Assets/New/Icons/textnew.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Title" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Link" Source="/Assets/UIControls/Link.png" Stretch="Uniform" />
+						<Image Name="Link" Source="/Assets/New/Icons/linknew.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Link" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Password" Source="/Assets/UIControls/Password.png" Stretch="Uniform" />
+						<Image Name="Password" Source="/Assets/New/Icons/password.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Password" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
@@ -114,21 +114,21 @@
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Check" Source="/Assets/UIControls/Check.png" Stretch="Uniform" />
+						<Image Name="Check" Source="/Assets/New/Icons/checkbox.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Check" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Image" Source="/Assets/UIControls/Image.png" Stretch="Uniform" />
+						<Image Name="Image" Source="/Assets/New/Icons/image.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Image" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Radio" Source="/Assets/UIControls/Radio.png" Stretch="Uniform" />
+						<Image Name="Radio" Source="/Assets/New/Icons/radio.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Radio" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
@@ -137,21 +137,21 @@
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="DataPicker" Source="/Assets/UIControls/DataPicker.png" Stretch="Uniform" />
+						<Image Name="DataPicker" Source="/Assets/New/Icons/datepicker.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="DataPicker" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="MultilineButton" Source="/Assets/UIControls/MultilineButton.png" Stretch="Uniform" />
+						<Image Name="MultilineButton" Source="/Assets/New/Icons/multilinebutton.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Multiline Button" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="TextArea" Source="/Assets/UIControls/TextArea.png" Stretch="Uniform" />
+						<Image Name="TextArea" Source="/Assets/New/Icons/textarea.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="TextArea" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
@@ -160,21 +160,21 @@
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="listBox" Source="/Assets/UIControls/ListBox.png" Stretch="Uniform" />
+						<Image Name="listBox" Source="/Assets/New/Icons/listbox.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="ListBox" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Repeater" Source="/Assets/UIControls/Repeater.png" Stretch="Uniform" />
+						<Image Name="Repeater" Source="/Assets/New/Icons/repeater.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Repeater" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="DropDown" Source="/Assets/UIControls/DropDown.png" Stretch="Uniform" />
+						<Image Name="DropDown" Source="/Assets/New/Icons/dropdown.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="DropDown" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
@@ -183,21 +183,21 @@
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Table" Source="/Assets/UIControls/Table.png" Stretch="Uniform" />
+						<Image Name="Table" Source="/Assets/New/Icons/table.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Table" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Slider" Source="/Assets/UIControls/Slider.png" Stretch="Uniform" />
+						<Image Name="Slider" Source="/Assets/New/Icons/slider.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Slider" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
 					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="Progress" Source="/Assets/UIControls/Progress.png" Stretch="Uniform" />
+						<Image Name="Progress" Source="/Assets/New/Icons/loading.png" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Progress" Foreground="#1F2937" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
