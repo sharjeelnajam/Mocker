@@ -1,9 +1,34 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <x:String x:Key="MainBackgroundImageSource">avares://MockerProject/Assets/New/Background/bg-dark-gradient.png</x:String>
 
-  <Color x:Key="ThemeHeaderBackgroundColor">#1F2937</Color>
-  <Color x:Key="ThemeControlBackgroundColor">#374151</Color>
+  <Bitmap x:Key="MainBackgroundImageSource">/Assets/New/Background/bg-dark-gradient.png</Bitmap>
+  <Bitmap x:Key="MenuIcon">avares://MockerProject/Assets/New/Icons/dark/menu.png</Bitmap>
+  <Bitmap x:Key="NewFileIcon">avares://MockerProject/Assets/New/Icons/dark/file.png</Bitmap>
+  <Bitmap x:Key="NewFolderIcon">avares://MockerProject/Assets/New/Icons/dark/folder.png</Bitmap>
+  <Bitmap x:Key="StoryBoardIcon">avares://MockerProject/Assets/New/Icons/dark/clipboard.png</Bitmap>
+  <Bitmap x:Key="SaveIcon">avares://MockerProject/Assets/New/Icons/dark/save.png</Bitmap>
+  <Bitmap x:Key="RulerIcon">avares://MockerProject/Assets/New/Icons/dark/ruler.png</Bitmap>
+  <Bitmap x:Key="StylesheetIcon">avares://MockerProject/Assets/New/Icons/dark/colors.png</Bitmap>
+  <Bitmap x:Key="SettingsIcon">avares://MockerProject/Assets/New/Icons/dark/setting.png</Bitmap>
+  <Bitmap x:Key="UndoIcon">avares://MockerProject/Assets/New/Icons/dark/undo.png</Bitmap>
+  <Bitmap x:Key="RedoIcon">avares://MockerProject/Assets/New/Icons/dark/redo.png</Bitmap>
+  <Bitmap x:Key="PlayIcon">avares://MockerProject/Assets/New/Icons/play.png</Bitmap>
+  <Bitmap x:Key="ShareIcon">avares://MockerProject/Assets/New/Icons/dark/share.png</Bitmap>
+  <Bitmap x:Key="SearchIcon">avares://MockerProject/Assets/New/Icons/dark/search.png</Bitmap>
+
+  <Bitmap x:Key="MenuNew">avares://MockerProject/Assets/New/Icons/dark/menunew.png</Bitmap>
+  <Bitmap x:Key="MenuOpen">avares://MockerProject/Assets/New/Icons/dark/menuopen.png</Bitmap>
+  <Bitmap x:Key="MenuSave">avares://MockerProject/Assets/New/Icons/dark/menusave.png</Bitmap>
+  <Bitmap x:Key="MenuSaveAll">avares://MockerProject/Assets/New/Icons/dark/save-all.png</Bitmap>
+  <Bitmap x:Key="MenuClose">avares://MockerProject/Assets/New/Icons/dark/x-circle.png</Bitmap>
+  <Bitmap x:Key="MenuHelp">avares://MockerProject/Assets/New/Icons/dark/information-circle.png</Bitmap>
+  <Bitmap x:Key="MenuAbout">avares://MockerProject/Assets/New/Icons/dark/about.png</Bitmap>
+
+  <Bitmap x:Key="ThreeDotsIcon">avares://MockerProject/Assets/New/Icons/dark/dots.png</Bitmap>
+  <Bitmap x:Key="NewProjectIcon">avares://MockerProject/Assets/New/Icons/dark/add-new.png</Bitmap>
+
+  <Color x:Key="ThemeHeaderBackgroundColor">#121212</Color>
+  <Color x:Key="ThemeControlBackgroundColor">#383739</Color>
   <Color x:Key="ThemeControlBorderColor">#4B5563</Color>
   <Color x:Key="ThemePrimaryTextColor">#F9FAFB</Color>
   <Color x:Key="ThemeSecondaryTextColor">#FFFFFF</Color>
@@ -16,6 +41,11 @@
   <Color x:Key="ThemeMainLeftGradientColor">#3B82F61A</Color>
   <Color x:Key="ThemeMainCenterGradientColor">#8B5CF61A</Color>
   <Color x:Key="ThemeMainRightGradientColor">#6366F11A</Color>
+  <Color x:Key="ThemeMenuBorderColor">#0000004D</Color>
+  <Color x:Key="ThemeDesignStudioGradientStart">#FFFFFF</Color>
+  <Color x:Key="ThemeDesignStudioGradientEnd">#A855F7</Color>
+  <Color x:Key="ThemeDesignStudioBorderBackground">#434445</Color>
+  <Color x:Key="ThemeDesignStudioTextColor">#bcbdbd</Color>
 
   <SolidColorBrush x:Key="HeaderBackground" Color="{DynamicResource ThemeHeaderBackgroundColor}" />
   <SolidColorBrush x:Key="ControlBackground" Color="{DynamicResource ThemeControlBackgroundColor}" />
@@ -26,10 +56,16 @@
   <SolidColorBrush x:Key="ControlPressedBackground" Color="{DynamicResource ThemeControlPressedColor}" />
   <SolidColorBrush x:Key="RunButtonForeground" Color="{DynamicResource ThemeRunButtonForegroundColor}" />
   <SolidColorBrush x:Key="DisabledForeground" Color="{DynamicResource ThemeDisabledForegroundColor}" />
+  <SolidColorBrush x:Key="MenuBorder" Color="{DynamicResource ThemeMenuBorderColor}" />
 
   <LinearGradientBrush x:Key="RunButtonBackground" StartPoint="0%,50%" EndPoint="100%,50%">
     <GradientStop Color="{DynamicResource ThemeRunButtonGradientStart}" Offset="0.0" />
     <GradientStop Color="{DynamicResource ThemeRunButtonGradientEnd}" Offset="1.0" />
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="DesignStudioGradient" StartPoint="0%,50%" EndPoint="100%,50%">
+    <GradientStop Color="{DynamicResource ThemeDesignStudioGradientStart}" Offset="0"/>
+    <GradientStop Color="{DynamicResource ThemeDesignStudioGradientEnd}" Offset="1"/>
   </LinearGradientBrush>
 
   <RadialGradientBrush x:Key="LeftRadialGradient" Center="0,0.5" Radius="1.0" Opacity="0.5">

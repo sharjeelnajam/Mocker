@@ -85,7 +85,6 @@
 -->
 
 
-
 <!--new design-->
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -96,15 +95,39 @@
              xmlns:vm="clr-namespace:MockerProject.ViewModels"
              x:DataType="vm:MainWindowViewModel"
              MaxHeight="701">
-  <UserControl.Resources>
-    <LinearGradientBrush x:Key="DesignStudioGradient" StartPoint="0%,50%" EndPoint="100%,50%">
-      <GradientStop Color="#000000" Offset="0"/>
-      <GradientStop Color="#A855F7" Offset="1"/>
-    </LinearGradientBrush>
-  </UserControl.Resources>
+
+  <UserControl.Styles>
+    <!-- SearchBox -->
+    <Style Selector="TextBox.SearchBox">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
+      <Setter Property="CaretBrush" Value="{DynamicResource PrimaryForeground}"/>
+      <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="TextBox.SearchBox /template/ TextBlock#PART_Watermark">
+      <Setter Property="Foreground" Value="{DynamicResource SecondaryForeground}"/>
+    </Style>
+
+    <Style Selector="Button">
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Padding" Value="0,4"/>
+      <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+
+    <Style Selector="Button:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource ControlHoverBackground}"/>
+      <Setter Property="CornerRadius" Value="5"/>
+    </Style>
+
+    <Style Selector="Button:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource ControlPressedBackground}"/>
+    </Style>
+  </UserControl.Styles>
 
   <Panel Margin="30">
-    <Border CornerRadius="15" Background="White">
+    <Border CornerRadius="15" Background="{DynamicResource HeaderBackground}">
       <Border.Effect>
         <DropShadowEffect OffsetX="0" OffsetY="8" BlurRadius="25" Color="#20000000"/>
       </Border.Effect>
@@ -115,7 +138,7 @@
                      FontSize="30"
                      HorizontalAlignment="Center"
                      FontWeight="Bold"
-                     Foreground="{StaticResource DesignStudioGradient}"/>
+                     Foreground="{DynamicResource DesignStudioGradient}"/>
           <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, *, Auto" VerticalAlignment="Stretch">
             <!-- Heading -->
             <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,20">
@@ -129,40 +152,23 @@
                   </Border.Background>
                   <Image Source="/Assets/New/Icons/folder-3-line.png" Width="16" Height="16" Stretch="UniformToFill"/>
                 </Border>
-                <TextBlock Text="Open recent" FontSize="18" FontWeight="SemiBold" Foreground="#333333" VerticalAlignment="Center"/>
+                <TextBlock Text="Open recent" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryForeground}" VerticalAlignment="Center"/>
               </StackPanel>
 
               <!-- Search Box -->
-              <Border CornerRadius="8" BorderBrush="#E0E0E0" BorderThickness="1" Background="#F8F8F8">
+              <Border CornerRadius="8" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Background="{DynamicResource ControlBackground}">
                 <Grid ColumnDefinitions="*, Auto" VerticalAlignment="Center" Margin="10,5">
                   <TextBox Grid.Column="0"
-                           Text=""
                            Watermark="design"
                            FontSize="14"
+                           Classes="SearchBox"
                            VerticalContentAlignment="Center"
                            Background="Transparent"
                            BorderThickness="0"
-                           Foreground="#333333">
-                    <TextBox.Styles>
-                      <Style Selector="TextBox">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderBrush" Value="Transparent"/>
-                        <Setter Property="CaretBrush" Value="#333"/>
-                        <Setter Property="FocusAdorner" Value="{x:Null}"/>
-                      </Style>
-                      <Style Selector="TextBox:pointerover">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="#333333"/>
-                      </Style>
-                      <Style Selector="TextBox:focus">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="#333333"/>
-                      </Style>
-                    </TextBox.Styles>
+                           Foreground="{DynamicResource PrimaryForeground}">
                   </TextBox>
-
                   <Image Grid.Column="1"
-                         Source="/Assets/New/Icons/search.png"
+                         Source="{DynamicResource SearchIcon}"
                          Width="16"
                          Height="16"
                          Margin="8,0,4,0"
@@ -173,29 +179,29 @@
 
             <!-- Recent Projects -->
             <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,30">
-              <Border CornerRadius="8" BorderBrush="#E0E0E0" BorderThickness="1" Background="#F8F8F8" Margin="0,0,0,10"
+              <Border CornerRadius="8" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Background="{DynamicResource ControlBackground}" Margin="0,0,0,10"
                       Classes="RecentDesignItem">
                 <Grid ColumnDefinitions="*,Auto" Margin="10">
                   <StackPanel Grid.Column="0">
-                    <TextBlock Text="Test design2" FontSize="16" FontWeight="SemiBold" Foreground="#333333"/>
-                    <TextBlock Text="15/7/2023 08:34" FontSize="12" Foreground="#888888"/>
+                    <TextBlock Text="Test design2" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryForeground}"/>
+                    <TextBlock Text="15/7/2023 08:34" FontSize="12" Foreground="{DynamicResource ThemeDesignStudioTextColor}"/>
                   </StackPanel>
-                  <Button Grid.Column="1" Width="36" Height="36" Padding="8" Background="#1F29371A"
+                  <Button Grid.Column="1" Width="36" Height="36" Padding="8" Background="{DynamicResource ThemeDesignStudioBorderBackground}"
                           HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Image Source="/Assets/New/Icons/dots.png" Width="16" Height="16"/>
+                    <Image Source="{DynamicResource ThreeDotsIcon}" Width="16" Height="16"/>
                   </Button>
                 </Grid>
               </Border>
-              <Border CornerRadius="8" BorderBrush="#E0E0E0" BorderThickness="1" Background="#F8F8F8"
+              <Border CornerRadius="8" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Background="{DynamicResource ControlBackground}" Margin="0,0,0,10"
                       Classes="RecentDesignItem">
                 <Grid ColumnDefinitions="*,Auto" Margin="10">
                   <StackPanel Grid.Column="0">
-                    <TextBlock Text="Test design1" FontSize="16" FontWeight="SemiBold" Foreground="#333333"/>
-                    <TextBlock Text="13/7/2023 13:57" FontSize="12" Foreground="#888888"/>
+                    <TextBlock Text="Test design1" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryForeground}"/>
+                    <TextBlock Text="13/7/2023 13:57" FontSize="12" Foreground="{DynamicResource ThemeDesignStudioTextColor}"/>
                   </StackPanel>
-                  <Button Grid.Column="1" Width="36" Height="36" Padding="8" Background="#1F29371A"
+                  <Button Grid.Column="1" Width="36" Height="36" Padding="8" Background="{DynamicResource ThemeDesignStudioBorderBackground}"
                           HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Image Source="/Assets/New/Icons/dots.png" Width="16" Height="16"/>
+                    <Image Source="{DynamicResource ThreeDotsIcon}" Width="16" Height="16"/>
                   </Button>
                 </Grid>
               </Border>
@@ -205,25 +211,25 @@
             <Button Command="{Binding onOpenProject}" Grid.Row="3" Grid.Column="0"
                     Margin="0,0,10,0" Padding="0" Background="Transparent" BorderThickness="0">
               <Border CornerRadius="10"
-                      BorderBrush="#E0E0E0"
+                      BorderBrush="{DynamicResource ControlBorderBrush}"
                       BorderThickness="1"
-                      Background="#F8F8F8"
+                      Background="{DynamicResource ControlBackground}"
                       Padding="20"
                       Height="150">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                  <Border Width="40" Height="40" Background="#1F29371A" CornerRadius="6" Margin="0,0,0,10">
-                    <Image Source="/Assets/New/Icons/folders-fill.png" Width="16" Height="16" />
+                  <Border Width="40" Height="40" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="6" Margin="0,0,0,10">
+                    <Image Source="{DynamicResource MenuOpen}" Width="20" Height="20" />
                   </Border>
                   <TextBlock Text="Open a project"
                              FontSize="16"
                              FontWeight="SemiBold"
-                             Foreground="#333333"
+                             Foreground="{DynamicResource PrimaryForeground}"
                              HorizontalAlignment="Center"/>
                   <TextBlock Text="Browse and open existing design projects from your workspace"
                              TextWrapping="Wrap"
                              TextAlignment="Center"
                              FontSize="12"
-                             Foreground="#888888"
+                             Foreground="{DynamicResource ThemeDesignStudioTextColor}"
                              Margin="0,5,0,0"/>
                 </StackPanel>
               </Border>
@@ -233,25 +239,25 @@
             <Button Command="{Binding onNewProject}" Grid.Row="3" Grid.Column="1"
                     Margin="10,0,0,0" Padding="0" Background="Transparent" BorderThickness="0">
               <Border CornerRadius="10"
-                      BorderBrush="#E0E0E0"
+                      BorderBrush="{DynamicResource ControlBorderBrush}"
                       BorderThickness="1"
-                      Background="#F8F8F8"
+                      Background="{DynamicResource ControlBackground}"
                       Padding="20"
                       Height="150">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                  <Border Width="40" Height="40" Background="#1F29371A" CornerRadius="6" Margin="0,0,0,10">
-                    <Image Source="/Assets/New/Icons/add-circle-line.png" Width="16" Height="16" />
+                  <Border Width="40" Height="40" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="6" Margin="0,0,0,10">
+                    <Image Source="{DynamicResource NewProjectIcon}" Width="20" Height="20" />
                   </Border>
                   <TextBlock Text="Create a new project"
                              FontSize="16"
                              FontWeight="SemiBold"
-                             Foreground="#333333"
+                             Foreground="{DynamicResource PrimaryForeground}"
                              HorizontalAlignment="Center"/>
                   <TextBlock Text="Start fresh with a new design project and bring your ideas to life"
                              TextWrapping="Wrap"
                              TextAlignment="Center"
                              FontSize="12"
-                             Foreground="#888888"
+                             Foreground="{DynamicResource ThemeDesignStudioTextColor}"
                              Margin="0,5,0,0"/>
                 </StackPanel>
               </Border>

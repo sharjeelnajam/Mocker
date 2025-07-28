@@ -23,12 +23,12 @@
     </Style>
 
     <Style Selector="Button:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#F0F0F0"/>
+      <Setter Property="Background" Value="{DynamicResource ControlHoverBackground}"/>
       <Setter Property="CornerRadius" Value="5"/>
     </Style>
 
     <Style Selector="Button:pressed /template/ ContentPresenter">
-      <Setter Property="Background" Value="#E5E5E5"/>
+      <Setter Property="Background" Value="{DynamicResource ControlPressedBackground}"/>
     </Style>
   </UserControl.Styles>
 
@@ -37,8 +37,8 @@
             Height="365"
             CornerRadius="20"
             BorderThickness="1"
-            BorderBrush="#E0E0E0"
-            Background="White"
+            BorderBrush="{DynamicResource MenuBorder}"
+            Background="{DynamicResource HeaderBackground}"
             Margin="20,60,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top">
@@ -48,7 +48,7 @@
         <TextBlock Text="Project Menu"
                    FontSize="18"
                    FontWeight="Bold"
-                   Foreground="#1F2937"
+                   Foreground="{DynamicResource PrimaryForeground}"
                    HorizontalAlignment="Left"
                    Margin="8,0,0,20"/>
 
@@ -60,9 +60,9 @@
                 HorizontalContentAlignment="Stretch">
           <Border Padding="0,6" Background="Transparent" CornerRadius="5">
             <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
-              <Image Grid.Column="0" Source="/Assets/New/Icons/file-02.png" Height="20" Margin="8,0,8,0"/>
-              <TextBlock Grid.Column="1" Text="New" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937" />
-              <TextBlock Grid.Column="2" Text="Ctrl+N" TextAlignment="Right" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="#888888" Margin="0,0,8,0"/>
+              <Image Grid.Column="0" Source="{DynamicResource MenuNew}" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="New" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource PrimaryForeground}" />
+              <TextBlock Grid.Column="2" Text="Ctrl+N" TextAlignment="Right" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Margin="0,0,8,0"/>
             </Grid>
           </Border>
         </Button>
@@ -75,9 +75,9 @@
                 HorizontalAlignment="Stretch">
           <Border Padding="0,6" Background="Transparent" CornerRadius="5">
             <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
-              <Image Grid.Column="0" Source="/Assets/New/Icons/folder-02.png" Height="20" Margin="8,0,8,0"/>
-              <TextBlock Grid.Column="1" Text="Open" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
-              <TextBlock Grid.Column="2" Text="Ctrl+O" TextAlignment="Right" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+              <Image Grid.Column="0" Source="{DynamicResource MenuOpen}" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="Open" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource PrimaryForeground}"/>
+              <TextBlock Grid.Column="2" Text="Ctrl+O" TextAlignment="Right" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Margin="0,0,8,0"/>
             </Grid>
           </Border>          
         </Button>
@@ -90,9 +90,9 @@
                 Padding="0,4">
           <Border Padding="0,6" Background="Transparent" CornerRadius="5">
             <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
-              <Image Grid.Column="0" Source="/Assets/New/Icons/floppy-disk.png" Height="20" Margin="8,0,8,0"/>
-              <TextBlock Grid.Column="1" Text="Save" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
-              <TextBlock Grid.Column="2" Text="Ctrl+S" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+              <Image Grid.Column="0" Source="{DynamicResource MenuSave}" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="Save" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource PrimaryForeground}"/>
+              <TextBlock Grid.Column="2" Text="Ctrl+S" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Margin="0,0,8,0"/>
             </Grid>
           </Border>
         </Button>
@@ -106,9 +106,9 @@
                 Padding="0,4">
           <Border Padding="0,6" Background="Transparent" CornerRadius="5">
             <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
-              <Image Grid.Column="0" Source="/Assets/New/Icons/save-all.png" Height="20" Margin="8,0,8,0"/>
-              <TextBlock Grid.Column="1" Text="Save All" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
-              <TextBlock Grid.Column="2" Text="Ctrl+Shift+S" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+              <Image Grid.Column="0" Source="{DynamicResource MenuSaveAll}" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="Save All" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource PrimaryForeground}"/>
+              <TextBlock Grid.Column="2" Text="Ctrl+Shift+S" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Margin="0,0,8,0"/>
             </Grid>
           </Border>
         </Button>
@@ -121,9 +121,9 @@
                 Padding="0,4">
           <Border Padding="0,6" Background="Transparent" CornerRadius="5">
             <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
-              <Image Grid.Column="0" Source="/Assets/New/Icons/x-circle.png" Height="20" Margin="8,0,8,0"/>
-              <TextBlock Grid.Column="1" Text="Close" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
-              <TextBlock Grid.Column="2" Text="Ctrl+W" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+              <Image Grid.Column="0" Source="{DynamicResource MenuClose}" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="Close" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource PrimaryForeground}"/>
+              <TextBlock Grid.Column="2" Text="Ctrl+W" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Margin="0,0,8,0"/>
             </Grid>
           </Border>
         </Button>
@@ -135,9 +135,9 @@
                 Padding="0,4">
           <Border Padding="0,6" Background="Transparent" CornerRadius="5">
             <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
-              <Image Grid.Column="0" Source="/Assets/New/Icons/information-circle.png" Height="20" Margin="8,0,8,0"/>
-              <TextBlock Grid.Column="1" Text="Help" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
-              <TextBlock Grid.Column="2" Text="" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+              <Image Grid.Column="0" Source="{DynamicResource MenuHelp}" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="Help" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource PrimaryForeground}"/>
+              <TextBlock Grid.Column="2" Text="" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Margin="0,0,8,0"/>
             </Grid>
           </Border>
         </Button>
@@ -149,9 +149,9 @@
                 Padding="0,4">
           <Border Padding="0,6" Background="Transparent" CornerRadius="5">
             <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
-              <Image Grid.Column="0" Source="/Assets/New/Icons/about.png" Height="20" Margin="8,0,8,0"/>
-              <TextBlock Grid.Column="1" Text="About" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#1F2937"/>
-              <TextBlock Grid.Column="2" Text="" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#888888" Margin="0,0,8,0"/>
+              <Image Grid.Column="0" Source="{DynamicResource MenuAbout}" Height="20" Margin="8,0,8,0"/>
+              <TextBlock Grid.Column="1" Text="About" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource PrimaryForeground}"/>
+              <TextBlock Grid.Column="2" Text="" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Margin="0,0,8,0"/>
             </Grid>
           </Border>
         </Button>

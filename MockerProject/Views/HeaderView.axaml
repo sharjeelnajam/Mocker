@@ -146,6 +146,7 @@
              Background="{DynamicResource HeaderBackground}">
 
   <UserControl.Styles>
+    <!-- Button Group Styling -->
     <Style Selector="Border.ButtonGroup">
       <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
       <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
@@ -154,7 +155,23 @@
       <Setter Property="Padding" Value="2"/>
       <Setter Property="Margin" Value="0 0 5 0"/>
     </Style>
+    <Style Selector="Border.ButtonGroup:disabled">
+      <Setter Property="BorderBrush" Value="Transparent"/>
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
 
+    <!-- Generic Disabled Styling -->
+    <Style Selector="Button:disabled, TextBox:disabled">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Foreground" Value="{DynamicResource DisabledForeground}"/>
+    </Style>
+
+    <!-- Opacity for Disabled Layout Containers -->
+    <Style Selector="DockPanel:disabled Button, DockPanel:disabled ToggleButton, StackPanel:disabled Border, StackPanel:disabled Button, StackPanel:disabled TextBox, DockPanel:disabled Image, StackPanel:disabled Image">
+      <Setter Property="Opacity" Value="0.8"/>
+    </Style>
+
+    <!-- Icon Buttons -->
     <Style Selector="Button.IconButton, ToggleButton.IconButton">
       <Setter Property="Background" Value="Transparent"/>
       <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
@@ -175,6 +192,7 @@
       <Setter Property="Background" Value="{DynamicResource ControlPressedBackground}"/>
     </Style>
 
+    <!-- Action Container -->
     <Style Selector="Border.ActionContainer">
       <Setter Property="Height" Value="32"/>
       <Setter Property="CornerRadius" Value="6"/>
@@ -184,15 +202,25 @@
       <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
     </Style>
 
-    <Style Selector="Button.ActionButton">
-      <Setter Property="Background" Value="Transparent"/>
-      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
+    <!-- Share Button Hover Fix -->
+    <Style Selector="Border.ActionContainer > Button:pointerover TextBlock">
+      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}" />
+    </Style>
+    <Style Selector="Border.ActionContainer > Button:pointerover Image">
+      <Setter Property="Source" Value="{DynamicResource ShareIcon}" />
+    </Style>
+
+    <!-- Run Button Styling -->
+    <Style Selector="Button.RunButton">
+      <Setter Property="Background" Value="{DynamicResource RunButtonBackground}" />
+      <Setter Property="Foreground" Value="{DynamicResource RunButtonForeground}" />
       <Setter Property="BorderThickness" Value="0"/>
       <Setter Property="Padding" Value="10 0"/>
       <Setter Property="VerticalAlignment" Value="Stretch"/>
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
     </Style>
 
+    <!-- SearchBox -->
     <Style Selector="TextBox.SearchBox">
       <Setter Property="Background" Value="Transparent"/>
       <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
@@ -205,10 +233,7 @@
       <Setter Property="Foreground" Value="{DynamicResource SecondaryForeground}"/>
     </Style>
 
-    <Style Selector="DockPanel:disabled Button, DockPanel:disabled ToggleButton, StackPanel:disabled Border, StackPanel:disabled Button, StackPanel:disabled TextBox, DockPanel:disabled Image, StackPanel:disabled Image">
-      <Setter Property="Opacity" Value="0.8"/>
-    </Style>
-
+    <!-- Dark Mode Toggle Button -->
     <Style Selector="ToggleButton.DarkModeToggle">
       <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
       <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
@@ -247,7 +272,7 @@
     <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
       <Border Classes="ButtonGroup">
         <Button Classes="IconButton" ToolTip.Tip="Menu" Command="{Binding onMenuOpen}">
-          <Image Source="/Assets/New/Icons/menu-01.png" Height="18" Width="18" />
+          <Image Source="{DynamicResource MenuIcon}" Height="18" Width="18" />
         </Button>
       </Border>
     </StackPanel>
@@ -257,16 +282,16 @@
         <Border Classes="ButtonGroup">
           <StackPanel Orientation="Horizontal">
             <Button Classes="IconButton" ToolTip.Tip="New Screen" Command="{Binding onNewScreen}">
-              <Image Source="/Assets/New/Icons/file-02.png" Height="18" Width="18" />
+              <Image Source="{DynamicResource NewFileIcon}" Height="18" Width="18" />
             </Button>
             <Button Classes="IconButton" ToolTip.Tip="Open Project" Command="{Binding onOpenProject}">
-              <Image Source="/Assets/New/Icons/folder-02.png" Height="18" Width="18" />
+              <Image Source="{DynamicResource NewFolderIcon}" Height="18" Width="18" />
             </Button>
-            <Button Classes="IconButton" ToolTip.Tip="Save Project" Command="{Binding onSaveProject}">
-              <Image Source="/Assets/New/Icons/floppy-disk.png" Height="18" Width="18" />
+            <Button Classes="IconButton" ToolTip.Tip="Story Board">
+              <Image Source="{DynamicResource StoryBoardIcon}" Height="18" Width="18" />
             </Button>
-            <Button Classes="IconButton" ToolTip.Tip="Save All" Command="{Binding onSaveAllProject}">
-              <Image Source="/Assets/New/Icons/save-all.png" Height="18" Width="18" />
+            <Button Classes="IconButton" ToolTip.Tip="Save" Command="{Binding onSaveProject}">
+              <Image Source="{DynamicResource SaveIcon}" Height="18" Width="18" />
             </Button>
           </StackPanel>
         </Border>
@@ -274,13 +299,13 @@
         <Border Classes="ButtonGroup">
           <StackPanel Orientation="Horizontal">
             <ToggleButton Name="Ruler" Classes="IconButton" ToolTip.Tip="Show Ruler">
-              <Image Source="/Assets/New/Icons/ruler.png" Height="18" Width="18"/>
+              <Image Source="{DynamicResource RulerIcon}" Height="18" Width="18"/>
             </ToggleButton>
             <Button Classes="IconButton" ToolTip.Tip="Colors">
-              <Image Source="/Assets/New/Icons/colors.png" Height="18" Width="18"/>
+              <Image Source="{DynamicResource StylesheetIcon}" Height="18" Width="18"/>
             </Button>
             <Button Classes="IconButton" ToolTip.Tip="Settings">
-              <Image Source="/Assets/New/Icons/setting-01.png" Height="18" Width="18"/>
+              <Image Source="{DynamicResource SettingsIcon}" Height="18" Width="18"/>
             </Button>
           </StackPanel>
         </Border>
@@ -288,10 +313,10 @@
         <Border Classes="ButtonGroup">
           <StackPanel Orientation="Horizontal">
             <Button Classes="IconButton" ToolTip.Tip="Undo" Command="{Binding onUndo}">
-              <Image Source="/Assets/New/Icons/undo.png" Height="18" Width="18" />
+              <Image Source="{DynamicResource UndoIcon}" Height="18" Width="18" />
             </Button>
             <Button Classes="IconButton" ToolTip.Tip="Redo" Command="{Binding onRedo}">
-              <Image Source="/Assets/New/Icons/redo.png" Height="18" Width="18" />
+              <Image Source="{DynamicResource RedoIcon}" Height="18" Width="18" />
             </Button>
           </StackPanel>
         </Border>
@@ -300,10 +325,10 @@
 
     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
       <Border Classes="ActionContainer" Background="{DynamicResource RunButtonBackground}" BorderThickness="0">
-        <Button Foreground="{DynamicResource RunButtonForeground}" ToolTip.Tip="Run Project" Command="{Binding onRun}" IsEnabled="{Binding IsWorkView}">
+        <Button Classes="RunButton" Foreground="White" ToolTip.Tip="Run Project" Command="{Binding onRun}" IsEnabled="{Binding IsWorkView}">
           <StackPanel Orientation="Horizontal">
-            <Image Source="/Assets/New/Icons/play.png" Height="16" Width="16" Margin="0,0,5,0"/>
-            <TextBlock Text="Run" VerticalAlignment="Center"/>
+            <Image Source="{DynamicResource PlayIcon}" Height="16" Width="16" Margin="0,0,5,0"/>
+            <TextBlock Foreground="White" Text="Run" VerticalAlignment="Center"/>
           </StackPanel>
         </Button>
       </Border>
@@ -311,7 +336,7 @@
       <Border Classes="ActionContainer">
         <Button Classes="ActionButton" ToolTip.Tip="Share Project" Command="{Binding onShare}" IsEnabled="{Binding IsWorkView}">
           <StackPanel Orientation="Horizontal">
-            <Image Source="/Assets/New/Icons/share-01.png" Height="16" Width="16" Margin="0,0,5,0"/>
+            <Image Source="{DynamicResource ShareIcon}" Height="16" Width="16" Margin="0,0,5,0"/>
             <TextBlock Text="Share" VerticalAlignment="Center"/>
           </StackPanel>
         </Button>
@@ -319,7 +344,7 @@
 
       <Border Classes="ActionContainer">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="8 0" IsEnabled="{Binding IsWorkView}">
-          <Image Source="/Assets/New/Icons/search.png" Width="16" Height="16" Margin="0,0,4,0"/>
+          <Image Source="{DynamicResource SearchIcon}" Width="16" Height="16" Margin="0,0,4,0"/>
           <TextBox Classes="SearchBox" Watermark="Search"/>
         </StackPanel>
       </Border>
