@@ -26,7 +26,28 @@
 
   <Bitmap x:Key="ThreeDotsIcon">avares://MockerProject/Assets/New/Icons/dots.png</Bitmap>
   <Bitmap x:Key="NewProjectIcon">avares://MockerProject/Assets/New/Icons/add-new.png</Bitmap>
-
+	<Bitmap x:Key="TreeView">avares://MockerProject/Assets/New/Icons/tree-view.png</Bitmap>
+	<Bitmap x:Key="Tabs">avares://MockerProject/Assets/New/Icons/tabs.png</Bitmap>
+	<Bitmap x:Key="ContainerBox">avares://MockerProject/Assets/New/Icons/container.png</Bitmap>
+	<Bitmap x:Key="Button">avares://MockerProject/Assets/New/Icons/button.png</Bitmap>
+	<Bitmap x:Key="TextBox">avares://MockerProject/Assets/New/Icons/text.png</Bitmap>
+	<Bitmap x:Key="Label">avares://MockerProject/Assets/New/Icons/text.png</Bitmap>
+	<Bitmap x:Key="Title">avares://MockerProject/Assets/New/Icons/title.png</Bitmap>
+	<Bitmap x:Key="Link">avares://MockerProject/Assets/New/Icons/link.png</Bitmap>
+	<Bitmap x:Key="Password">avares://MockerProject/Assets/New/Icons/password.png</Bitmap>
+	<Bitmap x:Key="Check">avares://MockerProject/Assets/New/Icons/checkbox.png</Bitmap>
+	<Bitmap x:Key="Image">avares://MockerProject/Assets/New/Icons/image.png</Bitmap>
+	<Bitmap x:Key="Radio">avares://MockerProject/Assets/New/Icons/radio.png</Bitmap>
+	<Bitmap x:Key="DataPicker">avares://MockerProject/Assets/New/Icons/calender.png</Bitmap>
+	<Bitmap x:Key="MultilineButton">avares://MockerProject/Assets/New/Icons/paragraph.png</Bitmap>
+	<Bitmap x:Key="TextArea">avares://MockerProject/Assets/New/Icons/text-area.png</Bitmap>
+	<Bitmap x:Key="ListBox">avares://MockerProject/Assets/New/Icons/list-box.png</Bitmap>
+	<Bitmap x:Key="Repeater">avares://MockerProject/Assets/New/Icons/repeater.png</Bitmap>
+	<Bitmap x:Key="DropDown">avares://MockerProject/Assets/New/Icons/dropdown.png</Bitmap>
+	<Bitmap x:Key="Table">avares://MockerProject/Assets/New/Icons/table.png</Bitmap>
+	<Bitmap x:Key="Slider">avares://MockerProject/Assets/New/Icons/slider.png</Bitmap>
+	<Bitmap x:Key="Progress">avares://MockerProject/Assets/New/Icons/progress.png</Bitmap>
+	
   <Color x:Key="ThemeHeaderBackgroundColor">#FFFFFF</Color>
   <Color x:Key="ThemeControlBackgroundColor">#F3F4F6</Color>
   <Color x:Key="ThemeControlBorderColor">#E5E7EB</Color>

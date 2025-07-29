@@ -27,6 +27,28 @@
   <Bitmap x:Key="ThreeDotsIcon">avares://MockerProject/Assets/New/Icons/dark/dots.png</Bitmap>
   <Bitmap x:Key="NewProjectIcon">avares://MockerProject/Assets/New/Icons/dark/add-new.png</Bitmap>
 
+	<Bitmap x:Key="TreeView">avares://MockerProject/Assets/New/Icons/dark/tree-view.png</Bitmap>
+	<Bitmap x:Key="Tabs">avares://MockerProject/Assets/New/Icons/dark/tabs.png</Bitmap>
+	<Bitmap x:Key="ContainerBox">avares://MockerProject/Assets/New/Icons/dark/container.png</Bitmap>
+	<Bitmap x:Key="Button">avares://MockerProject/Assets/New/Icons/dark/button.png</Bitmap>
+	<Bitmap x:Key="TextBox">avares://MockerProject/Assets/New/Icons/dark/text.png</Bitmap>
+	<Bitmap x:Key="Label">avares://MockerProject/Assets/New/Icons/dark/text.png</Bitmap>
+	<Bitmap x:Key="Title">avares://MockerProject/Assets/New/Icons/dark/title.png</Bitmap>
+	<Bitmap x:Key="Link">avares://MockerProject/Assets/New/Icons/dark/link.png</Bitmap>
+	<Bitmap x:Key="Password">avares://MockerProject/Assets/New/Icons/dark/password.png</Bitmap>
+	<Bitmap x:Key="Check">avares://MockerProject/Assets/New/Icons/dark/checkbox.png</Bitmap>
+	<Bitmap x:Key="Image">avares://MockerProject/Assets/New/Icons/dark/image.png</Bitmap>
+	<Bitmap x:Key="Radio">avares://MockerProject/Assets/New/Icons/dark/radio.png</Bitmap>
+	<Bitmap x:Key="DataPicker">avares://MockerProject/Assets/New/Icons/dark/calender.png</Bitmap>
+	<Bitmap x:Key="MultilineButton">avares://MockerProject/Assets/New/Icons/dark/paragraph.png</Bitmap>
+	<Bitmap x:Key="TextArea">avares://MockerProject/Assets/New/Icons/dark/text-area.png</Bitmap>
+	<Bitmap x:Key="ListBox">avares://MockerProject/Assets/New/Icons/dark/list-box.png</Bitmap>
+	<Bitmap x:Key="Repeater">avares://MockerProject/Assets/New/Icons/dark/repeater.png</Bitmap>
+	<Bitmap x:Key="DropDown">avares://MockerProject/Assets/New/Icons/dark/dropdown.png</Bitmap>
+	<Bitmap x:Key="Table">avares://MockerProject/Assets/New/Icons/dark/table.png</Bitmap>
+	<Bitmap x:Key="Slider">avares://MockerProject/Assets/New/Icons/dark/slider.png</Bitmap>
+	<Bitmap x:Key="Progress">avares://MockerProject/Assets/New/Icons/dark/progress.png</Bitmap>
+	
   <Color x:Key="ThemeHeaderBackgroundColor">#141414</Color>
   <Color x:Key="ThemeControlBackgroundColor">#383739</Color>
   <Color x:Key="ThemeControlBorderColor">#4B5563</Color>
