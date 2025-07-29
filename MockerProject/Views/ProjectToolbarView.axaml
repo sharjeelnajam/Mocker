@@ -90,10 +90,10 @@
     </UserControl.Styles>
 
 
-	<Border Background="White"
+	<Border Background="{DynamicResource PlatformBorderBrush}"
         BoxShadow="-6 0 20 #22000000"
         Margin="3,0,0,0">
-    <TabControl Margin="0"  IsVisible="{Binding IsProjectOpened}" Background="White">
+    <TabControl Margin="0"  IsVisible="{Binding IsProjectOpened}" Background="{DynamicResource ThemePlatformBackground}">
         <TabItem Header="UI CONTROLS" Margin="8,3">
             <v:UIControlView Name="UIControl"/>
         </TabItem>

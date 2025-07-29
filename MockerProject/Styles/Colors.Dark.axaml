@@ -46,7 +46,9 @@
   <Color x:Key="ThemeDesignStudioGradientEnd">#A855F7</Color>
   <Color x:Key="ThemeDesignStudioBorderBackground">#434445</Color>
   <Color x:Key="ThemeDesignStudioTextColor">#bcbdbd</Color>
-
+	<Color x:Key="PlateformBorderColor">#FFFFFF</Color>
+	<Color x:Key="ThemePlatformBackground">#141414</Color>
+	
   <SolidColorBrush x:Key="HeaderBackground" Color="{DynamicResource ThemeHeaderBackgroundColor}" />
   <SolidColorBrush x:Key="ControlBackground" Color="{DynamicResource ThemeControlBackgroundColor}" />
   <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource ThemeControlBorderColor}" />
@@ -57,8 +59,10 @@
   <SolidColorBrush x:Key="RunButtonForeground" Color="{DynamicResource ThemeRunButtonForegroundColor}" />
   <SolidColorBrush x:Key="DisabledForeground" Color="{DynamicResource ThemeDisabledForegroundColor}" />
   <SolidColorBrush x:Key="MenuBorder" Color="{DynamicResource ThemeMenuBorderColor}" />
+	<SolidColorBrush x:Key="PlatformBackground" Color="{DynamicResource ThemePlatformBackground}" />
+	<SolidColorBrush x:Key="PlatformBorderBrush" Color="{DynamicResource PlateformBorderColor}" />
 
-  <LinearGradientBrush x:Key="RunButtonBackground" StartPoint="0%,50%" EndPoint="100%,50%">
+	<LinearGradientBrush x:Key="RunButtonBackground" StartPoint="0%,50%" EndPoint="100%,50%">
     <GradientStop Color="{DynamicResource ThemeRunButtonGradientStart}" Offset="0.0" />
     <GradientStop Color="{DynamicResource ThemeRunButtonGradientEnd}" Offset="1.0" />
   </LinearGradientBrush>
