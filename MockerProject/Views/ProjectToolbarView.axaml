@@ -13,7 +13,6 @@
     </Design.DataContext>
     
     <UserControl.Styles>
-
         <Style Selector="TabControl">
             <Setter Property="Background" Value="#D3D1D6"/>
             <Setter Property="BorderBrush" Value="#f0f0f0"/>
@@ -90,10 +89,10 @@
     </UserControl.Styles>
 
 
-	<Border Background="{DynamicResource PlatformBorderBrush}"
+	<Border Background="{DynamicResource HeaderBackground}"
         BoxShadow="-6 0 20 #22000000"
         Margin="3,0,0,0">
-    <TabControl Margin="0"  IsVisible="{Binding IsProjectOpened}" Background="{DynamicResource ThemePlatformBackground}">
+    <TabControl Margin="0"  IsVisible="{Binding IsProjectOpened}" Background="{DynamicResource HeaderBackground}">
         <TabItem Header="UI CONTROLS" Margin="8,3">
             <v:UIControlView Name="UIControl"/>
         </TabItem>

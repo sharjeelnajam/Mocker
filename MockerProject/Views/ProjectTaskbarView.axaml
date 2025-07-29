@@ -18,7 +18,7 @@
         </Style>
     </UserControl.Styles>
     
-    <DockPanel Background="white" Margin="1">
+    <DockPanel Background="{DynamicResource HeaderBackground" Margin="1">
         <StackPanel DockPanel.Dock="Top">
             <!--<Button Click="onSetRefresh"></Button>-->
             <ToggleButton Name="Project" IsChecked="{Binding IsProjectView}" Width = "190" Margin="5 5 5 0" HorizontalContentAlignment="Center">

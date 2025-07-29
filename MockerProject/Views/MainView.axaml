@@ -17,7 +17,7 @@
 	</Design.DataContext>
 
   <Grid>
-    <Image Source="/Assets/New/Background/bg-dark-gradient.png" Stretch="UniformToFill" />
+    <Image Source="{DynamicResource MainBackgroundImageSource}" Stretch="UniformToFill" />
     <Border HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-300,0,0,0"
         Background="{DynamicResource LeftRadialGradient}" />
 

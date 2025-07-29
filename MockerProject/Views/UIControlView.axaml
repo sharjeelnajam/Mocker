@@ -3,10 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="MockerProject.Views.UIControlView" Background="#505050" Margin="5">
+             x:Class="MockerProject.Views.UIControlView" Background="{DynamicResource HeaderBackground}" Margin="5">
 	<UserControl.Styles>
 		<Style Selector="Border:pointerover">
-			<Setter Property="BorderBrush" Value="{DynamicResource PlatformBorderBrush}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}"/>
 			<Setter Property="BorderThickness" Value="1"/>
 		</Style>
 		<Style Selector="Border">
@@ -15,7 +15,7 @@
 		</Style>
 	</UserControl.Styles>
 
-	<ScrollViewer HorizontalScrollBarVisibility="Auto" Background="{DynamicResource ThemePlatformBackground}"
+	<ScrollViewer HorizontalScrollBarVisibility="Auto" Background="{DynamicResource HeaderBackground}"
                   VerticalScrollBarVisibility="Auto">
 		<StackPanel Orientation="Vertical" Margin="5">
 			<DockPanel>
