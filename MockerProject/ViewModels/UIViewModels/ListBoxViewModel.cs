@@ -1,32 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Controls;
-using MockerProject.ViewModels;
-using MockerProject.Views.UIControls;
+﻿using MockerProject.Models;
 using MockerProject.Views;
 using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Reactive;
-using System.ComponentModel;
-using MockerProject.Models;
 
 namespace MockerProject.ViewModels.UIViewModels
 {
     internal class ListBoxViewModel : UIControlViewModel
     {
-
         public ReactiveCommand<Unit, Unit> AddItems { get; }
         public ReactiveCommand<Unit, Unit> InsertAfter { get; }
-
         public ReactiveCommand<Unit, Unit> InsertBefore { get; }
         public ListBoxViewModel(UIControl uiControl) : base(uiControl)
         {
             m_UIControl = uiControl;
-
-
             CustomItem item = new CustomItem
             {
                 text = "Item1",
@@ -37,12 +24,10 @@ namespace MockerProject.ViewModels.UIViewModels
             AddItems = ReactiveCommand.Create(ExecuteAddItems);
             InsertAfter = ReactiveCommand.Create(InsertAfterItems);
             InsertBefore = ReactiveCommand.Create(InsertBeforeItems);
-
         }
 
         private void InsertAfterItems()
         {
-
             CustomItem item = new CustomItem
             {
                 text = "New Item",
@@ -51,7 +36,6 @@ namespace MockerProject.ViewModels.UIViewModels
 
             };
             Items.Insert(SelectedIndex + 1, item);
-
             // Handle the click event logic here
         }
 
@@ -66,13 +50,11 @@ namespace MockerProject.ViewModels.UIViewModels
 
             };
             Items.Insert(SelectedIndex, item);
-
             // Handle the click event logic here
         }
 
         private void ExecuteAddItems()
         {
-
             CustomItem item = new CustomItem
             {
                 text = "New Item",
@@ -80,7 +62,6 @@ namespace MockerProject.ViewModels.UIViewModels
                 iteration = "None",
             };
             Items.Add(item);
-
             // Handle the click event logic here
         }
 
@@ -91,18 +72,11 @@ namespace MockerProject.ViewModels.UIViewModels
             set { this.RaiseAndSetIfChanged(ref _SelectedIndex, value); }
         }
 
-
-
         public string SelectText
         {
             get { return Items[SelectedIndex].text; }
 
         }
-
-
-
-
-
 
         public ObservableCollection<CustomItem> _Items = new ObservableCollection<CustomItem>();
         public ObservableCollection<CustomItem> Items
@@ -112,5 +86,3 @@ namespace MockerProject.ViewModels.UIViewModels
         }
     }
 }
-
- 

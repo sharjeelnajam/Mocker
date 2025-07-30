@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using MockerProject.Views;
 using MockerProject.Views.UIControls;
-using Newtonsoft.Json.Linq;
 using ReactiveUI;
-using MockerProject.Models;
-
 
 namespace MockerProject.ViewModels
 {
@@ -26,11 +18,11 @@ namespace MockerProject.ViewModels
                     listBox.Items[listBox.SelectedIndex] = text;
             }
         }//Text
+
         public UIListBoxControlViewModel(UIControl uiControl) : base(uiControl)
         {
             m_UIControl = uiControl;
             listBox = ((ListBoxControl)m_UIControl).listBox;
-            
         }
     }
 }

@@ -8,55 +8,57 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MockerProject.Views.ProjectToolbarView"
              x:CompileBindings="True" x:DataType="vm:MainWindowViewModel">
-    <Design.DataContext>
-        <vm:MainWindowViewModel />
-    </Design.DataContext>
-    
-    <UserControl.Styles>
-        <Style Selector="TabControl">
-            <Setter Property="Background" Value="#D3D1D6"/>
-            <Setter Property="BorderBrush" Value="#f0f0f0"/>
-            <Setter Property="BorderThickness" Value="1"/>
-        </Style>
-        <Style Selector="TabControl WrapPanel">
-            <Setter Property="Background" Value="#D3D1D6"/>
-			<Setter Property="Margin" Value="12"/>
-			<Setter Property="Height" Value="50"/>
-        </Style>
-		<Style Selector="TabItem">
-			<Setter Property="Template">
-				<ControlTemplate>
-					<Border CornerRadius="8"
-							Background="{TemplateBinding Background}"
+  
+  <Design.DataContext>
+    <vm:MainWindowViewModel />
+  </Design.DataContext>
+
+  <UserControl.Styles>
+    <Style Selector="TabControl">
+      <Setter Property="Background" Value="{DynamicResource ControlBackground}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}"/>
+      <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <Style Selector="TabControl WrapPanel">
+      <Setter Property="Background" Value="{DynamicResource ControlBackground}"/>
+      <Setter Property="Margin" Value="12"/>
+      <Setter Property="Height" Value="50"/>
+    </Style>
+
+    <Style Selector="TabItem">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border CornerRadius="8"
+							Background="{DynamicResource ThemeDesignStudioBorderBackground}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
 							Padding="8"
 							Margin="4">
-						<ContentPresenter HorizontalAlignment="Center"
+            <ContentPresenter HorizontalAlignment="Center"
 										  VerticalAlignment="Center"
 										  Content="{TemplateBinding Header}"/>
-					</Border>
-				</ControlTemplate>
-			</Setter>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+      <Setter Property="Background" Value="#D3D1D6"/>
+    </Style>
 
-			<Setter Property="Background" Value="#D3D1D6"/>
-		</Style>
+    <Style Selector="SelectingItemsControl">
+      <Setter Property="BorderBrush" Value="#f0f0f0"/>
+      <Setter Property="BorderThickness" Value="11"/>
+    </Style>
 
-		<Style Selector="SelectingItemsControl">
-            <Setter Property="BorderBrush" Value="#f0f0f0"/>
-            <Setter Property="BorderThickness" Value="11"/>
-        </Style>
-
-        <Style Selector="TabItem">
-            <Setter Property="FontSize" Value="14"/>
-			<Setter Property="FontWeight" Value="Medium"/>
-			<Setter Property="Width" Value="140"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Background" Value="#D3D1D6"/>
-            <Setter Property="Foreground" Value="black"/>
-			<Setter Property="Template">
-				<ControlTemplate>
-					<Border
+    <Style Selector="TabItem">
+      <Setter Property="FontSize" Value="14"/>
+      <Setter Property="FontWeight" Value="Medium"/>
+      <Setter Property="Width" Value="140"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="Background" Value="{DynamicResource ThemeDesignStudioBorderBackground}"/>
+      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border
 					  Name="border"
 					  Background="{TemplateBinding Background}"
 					  BorderBrush="{TemplateBinding BorderBrush}"
@@ -66,48 +68,48 @@
 						Padding="10,4"
 						HorizontalAlignment="Stretch"
 						VerticalAlignment="Center">
-						<ContentPresenter
+            <ContentPresenter
 						  Name="contentPresenter"
 						  VerticalAlignment="Center"
 						  HorizontalAlignment="Center"
 						  Content="{TemplateBinding Header}"
 						  ContentTemplate="{TemplateBinding HeaderTemplate}" />
-					</Border>
-				</ControlTemplate>
-			</Setter>
-			
-        </Style>
-		<Style Selector="TabItem:selected">
-            <Setter Property="Background" Value="#E8E9EA"/>
-			<Setter Property="Foreground" Value="Black"/>
-        </Style>
-        <Style Selector="TabItem:selected /template/ Border#PART_SelectedPipe">
-            <Setter Property="Background" Value="#D3D1D6"/>
-            <Setter Property="IsVisible" Value="False"/>
-        </Style>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
 
-    </UserControl.Styles>
+    <Style Selector="TabItem:selected">
+      <Setter Property="Background" Value="{DynamicResource ThemeDesignStudioBorderBackground}"/>
+      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
+    </Style>
 
+    <Style Selector="TabItem:selected /template/ Border#PART_SelectedPipe">
+      <Setter Property="Background" Value="#D3D1D6"/>
+      <Setter Property="IsVisible" Value="False"/>
+    </Style>
+  </UserControl.Styles>
 
-	<Border Background="{DynamicResource HeaderBackground}"
-        BoxShadow="-6 0 20 #22000000"
-        Margin="3,0,0,0">
-    <TabControl Margin="0"  IsVisible="{Binding IsProjectOpened}" Background="{DynamicResource HeaderBackground}">
-        <TabItem Header="UI CONTROLS" Margin="8,3">
-            <v:UIControlView Name="UIControl"/>
-        </TabItem>
-        <TabItem Header="PlATFORMS " Margin="8,3">
-            <v:PlatformView Name="Platform"/>
-        </TabItem>
-        <!--<TabItem Header="Tab 2">
+  <Border Background="{DynamicResource HeaderBackground}"
+          BoxShadow="-6 0 20 #22000000"
+          Margin="3,0,0,0">
+    
+    <TabControl Margin="0"  IsVisible="{Binding IsProjectOpened}" Background="Transparent">
+      <TabItem Header="UI CONTROLS" Margin="8,3">
+        <v:UIControlView Name="UIControl"/>
+      </TabItem>
+      <TabItem Header="PlATFORMS " Margin="8,3">
+        <v:PlatformView Name="Platform"/>
+      </TabItem>
+      <!--<TabItem Header="Tab 2">
             <TextBlock Margin="5">This is tab 2 content</TextBlock>
         </TabItem>
         <TabItem Header="Tab 3">
             <TextBlock Margin="5">This is tab 3 content</TextBlock>
         </TabItem>-->
     </TabControl>
-	</Border>
-    <!--<TabControl Items="{Binding DataContent}" SelectedIndex ="{Binding SelectedTabIndex}">
+  </Border>
+  <!--<TabControl Items="{Binding DataContent}" SelectedIndex ="{Binding SelectedTabIndex}">
         <TabControl.ItemTemplate>
             <DataTemplate>
                 <TextBlock Text="{Binding Header}" />

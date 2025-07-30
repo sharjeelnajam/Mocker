@@ -26,6 +26,7 @@
 
   <Bitmap x:Key="ThreeDotsIcon">avares://MockerProject/Assets/New/Icons/dots.png</Bitmap>
   <Bitmap x:Key="NewProjectIcon">avares://MockerProject/Assets/New/Icons/add-new.png</Bitmap>
+  
 	<Bitmap x:Key="TreeView">avares://MockerProject/Assets/New/Icons/tree-view.png</Bitmap>
 	<Bitmap x:Key="Tabs">avares://MockerProject/Assets/New/Icons/tabs.png</Bitmap>
 	<Bitmap x:Key="ContainerBox">avares://MockerProject/Assets/New/Icons/container.png</Bitmap>

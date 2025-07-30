@@ -1,10 +1,5 @@
 ﻿using MockerProject.Views;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MockerProject.ViewModels
 {
@@ -23,6 +18,4 @@ namespace MockerProject.ViewModels
             set => this.RaiseAndSetIfChanged(ref m_WorkScreen, value);
         }
     }
-
-  
 }

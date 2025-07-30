@@ -265,7 +265,6 @@
         </Template>
       </Setter>
     </Style>
-
   </UserControl.Styles>
 
   <Grid ColumnDefinitions="Auto,*,Auto" Margin="5 0">

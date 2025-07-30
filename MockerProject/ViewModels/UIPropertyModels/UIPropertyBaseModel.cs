@@ -1,17 +1,8 @@
 ﻿using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
-using MockerProject.Models;
-using MockerProject.ViewModels.UIViewModels;
-using MockerProject.Views;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MockerProject.ViewModels.UIPropertyModels
 {
@@ -21,10 +12,7 @@ namespace MockerProject.ViewModels.UIPropertyModels
             List_FontSize = new ObservableCollection<int>();
             List_Thickness = new ObservableCollection<int>();
             List_Round = new ObservableCollection<int>();
-           
-
         }
-
        
         public ObservableCollection<int> List_Thickness { get; set; }
         public ObservableCollection<int> List_Round { get; set; }
@@ -39,9 +27,6 @@ namespace MockerProject.ViewModels.UIPropertyModels
                 //m_UIControl.m_Tooltip = Control_Tip;
             }
         }//Tooltip
-
-
-       
 
         public double m_opacity = 1;
         public double opacity
@@ -118,6 +103,7 @@ namespace MockerProject.ViewModels.UIPropertyModels
                 this.RaiseAndSetIfChanged(ref w_nThicknessID, value);
             }
         }
+
         private Thickness m_borderThickness;
         public Thickness borderThickness
         {
@@ -141,12 +127,14 @@ namespace MockerProject.ViewModels.UIPropertyModels
                 this.RaiseAndSetIfChanged(ref w_nRoundID, value);
             }
         }
+
         private CornerRadius m_borderRound = new CornerRadius(3, 3, 3, 3);
         public CornerRadius borderRound
         {
             get => m_borderRound;
             set { this.RaiseAndSetIfChanged(ref m_borderRound, value); }
         } //Border Rounding
+
         private SolidColorBrush m_foreground = new SolidColorBrush(new Color(255, 33, 33, 33));
         public SolidColorBrush foreground
         {
@@ -170,6 +158,7 @@ namespace MockerProject.ViewModels.UIPropertyModels
                 this.RaiseAndSetIfChanged(ref w_nfontSizeID, value);
             }
         }
+
         private int m_fontSize = 14;
         public int fontSize
         {
@@ -187,6 +176,7 @@ namespace MockerProject.ViewModels.UIPropertyModels
             get => m_fontFamily;
             set { this.RaiseAndSetIfChanged(ref m_fontFamily, value);  }
         }//Text_FontFamily
+
         private bool m_bTextBold = false;
         public bool textBold
         {
@@ -200,12 +190,14 @@ namespace MockerProject.ViewModels.UIPropertyModels
                 this.RaiseAndSetIfChanged(ref m_bTextBold, value);
             }
         } //Text_Bold
+
         public FontWeight m_FontWeight = FontWeight.Normal;
         public FontWeight fontWeight
         {
             get => m_FontWeight;
             set { this.RaiseAndSetIfChanged(ref m_FontWeight, value);  }
         }//FontWeight
+
         private bool m_bTextItalic = false;
         public bool textItalic
         {
@@ -227,7 +219,6 @@ namespace MockerProject.ViewModels.UIPropertyModels
             set { this.RaiseAndSetIfChanged(ref m_FontStyle, value);  }
         }//FontStyle
 
-
         private bool m_bTextUnderline = false;
         public bool textUnderline
         {
@@ -248,9 +239,6 @@ namespace MockerProject.ViewModels.UIPropertyModels
             get => m_TextDecorations;
             set { this.RaiseAndSetIfChanged(ref m_TextDecorations, value);  }
         }//FontStyle
-
-   
-
 
         public bool m_IsFitVisible = false;
         public bool IsFitVisible
@@ -310,8 +298,5 @@ namespace MockerProject.ViewModels.UIPropertyModels
         }
         public object IsTextPropertiesVisible { get; set; }
         public bool m_IsMultiItemVisible = false;
-
-    }
-
-    
+    }   
 }

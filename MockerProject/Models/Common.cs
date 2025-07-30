@@ -1,19 +1,15 @@
-﻿using Avalonia.Media;
-using Avalonia;
+﻿using Avalonia;
+using Avalonia.Media;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 
 namespace MockerProject.Models
 {
     internal class Common
     {
-
     }
 
     public enum CONTROL_TYPE
@@ -58,6 +54,7 @@ namespace MockerProject.Models
         CALLOUT,
         ARROW
     }
+
     public class DeviceInfo
     {
         public string Device { get; set; }
@@ -68,6 +65,7 @@ namespace MockerProject.Models
         public int PageCount { get; set; }
         public List<string> Pages { get; set; }
     }
+
     public class PageInfo
     {
         public bool Orientation { get; set; }
@@ -121,15 +119,12 @@ namespace MockerProject.Models
             }
         }
 
-
         // Add more properties as needed
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 
     public class Node : INotifyPropertyChanged
@@ -205,7 +200,6 @@ namespace MockerProject.Models
         }
     }
 
-    
     public class ControlInfo
     {
         public string Name { get; set; }
@@ -243,7 +237,7 @@ namespace MockerProject.Models
     public class ListControlInfo : ControlInfo
     {
         public List<CustomItem> Items { get; set; }
-        public int SeletedIndex {  get; set; }
+        public int SeletedIndex { get; set; }
         public IBrush ItemBackground { get; set; }
         public int itemHeight { get; set; }
 
@@ -327,6 +321,7 @@ namespace MockerProject.Models
             return new CornerRadius(this.X, this.Y, this.W, this.H);
         }
     }
+
     public struct stPlatFormPosInfo
     {
 
@@ -357,7 +352,8 @@ namespace MockerProject.Models
         }
     }
 
-    public enum EventType{
+    public enum EventType
+    {
         EVENT_TAP,
         EVENT_DOUBLETAP,
         EVENT_PRESSHOLD,
@@ -366,7 +362,5 @@ namespace MockerProject.Models
         EVENT_SWIPEUP,
         EVENT_SWIPEDOWN,
         EVENT_SELECTITEM,
-    } 
-
-   
+    }
 }

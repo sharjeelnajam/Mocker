@@ -1,14 +1,11 @@
 
-using System.Collections.ObjectModel;
-using System.Drawing;
-using System.IO;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input.Raw;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
 using MockerProject.Views;
 using ReactiveUI;
+using System.Collections.ObjectModel;
 using Color = Avalonia.Media.Color;
 using FontFamily = Avalonia.Media.FontFamily;
 using FontStyle = Avalonia.Media.FontStyle;
@@ -16,7 +13,6 @@ using Size = Avalonia.Size;
 
 namespace MockerProject.ViewModels;
 using MockerProject.Models;
-using MockerProject.ViewModels.UIPropertyModels;
 using System.ComponentModel;
 
 public class UIControlViewModel : ReactiveObject

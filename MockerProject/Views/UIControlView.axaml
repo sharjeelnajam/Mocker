@@ -20,7 +20,7 @@
 		<StackPanel Orientation="Vertical" Margin="5">
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="TreeView" Source="{DynamicResource TreeView}" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 					</Border>
 					<TextBlock Text="Tree View"
@@ -35,7 +35,7 @@
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Tabs" Source="{DynamicResource Tabs}" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 					</Border>
 					<TextBlock Text="Tabs"
@@ -50,7 +50,7 @@
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="ContainerBox" Source="{DynamicResource ContainerBox}" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 					</Border>
 					<TextBlock Text="Container"
@@ -64,24 +64,24 @@
 							   Margin="0"/>
 				</StackPanel>
 			</DockPanel>
-			<Separator Background="#E8E9EA" Height="1" Margin="0,10"/>
+			<Separator Background="{DynamicResource ThemeDesignStudioBorderBackground}" Height="1" Margin="0,10"/>
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Button" Source="{DynamicResource Button}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Button" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="TextBox" Source="{DynamicResource TextBox}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="TextBox" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Label" Source="{DynamicResource Label}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Label" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
@@ -90,21 +90,21 @@
 
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Title" Source="{DynamicResource Title}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Title" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Link" Source="{DynamicResource Link}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Link" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Password" Source="{DynamicResource Password}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Password" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
@@ -113,21 +113,21 @@
 
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Check" Source="{DynamicResource Check}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Check" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Image" Source="{DynamicResource Image}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Image" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Radio" Source="{DynamicResource Radio}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Radio" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
@@ -136,21 +136,21 @@
 
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="DataPicker" Source="{DynamicResource DataPicker}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="DataPicker" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="MultilineButton" Source="{DynamicResource MultilineButton}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Multiline Button" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="TextArea" Source="{DynamicResource TextArea}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="TextArea" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
@@ -159,21 +159,21 @@
 
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
-						<Image Name="listBox" Source="{DynamicResource listBox}" Stretch="Uniform" />
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+						<Image Name="listBox" Source="{DynamicResource ListBox}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="ListBox" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Repeater" Source="{DynamicResource Repeater}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Repeater" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="DropDown" Source="{DynamicResource DropDown}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="DropDown" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
@@ -182,21 +182,21 @@
 
 			<DockPanel>
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Table" Source="{DynamicResource Table}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Table" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Slider" Source="{DynamicResource Slider}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Slider" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
 				</StackPanel>
 
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26">
-					<Border Width="52" Height="52" Background="#E8E9EA" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
+					<Border Width="52" Height="52" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="8" Padding="12" HorizontalAlignment="Center">
 						<Image Name="Progress" Source="{DynamicResource Progress}" Stretch="Uniform" />
 					</Border>
 					<TextBlock Text="Progress" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>

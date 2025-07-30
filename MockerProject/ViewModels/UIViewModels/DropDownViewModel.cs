@@ -1,21 +1,8 @@
-﻿using MockerProject.Views;
-using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
-using MockerProject.ViewModels;
-using MockerProject.Views.UIControls;
+﻿using MockerProject.Models;
 using MockerProject.Views;
 using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Reactive;
-using System.ComponentModel;
-using MockerProject.Models;
 
 namespace MockerProject.ViewModels.UIViewModels
 {
@@ -94,7 +81,6 @@ namespace MockerProject.ViewModels.UIViewModels
             set { this.RaiseAndSetIfChanged(ref _SelectedIndex, value); }
         }
 
-
         public ObservableCollection<CustomItem> _Items = new ObservableCollection<CustomItem>();
         public ObservableCollection<CustomItem> Items
         {
@@ -103,8 +89,3 @@ namespace MockerProject.ViewModels.UIViewModels
         }
     }
 }
-
-
-
-
-

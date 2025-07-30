@@ -1,4 +1,22 @@
-﻿using System;
+﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Media.Immutable;
+using Avalonia.Platform.Storage;
+using Avalonia.VisualTree;
+using CommunityToolkit.Mvvm.Input;
+using MockerProject.Action;
+using MockerProject.Models;
+using MockerProject.Services;
+using MockerProject.ViewModels.UIViewModels;
+using MockerProject.Views;
+using MockerProject.Views.UIControls;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 //using System.Drawing;
@@ -6,37 +24,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Media.Immutable;
-using Avalonia.Platform.Storage;
-using CommunityToolkit.Mvvm.Input;
-using DynamicData;
-using MockerProject.Services;
-using MockerProject.Views;
-using ReactiveUI;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
-using SixLabors.ImageSharp.PixelFormats;
 using Color = Avalonia.Media.Color;
-using Image = Avalonia.Controls.Image;
 using Path = System.IO.Path;
-using DynamicData.Kernel;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using FontFamily = Avalonia.Media.FontFamily;
-using Size = System.Drawing.Size;
-using MockerProject.Models;
-using Avalonia.VisualTree;
-using MockerProject.Views.UIControls;
-using Avalonia.Interactivity;
-using MockerProject.ViewModels.UIViewModels;
-using System.Text.Json.Nodes;
-using MockerProject.Action;
-using Avalonia.Styling;
 
 namespace MockerProject.ViewModels
 {
@@ -121,8 +110,8 @@ namespace MockerProject.ViewModels
         public ObservableCollection<ScreenSmallView> m_ScreenSmallView = new ObservableCollection<ScreenSmallView>();
 
         public bool m_IsScreenVisible = false;
-
         public ScreenView m_WorkScreen = null;
+
         //private SampleViewModel CurrentSample;
         private IStorageFile? _openCodeFile;
         public ICommand onMenuOpen { get; }
@@ -158,7 +147,6 @@ namespace MockerProject.ViewModels
         public bool w_IsWorkView = false;
         public bool w_IsToolbarView = false;
 
-
         /// <ScreenView>
         public double w_nPG_OPT = 0.33; public double PG_OPT { get => w_nPG_OPT; set { WorkScreen.m_Opacity = value; this.RaiseAndSetIfChanged(ref w_nPG_OPT, value); } }
         public int w_nPG_X = 150; public int PG_X { get => w_nPG_X; set => this.RaiseAndSetIfChanged(ref w_nPG_X, value); }
@@ -177,7 +165,6 @@ namespace MockerProject.ViewModels
                 this.RaiseAndSetIfChanged(ref w_nPG_RW, value);
             }
         }
-
         public int w_nPG_RH = 647; public int PG_RH
         {
             get => w_nPG_RH;
@@ -189,7 +176,6 @@ namespace MockerProject.ViewModels
                 this.RaiseAndSetIfChanged(ref w_nPG_RH, value);
             }
         }
-
         public int w_nPG_RBX = 375; public int PG_RBX { get => w_nPG_RBX; set => this.RaiseAndSetIfChanged(ref w_nPG_RBX, value); }
         public int w_nPG_RBY = 647; public int PG_RBY { get => w_nPG_RBY; set => this.RaiseAndSetIfChanged(ref w_nPG_RBY, value); }
         public int w_nPF_X = 125; public int PF_X { get => w_nPF_X; set => this.RaiseAndSetIfChanged(ref w_nPF_X, value); }
@@ -907,7 +893,6 @@ namespace MockerProject.ViewModels
             PG_RH = PG_H;
         }
 
-
         private Bitmap? LoadBitmapOrError(string fileName, string imagePath)
         {
             string path = Path.Combine(imagePath, fileName);
@@ -922,7 +907,6 @@ namespace MockerProject.ViewModels
                 return null; // or return fallback image if you have one
             }
         }
-
         public void setOrientation(bool p_Orientation)
         {
 
@@ -1499,7 +1483,6 @@ namespace MockerProject.ViewModels
              }
         }
 
-
         public List<Object> NodeToList(List<Node> nodes)
         {
             List<Object> list = new List<Object>();
@@ -1911,13 +1894,11 @@ namespace MockerProject.ViewModels
             }
         }
     }
-    
 
     public class TabItemModel
     {
         public string Header { get; }
         public string Content { get; }
-
         public TabItemModel(string header, string content)
         {
             Header = header;

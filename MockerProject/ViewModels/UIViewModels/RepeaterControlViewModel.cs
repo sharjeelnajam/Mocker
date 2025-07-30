@@ -1,18 +1,10 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Media;
-using Avalonia.Styling;
 using MockerProject.Views;
 using MockerProject.Views.UIControls;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive;
-using System.Reflection;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MockerProject.ViewModels.UIViewModels
 {
@@ -20,42 +12,28 @@ namespace MockerProject.ViewModels.UIViewModels
     {
         public ReactiveCommand<Unit, Unit> AddItems { get; }
         public ReactiveCommand<Unit, Unit> InsertAfter { get; }
-
         public ReactiveCommand<Unit, Unit> InsertBefore { get; }
 
         public RepeaterControlViewModel(UIControl uiControl) : base(uiControl)
         {
-
             m_UIControl = uiControl;
-
-            
-           
-
-
             AddItems = ReactiveCommand.Create(ExecuteAddItems);
             InsertAfter = ReactiveCommand.Create(InsertAfterItems);
             InsertBefore = ReactiveCommand.Create(InsertBeforeItems);
-           
-
-
         }
+
         private void InsertAfterItems()
         {
-
-           
             // Handle the click event logic here
         }
 
         private void InsertBeforeItems()
         {
-
-          
             // Handle the click event logic here
         }
 
         private void ExecuteAddItems()
         {
-            
             ContainerBoxControl containerBoxControl = new ContainerBoxControl();
             containerBoxControl.setMainVM( this.m_MainVM);
             containerBoxControl.m_nUIControlType = Models.CONTROL_TYPE.CONTAINERBOX;
@@ -71,12 +49,7 @@ namespace MockerProject.ViewModels.UIViewModels
                 TextBlock textBlock = new TextBlock();
                 textBlock.Text = "Item" + Items.Count;
                 textBlock.Foreground = new SolidColorBrush(new Color(255, 0, 0, 0));
-
-
                 item.Header = textBlock;
-
-
-
             }
         }
 
@@ -94,5 +67,4 @@ namespace MockerProject.ViewModels.UIViewModels
             set { this.RaiseAndSetIfChanged(ref _TabHeaders, value); }
         }
     }
-
 }
