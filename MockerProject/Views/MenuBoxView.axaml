@@ -20,6 +20,7 @@
       <Setter Property="Padding" Value="0,4"/>
       <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style>
 
     <Style Selector="Button:pointerover /template/ ContentPresenter">

@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using MockerProject.ViewModels;
 
@@ -23,6 +22,5 @@ public partial class ProjectTaskbarView : UserControl
     {
         //int x = this.myList.ItemCount;
         //this.myList.GetType();
-
     }
 }

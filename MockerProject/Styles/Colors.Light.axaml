@@ -49,7 +49,9 @@
 	<Bitmap x:Key="DropDown">avares://MockerProject/Assets/New/Icons/dropdown.png</Bitmap>
 	<Bitmap x:Key="Table">avares://MockerProject/Assets/New/Icons/table.png</Bitmap>
 	<Bitmap x:Key="Slider">avares://MockerProject/Assets/New/Icons/slider.png</Bitmap>
-	<Bitmap x:Key="Progress">avares://MockerProject/Assets/New/Icons/progress.png</Bitmap>
+  <Bitmap x:Key="Progress">avares://MockerProject/Assets/New/Icons/progress.png</Bitmap>
+  
+  <Bitmap x:Key="AddScreen">avares://MockerProject/Assets/New/Icons/add-screen.png</Bitmap>
 	
   <Color x:Key="ThemeHeaderBackgroundColor">#FFFFFF</Color>
   <Color x:Key="ThemeControlBackgroundColor">#F3F4F6</Color>

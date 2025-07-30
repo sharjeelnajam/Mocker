@@ -209,7 +209,7 @@
 
             <!-- Open a Project -->
             <Button Command="{Binding onOpenProject}" Grid.Row="3" Grid.Column="0"
-                    Margin="0,0,10,0" Padding="0" Background="Transparent" BorderThickness="0">
+                    Margin="0,0,10,0" Padding="0" Background="Transparent" BorderThickness="0" Cursor="Hand">
               <Border CornerRadius="10"
                       BorderBrush="{DynamicResource ControlBorderBrush}"
                       BorderThickness="1"
@@ -237,7 +237,7 @@
 
             <!-- Create a New Project -->
             <Button Command="{Binding onNewProject}" Grid.Row="3" Grid.Column="1"
-                    Margin="10,0,0,0" Padding="0" Background="Transparent" BorderThickness="0">
+                    Margin="10,0,0,0" Padding="0" Background="Transparent" BorderThickness="0" Cursor="Hand">
               <Border CornerRadius="10"
                       BorderBrush="{DynamicResource ControlBorderBrush}"
                       BorderThickness="1"

@@ -154,6 +154,7 @@
       <Setter Property="CornerRadius" Value="6"/>
       <Setter Property="Padding" Value="2"/>
       <Setter Property="Margin" Value="0 0 5 0"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style>
     <Style Selector="Border.ButtonGroup:disabled">
       <Setter Property="BorderBrush" Value="Transparent"/>
@@ -181,9 +182,11 @@
       <Setter Property="Height" Value="32"/>
       <Setter Property="Padding" Value="0"/>
       <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style>
     <Style Selector="Button.IconButton:pointerover /template/ ContentPresenter, ToggleButton.IconButton:pointerover /template/ ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource ControlHoverBackground}"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style>
     <Style Selector="Button.IconButton:pressed /template/ ContentPresenter, ToggleButton.IconButton:pressed /template/ ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource ControlPressedBackground}"/>
@@ -205,6 +208,7 @@
     <!-- Share Button Hover Fix -->
     <Style Selector="Border.ActionContainer > Button:pointerover TextBlock">
       <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}" />
+      <Setter Property="Cursor" Value="Hand"/>
     </Style>
     <Style Selector="Border.ActionContainer > Button:pointerover Image">
       <Setter Property="Source" Value="{DynamicResource ShareIcon}" />
@@ -218,6 +222,7 @@
       <Setter Property="Padding" Value="10 0"/>
       <Setter Property="VerticalAlignment" Value="Stretch"/>
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style>
 
     <!-- SearchBox -->
@@ -244,6 +249,7 @@
       <Setter Property="Padding" Value="0"/>
       <Setter Property="VerticalAlignment" Value="Center"/>
       <Setter Property="Margin" Value="8 0 0 0"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style>
     <Style Selector="ToggleButton.DarkModeToggle:pointerover /template/ ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource ControlHoverBackground}"/>
@@ -333,7 +339,7 @@
       </Border>
 
       <Border Classes="ActionContainer">
-        <Button Classes="ActionButton" ToolTip.Tip="Share Project" Command="{Binding onShare}" IsEnabled="{Binding IsWorkView}">
+        <Button Classes="ActionButton" Cursor="Hand" ToolTip.Tip="Share Project" Command="{Binding onShare}" IsEnabled="{Binding IsWorkView}">
           <StackPanel Orientation="Horizontal">
             <Image Source="{DynamicResource ShareIcon}" Height="16" Width="16" Margin="0,0,5,0"/>
             <TextBlock Text="Share" VerticalAlignment="Center"/>

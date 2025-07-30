@@ -361,7 +361,7 @@ namespace MockerProject.ViewModels
             get => m_strProjectLocation;
             set => this.RaiseAndSetIfChanged(ref m_strProjectLocation, value);
         }
-        public string m_strProjectTitle = "Project1";
+        public string m_strProjectTitle = "My First Project";
         public string strProjectTitle
         {
             get => m_strProjectTitle;

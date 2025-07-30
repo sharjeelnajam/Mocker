@@ -17,21 +17,44 @@
     <Style Selector="ToggleButton:checked">
       <Setter Property="Background" Value="Red"/>
     </Style>
+    <Style Selector="Button.TransparentButton">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
+    </Style>
+    <Style Selector="Button.TransparentButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource ThemeControlHoverColor}"/>
+    </Style>
+    <Style Selector="Button.TransparentButton:pressed">
+      <Setter Property="Background" Value="{DynamicResource ThemeControlPressedColor}"/>
+    </Style>
   </UserControl.Styles>
 
-  <DockPanel Background="{DynamicResource HeaderBackground}" Margin="1">
+  <DockPanel Background="{DynamicResource HeaderBackground}" Margin="1">    
     <StackPanel DockPanel.Dock="Top">
-      <!--<Button Click="onSetRefresh"></Button>-->
-      <ToggleButton Name="Project" IsChecked="{Binding IsProjectView}" Width = "190" Margin="5 5 5 0" HorizontalContentAlignment="Center">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-          <TextBlock Text="{Binding strProjectTitle}"/>
-          <TextBlock Text="*" IsVisible="{Binding IsProjectUnSaved}"/>
+      <Grid ColumnDefinitions="*,Auto" Margin="5 5 5 0">
+        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+          <TextBlock Text="{Binding strProjectTitle}"
+                     Foreground="{DynamicResource PrimaryForeground}"
+                     FontSize="16"
+                     FontWeight="Bold" 
+                     Name="Project"/>
+          <TextBlock Text="*"
+                     IsVisible="{Binding IsProjectUnSaved}"
+                     Foreground="{DynamicResource PrimaryForeground}"
+                     FontSize="16"
+                     FontWeight="Bold"
+                     Margin="2 0 0 0"/>
         </StackPanel>
-      </ToggleButton>
-      <!--<TreeView BorderThickness="1" Margin="0 5">
-            <TreeViewItem Header="Project1" IsExpanded="True">
-            </TreeViewItem>
-          </TreeView>-->
+
+        <Button Grid.Column="1" Command="{Binding onNewScreen}" Classes="TransparentButton"
+                VerticalAlignment="Center" HorizontalAlignment="Right"
+                Width="24" Height="24" Padding="0">
+          <Image Source="{DynamicResource AddScreen}" Width="16" Height="16" />
+        </Button>
+      </Grid>
+
       <Separator IsEnabled="False"
                  Background="{DynamicResource SystemChromeAltLowColor}"
                  Opacity="0.3">

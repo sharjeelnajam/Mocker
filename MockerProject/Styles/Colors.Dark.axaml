@@ -51,6 +51,8 @@
   <Bitmap x:Key="Slider">avares://MockerProject/Assets/New/Icons/dark/slider.png</Bitmap>
   <Bitmap x:Key="Progress">avares://MockerProject/Assets/New/Icons/dark/progress.png</Bitmap>
 
+  <Bitmap x:Key="AddScreen">avares://MockerProject/Assets/New/Icons/dark/add-screen.png</Bitmap>
+
   <Color x:Key="ThemeHeaderBackgroundColor">#141414</Color>
   <Color x:Key="ThemeControlBackgroundColor">#383739</Color>
   <Color x:Key="ThemeControlBorderColor">#4B5563</Color>
