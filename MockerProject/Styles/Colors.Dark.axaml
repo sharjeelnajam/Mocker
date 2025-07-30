@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Bitmap x:Key="MainBackgroundImageSource">avares://MockerProject/Assets/New/Background/bg-dark-gradient.png</Bitmap>
+  <ImageBrush x:Key="MainBackgroundImageBrush" Source="avares://MockerProject/Assets/New/Background/bg-dark-gradient.png" Stretch="UniformToFill" />
+
   <Bitmap x:Key="MenuIcon">avares://MockerProject/Assets/New/Icons/dark/menu.png</Bitmap>
   <Bitmap x:Key="NewFileIcon">avares://MockerProject/Assets/New/Icons/dark/file.png</Bitmap>
   <Bitmap x:Key="NewFolderIcon">avares://MockerProject/Assets/New/Icons/dark/folder.png</Bitmap>
@@ -27,28 +29,28 @@
   <Bitmap x:Key="ThreeDotsIcon">avares://MockerProject/Assets/New/Icons/dark/dots.png</Bitmap>
   <Bitmap x:Key="NewProjectIcon">avares://MockerProject/Assets/New/Icons/dark/add-new.png</Bitmap>
 
-	<Bitmap x:Key="TreeView">avares://MockerProject/Assets/New/Icons/dark/tree-view.png</Bitmap>
-	<Bitmap x:Key="Tabs">avares://MockerProject/Assets/New/Icons/dark/tabs.png</Bitmap>
-	<Bitmap x:Key="ContainerBox">avares://MockerProject/Assets/New/Icons/dark/container.png</Bitmap>
-	<Bitmap x:Key="Button">avares://MockerProject/Assets/New/Icons/dark/button.png</Bitmap>
-	<Bitmap x:Key="TextBox">avares://MockerProject/Assets/New/Icons/dark/text.png</Bitmap>
-	<Bitmap x:Key="Label">avares://MockerProject/Assets/New/Icons/dark/text.png</Bitmap>
-	<Bitmap x:Key="Title">avares://MockerProject/Assets/New/Icons/dark/title.png</Bitmap>
-	<Bitmap x:Key="Link">avares://MockerProject/Assets/New/Icons/dark/link.png</Bitmap>
-	<Bitmap x:Key="Password">avares://MockerProject/Assets/New/Icons/dark/password.png</Bitmap>
-	<Bitmap x:Key="Check">avares://MockerProject/Assets/New/Icons/dark/checkbox.png</Bitmap>
-	<Bitmap x:Key="Image">avares://MockerProject/Assets/New/Icons/dark/image.png</Bitmap>
-	<Bitmap x:Key="Radio">avares://MockerProject/Assets/New/Icons/dark/radio.png</Bitmap>
-	<Bitmap x:Key="DataPicker">avares://MockerProject/Assets/New/Icons/dark/calender.png</Bitmap>
-	<Bitmap x:Key="MultilineButton">avares://MockerProject/Assets/New/Icons/dark/paragraph.png</Bitmap>
-	<Bitmap x:Key="TextArea">avares://MockerProject/Assets/New/Icons/dark/text-area.png</Bitmap>
-	<Bitmap x:Key="ListBox">avares://MockerProject/Assets/New/Icons/dark/list-box.png</Bitmap>
-	<Bitmap x:Key="Repeater">avares://MockerProject/Assets/New/Icons/dark/repeater.png</Bitmap>
-	<Bitmap x:Key="DropDown">avares://MockerProject/Assets/New/Icons/dark/dropdown.png</Bitmap>
-	<Bitmap x:Key="Table">avares://MockerProject/Assets/New/Icons/dark/table.png</Bitmap>
-	<Bitmap x:Key="Slider">avares://MockerProject/Assets/New/Icons/dark/slider.png</Bitmap>
-	<Bitmap x:Key="Progress">avares://MockerProject/Assets/New/Icons/dark/progress.png</Bitmap>
-	
+  <Bitmap x:Key="TreeView">avares://MockerProject/Assets/New/Icons/dark/tree-view.png</Bitmap>
+  <Bitmap x:Key="Tabs">avares://MockerProject/Assets/New/Icons/dark/tabs.png</Bitmap>
+  <Bitmap x:Key="ContainerBox">avares://MockerProject/Assets/New/Icons/dark/container.png</Bitmap>
+  <Bitmap x:Key="Button">avares://MockerProject/Assets/New/Icons/dark/button.png</Bitmap>
+  <Bitmap x:Key="TextBox">avares://MockerProject/Assets/New/Icons/dark/text.png</Bitmap>
+  <Bitmap x:Key="Label">avares://MockerProject/Assets/New/Icons/dark/text.png</Bitmap>
+  <Bitmap x:Key="Title">avares://MockerProject/Assets/New/Icons/dark/title.png</Bitmap>
+  <Bitmap x:Key="Link">avares://MockerProject/Assets/New/Icons/dark/link.png</Bitmap>
+  <Bitmap x:Key="Password">avares://MockerProject/Assets/New/Icons/dark/password.png</Bitmap>
+  <Bitmap x:Key="Check">avares://MockerProject/Assets/New/Icons/dark/checkbox.png</Bitmap>
+  <Bitmap x:Key="Image">avares://MockerProject/Assets/New/Icons/dark/image.png</Bitmap>
+  <Bitmap x:Key="Radio">avares://MockerProject/Assets/New/Icons/dark/radio.png</Bitmap>
+  <Bitmap x:Key="DataPicker">avares://MockerProject/Assets/New/Icons/dark/calender.png</Bitmap>
+  <Bitmap x:Key="MultilineButton">avares://MockerProject/Assets/New/Icons/dark/paragraph.png</Bitmap>
+  <Bitmap x:Key="TextArea">avares://MockerProject/Assets/New/Icons/dark/text-area.png</Bitmap>
+  <Bitmap x:Key="ListBox">avares://MockerProject/Assets/New/Icons/dark/list-box.png</Bitmap>
+  <Bitmap x:Key="Repeater">avares://MockerProject/Assets/New/Icons/dark/repeater.png</Bitmap>
+  <Bitmap x:Key="DropDown">avares://MockerProject/Assets/New/Icons/dark/dropdown.png</Bitmap>
+  <Bitmap x:Key="Table">avares://MockerProject/Assets/New/Icons/dark/table.png</Bitmap>
+  <Bitmap x:Key="Slider">avares://MockerProject/Assets/New/Icons/dark/slider.png</Bitmap>
+  <Bitmap x:Key="Progress">avares://MockerProject/Assets/New/Icons/dark/progress.png</Bitmap>
+
   <Color x:Key="ThemeHeaderBackgroundColor">#141414</Color>
   <Color x:Key="ThemeControlBackgroundColor">#383739</Color>
   <Color x:Key="ThemeControlBorderColor">#4B5563</Color>
@@ -68,8 +70,12 @@
   <Color x:Key="ThemeDesignStudioGradientEnd">#A855F7</Color>
   <Color x:Key="ThemeDesignStudioBorderBackground">#434445</Color>
   <Color x:Key="ThemeDesignStudioTextColor">#bcbdbd</Color>
-	<Color x:Key="PlateformBorderColor">#FFFFFF</Color>
-	
+  <Color x:Key="PlateformBorderColor">#FFFFFF</Color>
+  <Color x:Key="ThemeSaveProjectGradientStart">#FFFFFF</Color>
+  <Color x:Key="ThemeSaveProjectGradientEnd">#A855F7</Color>
+  <Color x:Key="ThemeSaveButtonGradientStart">#6366F1</Color>
+  <Color x:Key="ThemeSaveButtonGradientEnd">#8B5CF6</Color>
+
   <SolidColorBrush x:Key="HeaderBackground" Color="{DynamicResource ThemeHeaderBackgroundColor}" />
   <SolidColorBrush x:Key="ControlBackground" Color="{DynamicResource ThemeControlBackgroundColor}" />
   <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource ThemeControlBorderColor}" />
@@ -80,11 +86,21 @@
   <SolidColorBrush x:Key="RunButtonForeground" Color="{DynamicResource ThemeRunButtonForegroundColor}" />
   <SolidColorBrush x:Key="DisabledForeground" Color="{DynamicResource ThemeDisabledForegroundColor}" />
   <SolidColorBrush x:Key="MenuBorder" Color="{DynamicResource ThemeMenuBorderColor}" />
-	<SolidColorBrush x:Key="PlatformBorderBrush" Color="{DynamicResource PlateformBorderColor}" />
+  <SolidColorBrush x:Key="PlatformBorderBrush" Color="{DynamicResource PlateformBorderColor}" />
 
-	<LinearGradientBrush x:Key="RunButtonBackground" StartPoint="0%,50%" EndPoint="100%,50%">
+  <LinearGradientBrush x:Key="RunButtonBackground" StartPoint="0%,50%" EndPoint="100%,50%">
     <GradientStop Color="{DynamicResource ThemeRunButtonGradientStart}" Offset="0.0" />
     <GradientStop Color="{DynamicResource ThemeRunButtonGradientEnd}" Offset="1.0" />
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="SaveProjectTextForeground" StartPoint="0%,50%" EndPoint="100%,50%">
+    <GradientStop Color="{DynamicResource ThemeSaveProjectGradientStart}" Offset="0.0" />
+    <GradientStop Color="{DynamicResource ThemeSaveProjectGradientEnd}" Offset="1.0" />
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="SaveProjectButtonBackground" StartPoint="0%,50%" EndPoint="100%,50%">
+    <GradientStop Color="{DynamicResource ThemeSaveButtonGradientStart}" Offset="0.0" />
+    <GradientStop Color="{DynamicResource ThemeSaveButtonGradientEnd}" Offset="1.0" />
   </LinearGradientBrush>
 
   <LinearGradientBrush x:Key="DesignStudioGradient" StartPoint="0%,50%" EndPoint="100%,50%">

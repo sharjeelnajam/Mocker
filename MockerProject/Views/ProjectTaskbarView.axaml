@@ -8,7 +8,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MockerProject.Views.ProjectTaskbarView"
              x:DataType="vm:MainWindowViewModel">
-  
+
   <Design.DataContext>
     <vm:MainWindowViewModel />
   </Design.DataContext>
@@ -33,11 +33,11 @@
             </TreeViewItem>
           </TreeView>-->
       <Separator IsEnabled="False"
-                 Background="{DynamicResource SystemChromeAltLowColor}" 
+                 Background="{DynamicResource SystemChromeAltLowColor}"
                  Opacity="0.3">
       </Separator>
     </StackPanel>
-    
+
     <DockPanel>
       <DockPanel.ContextMenu>
         <ContextMenu>
@@ -46,7 +46,7 @@
           <MenuItem Header="Rename"/>
         </ContextMenu>
       </DockPanel.ContextMenu>
-      
+
       <ListBox Name="ListSmallScreen" SelectedIndex="{Binding SmallScreenID}"
                ItemsSource="{Binding SmallScreens}" Background="Transparent" IsVisible="{Binding IsScreenVisible}">
         <!--<ListBox.ItemTemplate>
@@ -55,7 +55,7 @@
            </DataTemplate>
          </ListBox.ItemTemplate>-->
       </ListBox>
-      
+
       <!--<ListBox Name="myList" SelectedIndex="{Binding MyItemsIndex}">
           <ListBoxItem >
               <Panel>
@@ -66,5 +66,5 @@
       </ListBox>-->
     </DockPanel>
   </DockPanel>
-  
+
 </UserControl>

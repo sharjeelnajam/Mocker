@@ -9,7 +9,8 @@
         x:DataType="vm:MainWindowViewModel"
         TransparencyLevelHint="AcrylicBlur"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Mocker">
+        Title="Mocker"
+        Background="{DynamicResource HeaderBackground}">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
