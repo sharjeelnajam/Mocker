@@ -45,6 +45,7 @@
       <Setter Property="CornerRadius" Value="6" />
       <Setter Property="VerticalAlignment" Value="Stretch"/>
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="Cursor" Value="Hand"/>
     </Style>
     <Style Selector="Button.SaveButton:pointerover /template/ ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource ThemeSaveProjectGradientEnd}" />

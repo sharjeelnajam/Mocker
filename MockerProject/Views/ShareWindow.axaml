@@ -4,139 +4,208 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:MockerProject.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        Width="900" Height="600"
+        Width="900" Height="700"
         x:Class="MockerProject.Views.ShareWindow"
-        Title="ShareWindow" 
-		ShowInTaskbar="False"
+        Title="Share"
+        Icon="/Assets/avalonia-logo.ico"
+        ShowInTaskbar="False"
         Topmost="False"
+        Background="{DynamicResource HeaderBackground}"
         WindowStartupLocation="CenterOwner" CanResize="False"
-		xmlns:vm="clr-namespace:MockerProject.ViewModels"
+        xmlns:vm="clr-namespace:MockerProject.ViewModels"
         x:CompileBindings="True" x:DataType="vm:MainWindowViewModel">
-    
-    <Window.Styles>
 
-        <Style Selector="TabControl">
-            <Setter Property="Background" Value="#555555"/>
-            <Setter Property="Margin" Value="1"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="BorderBrush" Value="#f0f0f0"/>
-            <Setter Property="BorderThickness" Value="1"/>
-        </Style>
-        <Style Selector="TabControl WrapPanel">
-            <Setter Property="Background" Value="#373737"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-        <Style Selector="SelectingItemsControl">
-            <Setter Property="BorderBrush" Value="#f0f0f0"/>
-            <Setter Property="BorderThickness" Value="11"/>
-        </Style>
+  <Window.Styles>
+    <Style Selector="TabControl">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Margin" Value="0"/>
+      <Setter Property="Padding" Value="0"/>
+      <Setter Property="BorderBrush" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+    <Style Selector="TabControl WrapPanel">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Margin" Value="0"/>
+    </Style>
+    <Style Selector="SelectingItemsControl">
+      <Setter Property="BorderBrush" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style Selector="TabItem">
+      <Setter Property="FontSize" Value="14"/>
+      <Setter Property="Height" Value="40"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Foreground" Value="{DynamicResource DisabledForeground}"/>
+      <Setter Property="Margin" Value="0"/>
+      <Setter Property="Padding" Value="10"/>
+      <Setter Property="CornerRadius" Value="8 8 0 0"/>
+      <Setter Property="HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Name="border"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="8"
+                  Height="33"
+                  Padding="10,4"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Center">
+            <ContentPresenter Name="contentPresenter"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              Content="{TemplateBinding Header}"
+                              ContentTemplate="{TemplateBinding HeaderTemplate}" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+    <Style Selector="TabItem:selected">
+      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Background" Value="{DynamicResource ThemeDesignStudioBorderBackground}"/>
+    </Style>
 
-        <Style Selector="TabItem">
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Height" Value="0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Background" Value="#505050"/>
-            <Setter Property="Foreground" Value="#909090"/>
-            <Setter Property="Margin" Value="1 0"/>
-            <Setter Property="Padding" Value="10 0"/>
-        </Style>
-        <Style Selector="TabItem:pointerover">
-            <Setter Property="Foreground" Value="#555555"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Margin" Value="1 0"/>
-            <Setter Property="Padding" Value="10 0"/>
-        </Style>
-        <!--<Style Selector="TabItem:pointerover /template/ Border#PART_SelectedPipe">
-            <Setter Property="ClipToBounds" Value="True"/>
-            <Setter Property="BorderThickness" Value="3"></Setter>
-        </Style>-->
+    <Style Selector="TextBox">
+      <Setter Property="Background" Value="{DynamicResource ControlBackground}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}"/>
+      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
+      <Setter Property="CornerRadius" Value="8"/>
+      <Setter Property="Height" Value="40"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Padding" Value="10"/>
+    </Style>
 
-        <Style Selector="TabItem:focus">
-            <Setter Property="Foreground" Value="#000000"/>
-            <Setter Property="Margin" Value="1 0"/>
-            <Setter Property="Padding" Value="10 0"/>
-        </Style>
-        <!--<Style Selector="TabItem:focus /template/ Border#PART_SelectedPipe">
-            <Setter Property="Background" Value="#000000"/>
-            <Setter Property="BorderThickness" Value="3"></Setter>
-        </Style>-->
+    <Style Selector="ComboBox">
+      <Setter Property="Background" Value="{DynamicResource ControlBackground}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}"/>
+      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
+      <Setter Property="CornerRadius" Value="8"/>
+      <Setter Property="Padding" Value="10"/>
+      <Setter Property="Height" Value="40"/>
+    </Style>
 
-        <Style Selector="TabItem:selected">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Background" Value="#555555"/>
-            <Setter Property="Margin" Value="1 0"/>
-            <Setter Property="Padding" Value="10 0"/>
-        </Style>
-        <Style Selector="TabItem:selected /template/ Border#PART_SelectedPipe">
-            <Setter Property="Background" Value="#555555"/>
-            <Setter Property="IsVisible" Value="False"/>
-            <Setter Property="Padding" Value="10 0"/>
-        </Style>
+    <Style Selector="CheckBox">
+      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Margin" Value="0 5"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Grid ColumnDefinitions="Auto, *">
+            <Border Name="CheckBorder"
+                    Grid.Column="0"
+                    Width="18"
+                    Height="18"
+                    CornerRadius="4"
+                    BorderThickness="2"
+                    BorderBrush="{DynamicResource DisabledForeground}"
+                    Background="Transparent"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+              <Path Name="CheckMark"
+                    Data="M3,6l4,4l8,-8"
+                    Stroke="{DynamicResource RunButtonForeground}"
+                    StrokeThickness="2"
+                    StrokeJoin="Round"
+                    IsVisible="False"/>
+            </Border>
+            <ContentPresenter Grid.Column="1"
+                              Margin="8,0,0,0"
+                              Content="{TemplateBinding Content}"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left"/>
+          </Grid>
+        </ControlTemplate>
+      </Setter>
+    </Style>
 
-    </Window.Styles>
-    
-    <Grid ColumnDefinitions="450,Auto">
-        <StackPanel>
-            <StackPanel Background="#505050">
-                <!--<CheckBox HorizontalAlignment="Right" Margin="10">Include linked Screens</CheckBox>-->
-            </StackPanel>
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" 
-                          VerticalScrollBarVisibility="Auto">
-                <WrapPanel Name="pagePanel" Background="Black" Width="450" Height="600">
-                    <!--<views:ScreenSmallView Width="225" Height="200"/>
-				    <views:ScreenSmallView Width="225" Height="200"/>-->
-                    <!--<Image Stretch="UniformToFill"
-                           Margin="5"
-                           Name="image"
-                           Source="/Assets/3-9.png">
-                        <Image.GestureRecognizers>
-                            <ScrollGestureRecognizer CanHorizontallyScroll="True"
-                                                     CanVerticallyScroll="True"/>
-                        </Image.GestureRecognizers>
-                    </Image>-->
-                </WrapPanel>
+    <Style Selector="CheckBox:checked /template/ Border#CheckBorder">
+      <Setter Property="Background" Value="{DynamicResource RunButtonBackground}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource RunButtonBackground}"/>
+    </Style>
+
+    <Style Selector="CheckBox:checked /template/ Path#CheckMark">
+      <Setter Property="IsVisible" Value="True"/>
+    </Style>
+
+    <Style Selector="TextBlock">
+      <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
+    </Style>
+
+    <Style Selector="Button.Generate">
+      <Setter Property="Background" Value="{DynamicResource RunButtonBackground}" />
+      <Setter Property="Foreground" Value="{DynamicResource RunButtonForeground}" />
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Padding" Value="10 0"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="Button.Generate:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource ThemeSaveProjectGradientEnd}" />
+      <Setter Property="Foreground" Value="{DynamicResource RunButtonForeground}" />
+    </Style>
+
+  </Window.Styles>
+
+  <Grid ColumnDefinitions="*,300">
+    <Grid Grid.Column="0">
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto"
+                    Background="{DynamicResource MainBackgroundImageBrush}">
+        <WrapPanel Name="pagePanel" >
+        </WrapPanel>
+      </ScrollViewer>
+    </Grid>
+
+    <Grid Grid.Column="1" Background="{DynamicResource HeaderBackground}" RowDefinitions="Auto,*">
+      <TabControl Name="shareTab" Grid.Row="0">
+        <TabControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Rows="1" Columns="{Binding ElementName=shareTab, Path=Items.Count}"/>
+          </ItemsPanelTemplate>
+        </TabControl.ItemsPanel>
+        <TabItem Header="New Share">
+          <Grid RowDefinitions="*,Auto">
+            <ScrollViewer Grid.Row="0">
+              <StackPanel Margin="20 10 20 0">
+                <TextBlock Text="Publish to" Margin="0 0 0 10"/>
+                <ComboBox SelectedIndex="0" Margin="0 0 0 10">
+                  <ComboBoxItem Content="Personal workspace"/>
+                </ComboBox>
+                <TextBox Name="ShareName" Text="{Binding strProjectTitle}" Watermark="Project1" Margin="0 0 0 10"/>
+                <TextBox Name="ShareDescription" Watermark="A brief description" Height="100" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 0 0 10" VerticalContentAlignment="Top" Padding="10"/>
+                <TextBox Name="ShareTag" Watermark="Add a tag" Margin="0 0 0 10"/>
+                <TextBox Name="SharePW" Watermark="Enter your password" PasswordChar="*" Margin="0 0 0 10"/>
+                <TextBlock Text="Review and commenting options" Margin="0 10 0 5"/>
+                <StackPanel Margin="10 5">
+                  <CheckBox IsChecked="True">Annotations</CheckBox>
+                  <CheckBox IsChecked="False">Highlight interactions</CheckBox>
+                  <CheckBox IsChecked="True">Commenting</CheckBox>
+                </StackPanel>
+              </StackPanel>
             </ScrollViewer>
-        </StackPanel>
-        
-          <TabControl Grid.Column="1" Name="shareTab">
-              <TabItem Header="New Share" Margin="0" Width="220" HorizontalContentAlignment="Center">
-                  <StackPanel>
-                      <StackPanel Orientation="Vertical"   Margin="10">
-                          <StackPanel Orientation="Horizontal">
-                              <TextBlock Text="Publish to" VerticalAlignment="Center" Margin="10 0"></TextBlock>
-                              <ComboBox SelectedIndex="0" Width="330">
-                                  <ComboBoxItem Content="Personal workspace"></ComboBoxItem>
-                              </ComboBox>
-                          </StackPanel>
-                          <TextBox Name="ShareName" Text="{Binding strProjectTitle}" Margin="10"></TextBox>
-                          <TextBox Name="ShareDescription" Watermark="A brief description" Height="100" AcceptsReturn="True" TextWrapping="Wrap" Margin="10"></TextBox>
-                          <TextBox Name="ShareTag" Watermark="Add a tag" Margin="10"></TextBox>
-                          <TextBox Name="SharePW" PasswordChar="*" Watermark="Enter your password" Width="200" Margin="10" HorizontalAlignment="Left"/>
-                          <TextBlock Text="Review and commenting options" Margin="10 10 10 0"></TextBlock>
-                          <StackPanel Margin="10 5">
-                              <CheckBox IsChecked="True">Annotations</CheckBox>
-                              <CheckBox IsChecked="False">Highlight interactions</CheckBox>
-                              <CheckBox IsChecked="True">Commenting</CheckBox>
-                          </StackPanel>
-                      </StackPanel>
-                      <StackPanel Margin="0 10 0 0" Background="#333333">
-                          <Button Name="LinkBtn" Click="onShare" HorizontalAlignment="Center" Background="ForestGreen" Margin="0 20">Generate link to publish workspace</Button>
-                      </StackPanel>
-                  </StackPanel>
-              </TabItem>
-              <TabItem Header="Replace exsiting" Margin="0" Width="217" HorizontalContentAlignment="Center">
-                  <StackPanel Orientation="Vertical"   Margin="10">
-                      <StackPanel Orientation="Horizontal">
-                          <TextBlock Text="Showing shares from" VerticalAlignment="Center" Margin="10 0"></TextBlock>
-                          <ComboBox SelectedIndex="0" Width="255">
-                              <ComboBoxItem Content="Personal workspace"></ComboBoxItem>
-                          </ComboBox>
-                      </StackPanel>
-                      <TextBox Name="shareSearch" Watermark="Search" Margin="10"></TextBox>
-
-                  </StackPanel>
-              </TabItem>
-          </TabControl>
+            <Border Grid.Row="1" Background="{DynamicResource HeaderBackground}" VerticalAlignment="Bottom">
+              <Button Classes="Generate" Name="LinkBtn" Click="onShare" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="20" Height="40" CornerRadius="8">
+                <TextBlock Text="Generate link to publish workspace" Foreground="{DynamicResource RunButtonForeground}" VerticalAlignment="Center"/>
+              </Button>
+            </Border>
+          </Grid>
+        </TabItem>
+        <TabItem Header="Replace Existing">
+          <Grid>
+            <StackPanel Grid.Row="0" Margin="20 10 20 0">
+              <TextBlock Text="Showing shares from" Margin="0 0 0 10"/>
+              <ComboBox SelectedIndex="0" Margin="0 0 0 10">
+                <ComboBoxItem Content="Personal workspace"/>
+              </ComboBox>
+              <TextBox Name="shareSearch" Watermark="Search" Margin="0 0 0 10"/>
+            </StackPanel>
+          </Grid>
+        </TabItem>
+      </TabControl>
+    </Grid>
   </Grid>
 </Window>

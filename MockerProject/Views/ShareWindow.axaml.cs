@@ -1,34 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Input.GestureRecognizers;
 using Avalonia.Interactivity;
-using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using MockerProject.ViewModels;
-using Newtonsoft.Json;
-using Avalonia.Platform;
-using FontFamily = Avalonia.Media.FontFamily;
-using Size = System.Drawing.Size;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Formats.Png;
-using Bitmap = Avalonia.Media.Imaging.Bitmap;
-using Brushes = System.Drawing.Brushes;
-using Image = Avalonia.Controls.Image;
-using MockerProject.ViewModels;
+using System;
+using System.IO;
 using System.IO.Compression;
-using Tmds.DBus.Protocol;
-using Rectangle = System.Drawing.Rectangle;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace MockerProject.Views
 {
@@ -36,14 +16,15 @@ namespace MockerProject.Views
     {
         static MainWindowViewModel m_MainVM;
         static ShareWindow m_ShareWindow;
+        
         public ShareWindow()
         {
             InitializeComponent();
             m_ShareWindow = this;
-            
         }
+        
         public void setMainVM(MainWindowViewModel mainVM)
-        {            
+        {
             m_MainVM = mainVM;
             for (int i = 0; i < m_MainVM.SmallScreens.Count; i++)
             {
@@ -52,7 +33,7 @@ namespace MockerProject.Views
                 page.SmallCanvasText.Text = m_MainVM.SmallScreens[i].SmallCanvasText.Text;
                 page.ScreenUnSaved.IsEnabled = false;
                 page.ScreenUnSaved.Text = "";
-                page.Margin = new Thickness(20);
+                page.Margin = new Thickness(10);
                 page.iamge.Source = m_MainVM.getImage(i);
                 pagePanel.Children.Add(page);
             }
@@ -89,23 +70,24 @@ namespace MockerProject.Views
             if (ShareTag.Text != null) tag = ShareTag.Text;
             if (SharePW.Text != null) pw = SharePW.Text;
             onUpload(UploadPath, shareTab, desc, tag, pw);
-
         }
+
         private string makeZip(string path)
         {
             // Create FileStream for output ZIP archive
             string w_strZipPath = path + ".zip";
-            if(File.Exists(w_strZipPath))
+            if (File.Exists(w_strZipPath))
                 File.Delete(w_strZipPath);
             ZipFile.CreateFromDirectory(path, w_strZipPath);
             //ZipFile.CreateFromDirectory(path, w_strZipPath, CompressionLevel.Fastest, true);
             return w_strZipPath;
         }
+
         private void makeScreenShots(string path)
         {
             m_MainVM.createFolder(path);
             string filePath;
-            for(int i=0;i<m_MainVM.m_lstWorkScreen.Count; i++)
+            for (int i = 0; i < m_MainVM.m_lstWorkScreen.Count; i++)
             {
                 filePath = path + "\\" + m_MainVM.m_lstWorkScreen[i].m_strName + ".png";
                 var rander = new RenderTargetBitmap(new PixelSize((int)180, (int)150));
@@ -117,29 +99,31 @@ namespace MockerProject.Views
                 }
             }
         }
+
         private void makeAssets(string path)
         {
             m_MainVM.createFolder(path);
             UIControl w_uiControl;
             foreach (ScreenView screenView in m_MainVM.m_lstWorkScreen)
             {
-                for (int i=3; i< screenView.screenCanvas.Children.Count;i++)
+                for (int i = 3; i < screenView.screenCanvas.Children.Count; i++)
                 {
                     w_uiControl = (UIControl)screenView.screenCanvas.Children[i];
                     if (w_uiControl.GetType() == typeof(ImageControl))
                     {
                         string w_path = Path.Combine(path, Path.GetFileName(w_uiControl.m_strSrc));
-                        if(!File.Exists(w_uiControl.m_strSrc)) continue;
+                        if (!File.Exists(w_uiControl.m_strSrc)) continue;
                         File.Copy(w_uiControl.m_strSrc, w_path, true);
                     }
                 }
             }
         }
+
         private string makeProject()
         {
-            string w_strDirPath="temp\\";
-            w_strDirPath += m_MainVM.strProjectTitle; 
-            if(Directory.Exists(w_strDirPath))
+            string w_strDirPath = "temp\\";
+            w_strDirPath += m_MainVM.strProjectTitle;
+            if (Directory.Exists(w_strDirPath))
                 Directory.Delete(w_strDirPath, true);
             m_MainVM.createFolder(w_strDirPath);
             makeScreenShots(Path.Combine(w_strDirPath, "screenshots"));
@@ -147,6 +131,7 @@ namespace MockerProject.Views
             m_MainVM.saveAllPages(w_strDirPath);
             return w_strDirPath;
         }
+
         static async Task onUpload(string path, TabControl share, string desciption, string tag, string pw)
         {
             string w_strFilePath = path;
@@ -178,7 +163,7 @@ namespace MockerProject.Views
 
                         // Send the form data to the API endpoint
                         share.IsEnabled = false;
-                        var response = new HttpResponseMessage(); 
+                        var response = new HttpResponseMessage();
                         try
                         {
                             response = await client.PostAsync("https://localhost:44364/Mocker/Upload", formData);
