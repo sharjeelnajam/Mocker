@@ -1,19 +1,18 @@
-
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
+using MockerProject.Models;
 using MockerProject.Views;
 using ReactiveUI;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Color = Avalonia.Media.Color;
 using FontFamily = Avalonia.Media.FontFamily;
 using FontStyle = Avalonia.Media.FontStyle;
 using Size = Avalonia.Size;
 
 namespace MockerProject.ViewModels;
-using MockerProject.Models;
-using System.ComponentModel;
 
 public class UIControlViewModel : ReactiveObject
 {

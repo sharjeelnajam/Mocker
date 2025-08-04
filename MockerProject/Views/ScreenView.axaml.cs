@@ -1,17 +1,15 @@
-using System;
-using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
+using MockerProject.Action;
+using MockerProject.Models;
 //using Avalonia.Remote.Protocol.Input;
 using MockerProject.ViewModels;
-using Point = System.Drawing.Point;
+using System;
+using System.Collections.Generic;
 using Size = System.Drawing.Size;
-using MockerProject.Models;
-using Avalonia.Interactivity;
-using MockerProject.Action;
-using Avalonia.VisualTree;
 
 
 namespace MockerProject.Views
@@ -38,16 +36,14 @@ namespace MockerProject.Views
         public double m_Opacity = 0.33;
         private Control? selectedElement;
         private MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext!;
+        
         public ScreenView()
         {
             InitializeComponent();
             //this.PointerMoved += onMouseMove;
             this.AttachedToVisualTree += (_, _) => this.Focus(); // or screenCanvas.Focus();
-
             this.AddHandler(KeyUpEvent, OnKeyDown, RoutingStrategies.Tunnel);
-
         }
-
 
         private void OnKeyDown(object? sender, KeyEventArgs e)
         {
@@ -90,6 +86,7 @@ namespace MockerProject.Views
                 }
             }
         }
+        
         private void onMousePressed(object sender, PointerPressedEventArgs e)
         {
             m_MainViewModel = (MainWindowViewModel)this.DataContext;
@@ -103,6 +100,7 @@ namespace MockerProject.Views
                 m_MainViewModel.m_UIControlType = CONTROL_TYPE.NONE;
             }
         }
+        
         private void onMouseReleased(object sender, PointerReleasedEventArgs e)
         {
             m_MainViewModel.m_UIControlType = 0;

@@ -1,16 +1,10 @@
-using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Data;
 using Avalonia.Input;
-using Avalonia.Interactivity;
-using Avalonia.Layout;
 using Avalonia.Media;
-using DynamicData;
+using MockerProject.Models;
 using MockerProject.ViewModels;
 using MockerProject.Views.UIControls;
-using MockerProject.Models;
-using System;
 
 namespace MockerProject.Views;
 
@@ -168,6 +162,7 @@ public partial class BodyView : UserControl
         }
         return;
     }
+    
     private void onMouseMove(object sender, PointerEventArgs e)
     {
         MainWindowViewModel mainViewModel = (MainWindowViewModel)this.DataContext;
@@ -424,7 +419,7 @@ public partial class BodyView : UserControl
         }
         
     }
-
+    
     private void onMouseDown(object sender, PointerEventArgs e)
     {
         MainWindowViewModel mainViewModel = (MainWindowViewModel)this.DataContext;
@@ -467,5 +462,4 @@ public partial class BodyView : UserControl
         mainViewModel.setScreenSmallView(mainViewModel.SmallScreenID);
         m_Control = null;
     }
-
 }
