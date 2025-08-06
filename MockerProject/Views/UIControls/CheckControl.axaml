@@ -6,8 +6,8 @@
              x:Class="MockerProject.Views.UIControls.CheckControl"
 	         xmlns:vm="clr-namespace:MockerProject.ViewModels"
 	         x:CompileBindings="True" x:DataType="vm:UIControlViewModel">
-	<StackPanel Name="check">
-		<CheckBox IsChecked="false"  Content="{Binding text}"
+  <StackPanel Name="check">
+    <CheckBox IsChecked="false"  Content="{Binding text}"
                      Width="{Binding width}"
                      Height="{Binding height}"
                      Opacity="{Binding opacity}"
@@ -22,5 +22,5 @@
 				     BorderThickness="{Binding borderThickness}"
 				     CornerRadius="{Binding borderRound}"
                      />
-	</StackPanel>
+  </StackPanel>
 </UserControl>

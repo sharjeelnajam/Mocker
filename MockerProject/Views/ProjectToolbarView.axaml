@@ -79,7 +79,7 @@
         <TabItem Header="UI CONTROLS">
           <v:UIControlView Name="UIControl"/>
         </TabItem>
-        <TabItem Header="PlATFORMS ">
+        <TabItem Header="PLATFORMS ">
           <v:PlatformView Name="Platform"/>
         </TabItem>
       </TabControl>

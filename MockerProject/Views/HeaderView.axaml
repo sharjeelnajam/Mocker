@@ -165,7 +165,7 @@
           </StackPanel>
         </Border>
 
-        <Border Classes="ButtonGroup">
+        <!--<Border Classes="ButtonGroup">
           <StackPanel Orientation="Horizontal">
             <ToggleButton Name="Ruler" Classes="IconButton" ToolTip.Tip="Show Ruler">
               <Image Source="{DynamicResource RulerIcon}" Height="18" Width="18"/>
@@ -177,7 +177,7 @@
               <Image Source="{DynamicResource SettingsIcon}" Height="18" Width="18"/>
             </Button>
           </StackPanel>
-        </Border>
+        </Border>-->
 
         <Border Classes="ButtonGroup">
           <StackPanel Orientation="Horizontal">

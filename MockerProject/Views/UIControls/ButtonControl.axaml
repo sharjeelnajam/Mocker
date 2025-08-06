@@ -33,10 +33,10 @@
 	        FontStretch="Expanded">
 
     <Button.Styles>
-      <Style Selector="Button:pointerover /template/ ContentPresenter">
+      <!--<Style Selector="Button:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="{Binding backgroundOver}"/>
         <Setter Property="Foreground" Value="{Binding foreground}"/>
-      </Style>
+      </Style>-->
       <Style Selector="Button">
         <Setter Property="Background" Value="{Binding background}"/>
         <Setter Property="Foreground" Value="{Binding foreground}"/>

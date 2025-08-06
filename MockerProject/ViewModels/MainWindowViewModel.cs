@@ -29,7 +29,7 @@ using Path = System.IO.Path;
 
 namespace MockerProject.ViewModels
 {
-   
+
     public class MainWindowViewModel : ReactiveObject
     {
         private bool _isDarkMode = true;
@@ -63,21 +63,53 @@ namespace MockerProject.ViewModels
 
         public void Undo()
         {
-            if (_undoStack.Any())
+            //if (_undoStack.Any())
+            //{
+            //    var action = _undoStack.Pop();
+            //    action.UnExecute();
+            //    _redoStack.Push(action);
+            //}
+            int w_Count = WorkScreen.m_UndoList.Count;
+            if (w_Count > 0)
             {
-                var action = _undoStack.Pop();
-                action.UnExecute();
-                _redoStack.Push(action);
+                stControlHistory w_ControlHistory = WorkScreen.m_UndoList[w_Count - 1];
+                string w_Cmd = WorkScreen.m_UndoList[w_Count - 1].Cmd;
+                int w_Index = WorkScreen.m_UndoList[w_Count - 1].Index;
+
+                if (w_Cmd == "New")
+                {
+                    Control w_Control = WorkScreen.screenCanvas.Children[w_Index];
+                    WorkScreen.screenCanvas.Children.Remove(w_Control);
+                    WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                }
+                WorkScreen.m_RedoList.Add(w_ControlHistory);
+                if (ContainerFlag > 0)
+                    ContainerFlag = 0;
             }
         }
 
         public void Redo()
         {
-            if (_redoStack.Any())
+            //if (_redoStack.Any())
+            //{
+            //    var action = _redoStack.Pop();
+            //    action.Execute();
+            //    _undoStack.Push(action);
+            //}
+
+            int w_Count = WorkScreen.m_RedoList.Count;
+            if (w_Count > 0)
             {
-                var action = _redoStack.Pop();
-                action.Execute();
-                _undoStack.Push(action);
+                stControlHistory w_ControlHistory = WorkScreen.m_RedoList[w_Count - 1];
+                string w_Cmd = WorkScreen.m_RedoList[w_Count - 1].Cmd;
+                int w_Index = WorkScreen.m_RedoList[w_Count - 1].Index;
+                if (w_Cmd == "New")
+                {
+                    Control w_Control = w_ControlHistory.curInfo;
+                    WorkScreen.screenCanvas.Children.Insert(w_Index, w_Control);
+                    WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                }
+                WorkScreen.m_UndoList.Add(w_ControlHistory);
             }
         }
 
@@ -276,7 +308,7 @@ namespace MockerProject.ViewModels
         public bool IsVerViewEnabled { get => w_IsVerViewEnabled; set => this.RaiseAndSetIfChanged(ref w_IsVerViewEnabled, value); }
         public bool IsResponseVisible { get => w_IsResponseVisible; set => this.RaiseAndSetIfChanged(ref w_IsResponseVisible, value); }
         public bool w_Orientation = true;
-        public bool Orientation { get => w_Orientation; set { this.RaiseAndSetIfChanged(ref w_Orientation, value); if(WorkScreen!=null) WorkScreen.m_Orientation = Orientation; } }
+        public bool Orientation { get => w_Orientation; set { this.RaiseAndSetIfChanged(ref w_Orientation, value); if (WorkScreen != null) WorkScreen.m_Orientation = Orientation; } }
         /// </PlatformView>
 
         public int w_SelectedTabIndex { get; set; }
@@ -321,19 +353,19 @@ namespace MockerProject.ViewModels
             {
                 if (ContainerFlag > 0)
                 {
-                    for(int i = ContainerCanvas.Count-1;i>=0;i--)
+                    for (int i = ContainerCanvas.Count - 1; i >= 0; i--)
                     {
                         ContainerBoxControl ctl = ContainerCanvas[i].FindAncestorOfType<ContainerBoxControl>();
                         if (ctl != null)
                         {
-                            ctl.Click_CloseButton(ctl.Click_CloseButton,new RoutedEventArgs());
+                            ctl.Click_CloseButton(ctl.Click_CloseButton, new RoutedEventArgs());
                         }
                     }
-                    
+
                 }
                 if (value >= 0 && m_lstWorkScreen.Count > value)
                 {
-                    
+
                     IsProjectView = false;
 
 
@@ -368,12 +400,12 @@ namespace MockerProject.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref m_strProjectTitle, value);
-                if(m_IsProjectPath) return;
+                if (m_IsProjectPath) return;
                 strProjectPath = strProjectLocation + "\\" + strProjectTitle;
                 int id = 1;
                 while (Directory.Exists(strProjectPath))
                 {
-                    strProjectPath = strProjectLocation + "\\" + strProjectTitle+"-"+id.ToString();
+                    strProjectPath = strProjectLocation + "\\" + strProjectTitle + "-" + id.ToString();
                     id++;
                 }
             }
@@ -534,12 +566,13 @@ namespace MockerProject.ViewModels
             });
             onNewProject = ReactiveCommand.Create(() =>
             {
+                IsMenuOpened = false;
                 init();
                 //OpenFolderPickerAsync()
             });
             onSaveProject = ReactiveCommand.Create(() =>
             {
-                
+                IsMenuOpened = false;
                 if (m_IsProjectPath)
                 {
                     savePage(strProjectPath);
@@ -570,7 +603,7 @@ namespace MockerProject.ViewModels
                 int id = 1;
                 while (Directory.Exists(strProjectPath))
                 {
-                    strProjectPath = strProjectLocation + "\\" + strProjectTitle+"-"+id.ToString();
+                    strProjectPath = strProjectLocation + "\\" + strProjectTitle + "-" + id.ToString();
                     id++;
                 }
                 m_SaveWindow = new SaveProjectWindow();
@@ -579,6 +612,7 @@ namespace MockerProject.ViewModels
             });
             onSaveAllProject = ReactiveCommand.Create(() =>
             {
+                IsMenuOpened = false;
                 if (m_IsProjectPath)
                 {
                     saveAllPages(strProjectPath);
@@ -591,7 +625,7 @@ namespace MockerProject.ViewModels
                 int id = 1;
                 while (Directory.Exists(strProjectPath))
                 {
-                    strProjectPath = strProjectLocation + "\\" + strProjectTitle+"-"+id.ToString();
+                    strProjectPath = strProjectLocation + "\\" + strProjectTitle + "-" + id.ToString();
                     id++;
                 }
                 m_SaveWindow = new SaveProjectWindow();
@@ -606,6 +640,7 @@ namespace MockerProject.ViewModels
             onSetProjectPath = new AsyncRelayCommand(async () => await OpenProjFolder());
             onSave = ReactiveCommand.Create(() =>
             {
+                IsMenuOpened = false;
                 if (m_SaveWindow == null) return;
                 createFolder(strProjectPath);
                 savePage(strProjectPath);
@@ -613,7 +648,7 @@ namespace MockerProject.ViewModels
                 if (m_IsProjectView || m_SaveWindow.save.Content == "Save All")
                 {
                     IsProjectUnSaved = false;
-                    for(int i=0; i<m_ScreenSmallView.Count;i++)
+                    for (int i = 0; i < m_ScreenSmallView.Count; i++)
                         m_ScreenSmallView[i].ScreenUnSaved.IsVisible = false;
                 }
                 else
@@ -702,11 +737,11 @@ namespace MockerProject.ViewModels
                 int w_Count = WorkScreen.m_UndoList.Count;
                 if (w_Count > 0)
                 {
-                    
+
                     stControlHistory w_ControlHistory = WorkScreen.m_UndoList[w_Count - 1];
                     string w_Cmd = WorkScreen.m_UndoList[w_Count - 1].Cmd;
                     int w_Index = WorkScreen.m_UndoList[w_Count - 1].Index;
-                    
+
                     if (w_Cmd == "New")
                     {
                         Control w_Control = WorkScreen.screenCanvas.Children[w_Index];
@@ -780,7 +815,7 @@ namespace MockerProject.ViewModels
             createPage(null);
         }
         public void setPlatform(int platformId)
-        {  
+        {
             IsPlatForm1 = false;
             IsPlatForm2 = false;
             IsPlatForm3 = false;
@@ -860,7 +895,7 @@ namespace MockerProject.ViewModels
 
             strPlatFormTitle = m_PlatFormInfo[m_nSelectedPlatFormIndex].Type;
 
-            string m_strImgPath = "./Assets/Platforms/"+strPlatFormTitle+"/";
+            string m_strImgPath = "./Assets/Platforms/" + strPlatFormTitle + "/";
             Img_PF_TL = LoadBitmapOrError("Top_Left.png", m_strImgPath);
             Img_PF_TM = LoadBitmapOrError("Top_Middle.png", m_strImgPath);
             Img_PF_TR = LoadBitmapOrError("Top_Right.png", m_strImgPath);
@@ -903,7 +938,7 @@ namespace MockerProject.ViewModels
             }
             else
             {
-               
+
                 return null; // or return fallback image if you have one
             }
         }
@@ -941,7 +976,7 @@ namespace MockerProject.ViewModels
 
         public IImage getImage(int id)
         {
-            if(id<0)
+            if (id < 0)
                 return null;
             int w_height = 0;
             int w_width = 0;
@@ -963,7 +998,7 @@ namespace MockerProject.ViewModels
             }
 
             var renderTargetBitmap = new RenderTargetBitmap(new PixelSize(w_width, w_height));
-            
+
             renderTargetBitmap.Render(m_lstWorkScreen[id].screenCanvas);
             IImage result = new CroppedBitmap(renderTargetBitmap, new PixelRect(150, 150, w_crop_W, w_crop_H));
             return result;
@@ -1087,12 +1122,12 @@ namespace MockerProject.ViewModels
         }
         private async Task OpenProjFile()
         {
-           // IsMenuOpened = false;
-           //// if (!IsStartMocker)
-           // if (IsStartMocker)
-           // {
-           //     return;
-           // }
+            IsMenuOpened = false;
+            //// if (!IsStartMocker)
+            // if (IsStartMocker)
+            // {
+            //     return;
+            // }
             var storageProvider = StorageService.GetStorageProvider();
             if (storageProvider is null)
             {
@@ -1108,8 +1143,8 @@ namespace MockerProject.ViewModels
 
             var file = result.FirstOrDefault();
             DeviceInfo w_DeviceInfo = await creatProject(file);
-            if(w_DeviceInfo == null)return;
-            for(int i=0; i<w_DeviceInfo.PageCount;i++)
+            if (w_DeviceInfo == null) return;
+            for (int i = 0; i < w_DeviceInfo.PageCount; i++)
                 createPage(getPageName(w_DeviceInfo.Pages[i]));
         }
         private async Task<DeviceInfo> creatProject(IStorageFile file)
@@ -1124,10 +1159,10 @@ namespace MockerProject.ViewModels
                     var fileContent = await reader.ReadToEndAsync();
                     var objects = JArray.Parse(fileContent);
                     JObject items = objects[0].ToObject<JObject>();
-                    if(items.Count != 7) return null;
+                    if (items.Count != 7) return null;
                     List<DeviceInfo> deviceInfo = JsonConvert.DeserializeObject<List<DeviceInfo>>(fileContent);
-                    if(deviceInfo == null || deviceInfo[0] == null || deviceInfo[0].Device == null || deviceInfo[0].size.W <= 0 || deviceInfo[0].size.H <= 0) return null;
-                    
+                    if (deviceInfo == null || deviceInfo[0] == null || deviceInfo[0].Device == null || deviceInfo[0].size.W <= 0 || deviceInfo[0].size.H <= 0) return null;
+
                     string w_strPath = file.Path.LocalPath;
                     string w_strName = Path.GetFileNameWithoutExtension(w_strPath);
                     string w_strExtension = Path.GetExtension(w_strPath);
@@ -1178,7 +1213,7 @@ namespace MockerProject.ViewModels
         {
             ScreenView w_WorkScreen = new ScreenView();
             ScreenSmallView w_ScreenSmallView = new ScreenSmallView();
-            if(pageName=="")
+            if (pageName == "")
             {
                 pageName = getPageName("Page");
                 m_lstWorkScreen.Add(w_WorkScreen);
@@ -1189,10 +1224,10 @@ namespace MockerProject.ViewModels
             }
             else if (pageName is not null)
             {
-                if(!File.Exists(strProjectPath+"\\"+pageName+".dspage")) return;
-                string json = File.ReadAllText(strProjectPath+"\\"+pageName+".dspage");
+                if (!File.Exists(strProjectPath + "\\" + pageName + ".dspage")) return;
+                string json = File.ReadAllText(strProjectPath + "\\" + pageName + ".dspage");
                 List<PageInfo> pageInfos = JsonConvert.DeserializeObject<List<PageInfo>>(json);
-                
+
                 IsWorkView = true;
                 IsToolbarView = true;
                 IsScreenVisible = true;
@@ -1208,11 +1243,11 @@ namespace MockerProject.ViewModels
                 {
                     m_PlatformView.colorButton.Color = WorkScreen.m_background.Color;
                 }
-                
+
                 int controlCount = pageInfos[0].Contents.Count;
                 foreach (Object obj in pageInfos[0].Contents)
                 {
-                    
+
                     ControlInfo control = JsonConvert.DeserializeObject<ControlInfo>(JsonConvert.SerializeObject(obj));
 
                     UIControl uiControl;
@@ -1234,8 +1269,8 @@ namespace MockerProject.ViewModels
                         uiControl = new RadioControl();
                     else if (control.Name == "MultilineButton")
                     {
-                         uiControl = new ButtonControl();
-                         uiControl.setType(CONTROL_TYPE.MULTIBUTTON);
+                        uiControl = new ButtonControl();
+                        uiControl.setType(CONTROL_TYPE.MULTIBUTTON);
                     }
                     else if (control.Name == "TextArea")
                     {
@@ -1254,11 +1289,11 @@ namespace MockerProject.ViewModels
                     }
                     else if (control.Name == "DropDown")
                     {
-                        ListControlInfo control1 = JsonConvert.DeserializeObject<ListControlInfo>(JsonConvert.SerializeObject(obj));                      
-                        
+                        ListControlInfo control1 = JsonConvert.DeserializeObject<ListControlInfo>(JsonConvert.SerializeObject(obj));
+
                         uiControl = new DropDownControl();
                         ((ListBoxViewModel)((DropDownControl)uiControl).DataContext).Items.Clear();
-                        foreach(CustomItem item in control1.Items)
+                        foreach (CustomItem item in control1.Items)
                         {
                             ((ListBoxViewModel)((DropDownControl)uiControl).DataContext).Items.Add(item);
                         }
@@ -1270,7 +1305,7 @@ namespace MockerProject.ViewModels
                     {
                         ListControlInfo control1 = JsonConvert.DeserializeObject<ListControlInfo>(JsonConvert.SerializeObject(obj));
                         uiControl = new ListBoxControl();
-                        
+
                         ((ListBoxViewModel)((ListBoxControl)uiControl).DataContext).Items.Clear();
                         foreach (CustomItem item in control1.Items)
                         {
@@ -1292,10 +1327,10 @@ namespace MockerProject.ViewModels
                     uiControl.setPosition(control.x, control.y);
                     //uiControl.setPositionX(control.x);
                     //uiControl.setPositionY(control.y);
-                   
+
                     uiControl.setFitWidth(control.isFitWidth);
                     uiControl.setFitHeight(control.isFitHeight);
-                    if(control.isFitWidth && (control.Name == "Label" || control.Name == "Title"))
+                    if (control.isFitWidth && (control.Name == "Label" || control.Name == "Title"))
                     {
                         ((LabelControl)uiControl).setFitWidth();
                     }
@@ -1336,14 +1371,14 @@ namespace MockerProject.ViewModels
                     uiControl.setSwipeRightEvent(control.SwipeRightEvent);
                     uiControl.setSwipeUpEvent(control.SwipeUpEvent);
                     uiControl.setSwipeDownEvent(control.SwipeDownEvent);
-                    
+
                     WorkScreen.screenCanvas.Children.Add(uiControl);
                 }
 
-                
+
 
                 m_ScreenSmallView.Add(w_ScreenSmallView);
-                
+
                 SmallScreens = m_ScreenSmallView;
                 SmallScreenID = SmallScreens.Count - 1;
 
@@ -1363,7 +1398,7 @@ namespace MockerProject.ViewModels
                 m_ScreenSmallView.Add(w_ScreenSmallView);
                 SmallScreens = m_ScreenSmallView;
                 SmallScreenID = SmallScreens.Count - 1;
-                
+
                 if (m_wndUIProperty != null)
                     m_wndUIProperty.Hide();
             }
@@ -1377,13 +1412,13 @@ namespace MockerProject.ViewModels
             UIControl w_uiControl;
             foreach (ScreenView screenView in m_lstWorkScreen)
             {
-                for (int i=3; i< screenView.screenCanvas.Children.Count;i++)
+                for (int i = 3; i < screenView.screenCanvas.Children.Count; i++)
                 {
                     w_uiControl = (UIControl)screenView.screenCanvas.Children[i];
                     if (w_uiControl.GetType() == typeof(ImageControl))
                     {
                         string w_path = Path.Combine(path, Path.GetFileName(w_uiControl.m_strSrc));
-                        if(!File.Exists(w_uiControl.m_strSrc)|| path == w_uiControl.m_strSrc ) continue;
+                        if (!File.Exists(w_uiControl.m_strSrc) || path == w_uiControl.m_strSrc) continue;
                         File.Copy(w_uiControl.m_strSrc, w_path);
                     }
                 }
@@ -1393,7 +1428,7 @@ namespace MockerProject.ViewModels
         {
             try
             {
-                if(Directory.Exists(path))
+                if (Directory.Exists(path))
                     Directory.Delete(path);
                 Directory.CreateDirectory(path);//Create Project Folder
             }
@@ -1413,7 +1448,7 @@ namespace MockerProject.ViewModels
             {
                 w_Size = new stSize(m_PlatFormInfo[w_nDeviceID].PF_Size[0].W, m_PlatFormInfo[w_nDeviceID].PF_Size[0].H);
             }
-            else if(w_nDeviceID>4)
+            else if (w_nDeviceID > 4)
                 w_Size = new stSize(PF_W, PF_H);
             else w_Size = m_PlatFormInfo[w_nDeviceID].PF_Size[w_nSubID];//new Size(431, 880);
             ///////////////////////
@@ -1443,7 +1478,7 @@ namespace MockerProject.ViewModels
         public void saveAllPages(string path)
         {
             saveProject(path);
-            for(int i=0; i < m_lstWorkScreen.Count; i++)
+            for (int i = 0; i < m_lstWorkScreen.Count; i++)
             {
                 savePage(path, i);
             }
@@ -1458,29 +1493,29 @@ namespace MockerProject.ViewModels
             {
                 //SmallScreenID
                 saveProject(path);
-                savePage(path, SmallScreenID);                    
+                savePage(path, SmallScreenID);
             }
         }
         public void savePage(string path, int id)
         {
-             //SmallScreenID
-             if(id<0)return;
-             string filePath = path + "\\" + m_lstWorkScreen[id].m_strName + ".dspage";
-             try
-             {
-                 List<Object> w_ControlInfo = new List<Object>();
-                 List<PageInfo> w_PageInfo = new List<PageInfo>();
+            //SmallScreenID
+            if (id < 0) return;
+            string filePath = path + "\\" + m_lstWorkScreen[id].m_strName + ".dspage";
+            try
+            {
+                List<Object> w_ControlInfo = new List<Object>();
+                List<PageInfo> w_PageInfo = new List<PageInfo>();
 
-                 makeControl(w_ControlInfo, m_lstWorkScreen[id].screenCanvas, 3);
-                 w_PageInfo.Add(new PageInfo { Orientation = m_lstWorkScreen[id].m_Orientation, size = new stSize(m_lstWorkScreen[id].m_Size.Width, m_lstWorkScreen[id].m_Size.Height), background = m_lstWorkScreen[id].m_background, Opacity =m_lstWorkScreen[id].m_Opacity, Contents = w_ControlInfo });
+                makeControl(w_ControlInfo, m_lstWorkScreen[id].screenCanvas, 3);
+                w_PageInfo.Add(new PageInfo { Orientation = m_lstWorkScreen[id].m_Orientation, size = new stSize(m_lstWorkScreen[id].m_Size.Width, m_lstWorkScreen[id].m_Size.Height), background = m_lstWorkScreen[id].m_background, Opacity = m_lstWorkScreen[id].m_Opacity, Contents = w_ControlInfo });
 
-                 string json = JsonConvert.SerializeObject(w_PageInfo.ToArray());
-                 System.IO.File.WriteAllText(filePath, json);
-             }
-             catch (Exception Ex)
-             {
-                 Console.WriteLine(Ex.ToString());
-             }
+                string json = JsonConvert.SerializeObject(w_PageInfo.ToArray());
+                System.IO.File.WriteAllText(filePath, json);
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine(Ex.ToString());
+            }
         }
 
         public List<Object> NodeToList(List<Node> nodes)
@@ -1488,19 +1523,20 @@ namespace MockerProject.ViewModels
             List<Object> list = new List<Object>();
             foreach (Node node in nodes)
             {
-                list.Add(new TreeItemInfo { 
-                    item= new CustomItem
+                list.Add(new TreeItemInfo
+                {
+                    item = new CustomItem
                     {
                         text = node.text,
                         Visible = node.Visible,
                         iteration = node.iteration,
                     },
-                    Items = NodeToList(node.SubItems.ToList())  
+                    Items = NodeToList(node.SubItems.ToList())
                 });
             }
             return list;
         }
-        public void makeControl(List<Object> controlInfo,Canvas canvas,int startChild = 0)
+        public void makeControl(List<Object> controlInfo, Canvas canvas, int startChild = 0)
         {
             for (int i = 0; i < canvas.Children.Count - startChild; i++)
             {
@@ -1605,7 +1641,7 @@ namespace MockerProject.ViewModels
                     int index = 0; // Index of the item you want to get the height for
                     TreeViewItem treeViewItem = (TreeViewItem)((TreeViewControl)w_UIControl).treeView.ContainerFromIndex(0);
                     //((TreeViewControl)w_UIControl).treeView.CollapseSubTree(treeViewItem);
-                   
+
                     TreeViewItem treeViewItem1 = (TreeViewItem)((TreeViewControl)w_UIControl).treeView.ContainerFromIndex(0);
 
                     int itemHeight = 46;// (int)treeViewItem1.MinHeight;
@@ -1693,8 +1729,8 @@ namespace MockerProject.ViewModels
                 {
                     List<Object> repeaterInfo = new List<Object>();
                     ObservableCollection<ContainerBoxControl> items = ((RepeaterControlViewModel)w_UIControl.m_ControlViewModel).Items;
-                    
-                    foreach(ContainerBoxControl item in items)
+
+                    foreach (ContainerBoxControl item in items)
                     {
                         List<Object> canvasInfo = new List<Object>();
                         makeControl(canvasInfo, ((ContainerBoxControl)item).container);
@@ -1734,7 +1770,7 @@ namespace MockerProject.ViewModels
                         });
                         continue;
                     }
-                    
+
                     controlInfo.Add(new ContainterControlInfo
                     {
                         Name = w_UIControl.m_strName,
