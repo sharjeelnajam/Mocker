@@ -1,56 +1,46 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 using Avalonia.Media;
-using Avalonia.Media.Imaging;
+using MockerProject.Models;
 using MockerProject.ViewModels;
+using MockerProject.ViewModels.UIViewModels;
 using MockerProject.Views;
-using System.Drawing;
-using Avalonia.Styling;
 using MockerProject.Views.UIControls;
+using static MockerProject.ViewModels.UIControlViewModel;
 using Bitmap = Avalonia.Media.Imaging.Bitmap;
 using FontStyle = Avalonia.Media.FontStyle;
 using Image = Avalonia.Controls.Image;
-using System;
-using MockerProject.Models;
-using MockerProject.ViewModels.UIViewModels;
-using static MockerProject.ViewModels.UIControlViewModel;
-using System.Reflection;
-using Avalonia.Controls.Primitives;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-
-
 
 namespace MockerProject
 {
     public partial class RunWindow : Window
     {
         private MainWindowViewModel m_MainVM;
+
         public RunWindow()
         {
             InitializeComponent();
         }
+
         public void setMainViewModel(MainWindowViewModel mainViewModel)
         {
             this.DataContext = mainViewModel;
             m_MainVM = mainViewModel;
             Control w_Control = null;
-            
+
             SetControltoCanvas(0);
         }
 
         public void Init()
         {
-            for(int i=1; i<this.screenCanvas.Children.Count;)
+            for (int i = 1; i < this.screenCanvas.Children.Count;)
                 this.screenCanvas.Children.RemoveAt(1);
         }
 
         private int GetIdtoPageName(string name)
         {
-
             int id = -1;
             for (int i = 0; i < m_MainVM.m_lstWorkScreen.Count; i++)
             {
@@ -78,22 +68,22 @@ namespace MockerProject
                 (m_control).FontStyle = FontStyle.Italic;
             (m_control).IsEnabled = model.isEnabled;
         }
+
         private void SetControltoCanvas(int id)
         {
             Control w_Control = null;
-            
+
             this.rectangle.Width = m_MainVM.m_lstWorkScreen[id].m_Size.Width;
             this.rectangle.Height = m_MainVM.m_lstWorkScreen[id].m_Size.Height;
             this.rectangle.Fill = m_MainVM.m_lstWorkScreen[id].m_background;
             this.rectangle.Opacity = m_MainVM.m_lstWorkScreen[id].m_Opacity;
-            int width =  m_MainVM.m_lstWorkScreen[id].m_Size.Width;
+            int width = m_MainVM.m_lstWorkScreen[id].m_Size.Width;
             int height = m_MainVM.m_lstWorkScreen[id].m_Size.Height;
-            
-            BuidControl(m_MainVM.m_lstWorkScreen[id].screenCanvas,this.screenCanvas, id,width,height,3);
-            
+
+            BuidControl(m_MainVM.m_lstWorkScreen[id].screenCanvas, this.screenCanvas, id, width, height, 3);
         }
 
-        private void BuidControl(Canvas sourceCanvas, Canvas destCanvas,int id,int width,int height,int start = 0)
+        private void BuidControl(Canvas sourceCanvas, Canvas destCanvas, int id, int width, int height, int start = 0)
         {
             Control w_Control = null;
             for (int i = start; i < sourceCanvas.Children.Count; i++)
@@ -235,13 +225,13 @@ namespace MockerProject
                     ((TextBlock)w_Control).Background = w_UIControl.m_Background;
                     ((TextBlock)w_Control).Foreground = w_UIControl.m_Foreground;
                     ((TextBlock)w_Control).FontFamily = w_UIControl.m_FontFamily;
-                    if(w_UIControl.m_bFitWidth)
+                    if (w_UIControl.m_bFitWidth)
                     {
                         ((TextBlock)w_Control).TextWrapping = TextWrapping.Wrap;
                         ((TextBlock)w_Control).Width = double.NaN;
                         ((TextBlock)w_Control).Measure(Avalonia.Size.Infinity);
                         ((TextBlock)w_Control).Width = ((TextBlock)w_Control).DesiredSize.Width;
-                        
+
                     }
                     if (w_UIControl.m_bFitHeight)
                     {
@@ -302,12 +292,12 @@ namespace MockerProject
                 {
                     w_Control = new Image();
                     ((Image)w_Control).Opacity = w_UIControl.m_Opacity;
-                    
+
                     ToolTip.SetTip(w_Control, w_UIControl.m_Tooltip);
                     ((Image)w_Control).Source = new Bitmap(w_UIControl.m_strSrc);
                     //((Image)w_Control).Text = w_UIControl.m_strText;
                     ((Image)w_Control).IsEnabled = !w_UIControl.m_bDisable;
-                    ((Image)w_Control).Stretch =Stretch.Fill;
+                    ((Image)w_Control).Stretch = Stretch.Fill;
                     if (w_UIControl.m_TapEvent != null)
                     {
                         int w_EventID = GetIdtoPageName(w_UIControl.m_TapEvent);
@@ -471,9 +461,9 @@ namespace MockerProject
                     w_Control = new ContainerBoxRunControl();
 
                     setBaseProperty((TemplatedControl)w_Control, (UIControlViewModel)w_UIControl.m_ControlViewModel);
-                    int w = (int) ((ContainerBoxControl)w_UIControl).container.Width;
-                    int h =(int) ((ContainerBoxControl)w_UIControl).container.Height;
-                    BuidControl(((ContainerBoxControl)w_UIControl).container, ((ContainerBoxRunControl)w_Control).container, id,w,h);
+                    int w = (int)((ContainerBoxControl)w_UIControl).container.Width;
+                    int h = (int)((ContainerBoxControl)w_UIControl).container.Height;
+                    BuidControl(((ContainerBoxControl)w_UIControl).container, ((ContainerBoxRunControl)w_Control).container, id, w, h);
                     //((ContainerBoxRunControl)w_Control).container = ((ContainerBoxControl)w_UIControl).container;
 
 
@@ -512,18 +502,18 @@ namespace MockerProject
                     w_Control = new RepeaterRunControl();
 
                     setBaseProperty((TemplatedControl)w_Control, (UIControlViewModel)w_UIControl.m_ControlViewModel);
-                    
+
                     foreach (ContainerBoxControl item in ((RepeaterControlViewModel)w_UIControl.m_ControlViewModel).Items)
                     {
                         ContainerBoxRunControl containerItem = new ContainerBoxRunControl();
-                        
+
                         int w = (int)(item.container).Width;
                         int h = (int)(item.container).Height;
                         BuidControl(item.container, containerItem.container, id, w, h);
                         setBaseProperty((TemplatedControl)containerItem, (UIControlViewModel)item.m_ControlViewModel);
                         containerItem.Width = w;
                         containerItem.Height = h;
-                        
+
                         ((RepeaterRunControl)w_Control).itemControl.Items.Add(containerItem);
 
 
@@ -553,7 +543,7 @@ namespace MockerProject
                         TabItem tabItem1 = new TabItem();
                         tabItem1.Header = ((RepeaterControlViewModel)w_UIControl.m_ControlViewModel).TabHeaders[index];
                         tabItem1.Content = containerItem;
-                       
+
                         ((TabViewRunControl)w_Control).tabControl.Items.Add(tabItem1);
                         index++;
 
@@ -569,10 +559,10 @@ namespace MockerProject
                     w_Control = new ListBox();
 
                     setBaseProperty((TemplatedControl)w_Control, (UIControlViewModel)w_UIControl.m_ControlViewModel);
-                    
+
                     foreach (CustomItem subItem in ((ListBoxViewModel)w_UIControl.m_ControlViewModel).Items)
                     {
-                        
+
                         ListBoxItem itm = new ListBoxItem();
                         itm.Content = subItem.text;
                         ((ListBox)w_Control).Items.Add(itm);
@@ -837,15 +827,14 @@ namespace MockerProject
                 else continue;
                 w_Control.Width = w_UIControl.m_nWidth;
                 w_Control.Height = w_UIControl.m_nHeight;
-                
+
                 //Canvas.SetTop(w_Control,-20);
-                Canvas.SetTop(w_Control, w_UIControl.m_nPositionY- w_UIControl.m_nOffsetY);
-                Canvas.SetLeft(w_Control, w_UIControl.m_nPositionX- w_UIControl.m_nOffsetX);
+                Canvas.SetTop(w_Control, w_UIControl.m_nPositionY - w_UIControl.m_nOffsetY);
+                Canvas.SetLeft(w_Control, w_UIControl.m_nPositionX - w_UIControl.m_nOffsetX);
                 destCanvas.Children.Add(w_Control);
                 destCanvas.Width = width;
                 destCanvas.Height = height;
             }
         }
     }
-
 }

@@ -115,7 +115,7 @@ namespace MockerProject.ViewModels
 
         public bool m_IsProjectPath = false;
 
-        public int w_nRunWindowWidth = 800;
+        public int w_nRunWindowWidth = 1000;
         public int RunWindowWidth
         {
             get => w_nRunWindowWidth;

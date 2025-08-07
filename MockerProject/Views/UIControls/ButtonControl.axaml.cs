@@ -1,11 +1,4 @@
-using System;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Media;
-using Avalonia.VisualTree;
-using MockerProject.ViewModels;
 
 namespace MockerProject.Views
 {
@@ -26,8 +19,8 @@ namespace MockerProject.Views
             setBorderColor(new SolidColorBrush(new Color(255, 77, 77, 77)));
             setBorderThickness(1);
             setBorderRound(5);
-            
-                //m_MainViewModel = (MainWindowViewModel)this.DataContext;
+
+            //m_MainViewModel = (MainWindowViewModel)this.DataContext;
 
             //m_MainViewModel.m_wndUIProperty = new SetResponseWindow();
             /*button.AddHandler(Button.PointerPressedEvent, (sender, e) =>
@@ -62,6 +55,6 @@ namespace MockerProject.Views
                 ((UIPropertyWindow)m_MainViewModel.m_wndUIProperty).setControlInfo(m_ControlViewModel, this);
                 m_MainViewModel.m_wndUIProperty.Show();
             }, handledEventsToo: true);*/
-            }
+        }
     }
 }
