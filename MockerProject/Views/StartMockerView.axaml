@@ -156,26 +156,39 @@
               </StackPanel>
 
               <!-- Search Box -->
-              <Border CornerRadius="8" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Background="{DynamicResource ControlBackground}">
-                <Grid ColumnDefinitions="*, Auto" VerticalAlignment="Center" Margin="10,5">
-                  <TextBox Grid.Column="0"
-                           Watermark="design"
-                           FontSize="14"
-                           Classes="SearchBox"
-                           VerticalContentAlignment="Center"
-                           Background="Transparent"
-                           BorderThickness="0"
-                           Foreground="{DynamicResource PrimaryForeground}">
-                  </TextBox>
-                  <Image Grid.Column="1"
-                         Source="{DynamicResource SearchIcon}"
-                         Width="16"
-                         Height="16"
-                         Margin="8,0,4,0"
-                         VerticalAlignment="Center"/>
-                </Grid>
-              </Border>
-            </StackPanel>
+				<Border CornerRadius="8"
+			BorderBrush="{DynamicResource ControlBorderBrush}"
+			BorderThickness="1"
+			Background="{DynamicResource ControlBackground}"
+			PointerPressed="SearchBar_Pressed"
+			Cursor="Hand">
+					<Grid ColumnDefinitions="*, Auto"
+						  VerticalAlignment="Center"
+						  Margin="10,5">
+
+						<!-- Make this ignore pointer so the outer Border gets it -->
+						<TextBox Grid.Column="0"
+								 Watermark="design"
+								 FontSize="14"
+								 Classes="SearchBox"
+								 VerticalContentAlignment="Center"
+								 Background="Transparent"
+								 BorderThickness="0"
+								 IsHitTestVisible="False"
+								 Foreground="{DynamicResource PrimaryForeground}" />
+
+						<Image Grid.Column="1"
+							   Source="{DynamicResource SearchIcon}"
+							   Width="16"
+							   Height="16"
+							   Margin="8,0,4,0"
+							   VerticalAlignment="Center" />
+					</Grid>
+				</Border>
+
+
+
+			</StackPanel>
 
             <!-- Recent Projects -->
             <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,30">

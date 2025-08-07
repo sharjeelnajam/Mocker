@@ -156,6 +156,7 @@ namespace MockerProject.ViewModels
         public ICommand onSaveProject { get; }
         public ICommand onSaveAllProject { get; }
         public ICommand onOpenProject { get; }
+        public ICommand onSearchProject { get; }
         public ICommand onNewScreen { get; }
         public ICommand onDeleteScreen { get; }
         public ICommand onUndo { get; }
@@ -550,6 +551,7 @@ namespace MockerProject.ViewModels
             SubPlatformId = 0;
             onSaveProject = new AsyncRelayCommand(async () => await SaveProjFile());
             onOpenProject = new AsyncRelayCommand(async () => await OpenProjFile());
+            onSearchProject = new AsyncRelayCommand(async () => await OpenProjFile());
 
             DataContent = new TabItemModel[] {
                 new TabItemModel("One", "first"),
