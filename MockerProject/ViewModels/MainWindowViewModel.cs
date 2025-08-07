@@ -796,7 +796,7 @@ namespace MockerProject.ViewModels
         {
             m_MainWindow = (MainWindow)window;
         }
-        private void init()
+        private void init(bool flag = true)
         {
             m_IsProjectPath = false;
             strProjectTitle = "My First Project";
@@ -813,6 +813,7 @@ namespace MockerProject.ViewModels
                 SmallScreens.RemoveAt(0);
                 m_lstWorkScreen.RemoveAt(0);
             }
+            if(flag)
             createPage(null);
         }
         public void setPlatform(int platformId)
@@ -1168,7 +1169,7 @@ namespace MockerProject.ViewModels
                     string w_strName = Path.GetFileNameWithoutExtension(w_strPath);
                     string w_strExtension = Path.GetExtension(w_strPath);
                     if (w_strExtension != ".dsproj") return null;
-                    init();
+                    init(false);
                     strProjectTitle = w_strName;
                     strProjectPath = Path.GetDirectoryName(w_strPath);
                     strProjectLocation = Path.GetDirectoryName(strProjectPath);
@@ -1197,6 +1198,7 @@ namespace MockerProject.ViewModels
             int i = 0;
             while (w_bExist)
             {
+                w_bExist = false; i++;
                 foreach (ScreenView screen in m_lstWorkScreen)
                 {
                     if (w_strPageName == screen.m_strName)
@@ -1207,7 +1209,6 @@ namespace MockerProject.ViewModels
                         break;
                     }
                 }
-                w_bExist = false; i++;
             }
             return w_strPageName;
         }
@@ -1226,7 +1227,7 @@ namespace MockerProject.ViewModels
             }
             else if (pageName is not null)
             {
-                if(pageName == "Page1") pageName = "Page";
+               // if(pageName == "Page1") pageName = "Page";
                 if (!File.Exists(strProjectPath + "\\" + pageName + ".dspage")) return;
                 string json = File.ReadAllText(strProjectPath + "\\" + pageName + ".dspage");
                 List<PageInfo> pageInfos = JsonConvert.DeserializeObject<List<PageInfo>>(json);
