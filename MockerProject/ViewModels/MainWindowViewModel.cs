@@ -799,6 +799,7 @@ namespace MockerProject.ViewModels
         private void init()
         {
             m_IsProjectPath = false;
+            strProjectTitle = "My First Project";
             IsProjectUnSaved = true;
             IsStartMocker = false;
             IsMenuOpened = false;
@@ -1196,16 +1197,17 @@ namespace MockerProject.ViewModels
             int i = 0;
             while (w_bExist)
             {
-                w_bExist = false; i++;
                 foreach (ScreenView screen in m_lstWorkScreen)
                 {
                     if (w_strPageName == screen.m_strName)
                     {
                         w_strPageName = pageName + i.ToString();
+                        if (w_strPageName == "Page0") w_strPageName = "Page";
                         w_bExist = true;
                         break;
                     }
                 }
+                w_bExist = false; i++;
             }
             return w_strPageName;
         }
@@ -1224,6 +1226,7 @@ namespace MockerProject.ViewModels
             }
             else if (pageName is not null)
             {
+                if(pageName == "Page1") pageName = "Page";
                 if (!File.Exists(strProjectPath + "\\" + pageName + ".dspage")) return;
                 string json = File.ReadAllText(strProjectPath + "\\" + pageName + ".dspage");
                 List<PageInfo> pageInfos = JsonConvert.DeserializeObject<List<PageInfo>>(json);
