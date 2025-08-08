@@ -191,36 +191,44 @@
 			</StackPanel>
 
             <!-- Recent Projects -->
-            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,30">
-              <Border CornerRadius="8" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Background="{DynamicResource ControlBackground}" Margin="0,0,0,10"
-                      Classes="RecentDesignItem">
-                <Grid ColumnDefinitions="*,Auto" Margin="10">
-                  <StackPanel Grid.Column="0">
-                    <TextBlock Text="Test design2" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryForeground}"/>
-                    <TextBlock Text="15/7/2023 08:34" FontSize="12" Foreground="{DynamicResource ThemeDesignStudioTextColor}"/>
-                  </StackPanel>
-                  <Button Grid.Column="1" Width="36" Height="36" Padding="8" Background="{DynamicResource ThemeDesignStudioBorderBackground}"
-                          HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Image Source="{DynamicResource ThreeDotsIcon}" Width="16" Height="16"/>
-                  </Button>
-                </Grid>
-              </Border>
-              <Border CornerRadius="8" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Background="{DynamicResource ControlBackground}" Margin="0,0,0,10"
-                      Classes="RecentDesignItem">
-                <Grid ColumnDefinitions="*,Auto" Margin="10">
-                  <StackPanel Grid.Column="0">
-                    <TextBlock Text="Test design1" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryForeground}"/>
-                    <TextBlock Text="13/7/2023 13:57" FontSize="12" Foreground="{DynamicResource ThemeDesignStudioTextColor}"/>
-                  </StackPanel>
-                  <Button Grid.Column="1" Width="36" Height="36" Padding="8" Background="{DynamicResource ThemeDesignStudioBorderBackground}"
-                          HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Image Source="{DynamicResource ThreeDotsIcon}" Width="16" Height="16"/>
-                  </Button>
-                </Grid>
-              </Border>
-            </StackPanel>
+			  <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,30">
+				  <ItemsControl ItemsSource="{Binding RecentProjects}">
+					  <ItemsControl.ItemTemplate>
+						  <DataTemplate>
+							  <Border CornerRadius="8"
+									  BorderBrush="{DynamicResource ControlBorderBrush}"
+									  BorderThickness="1"
+									  Background="{DynamicResource ControlBackground}"
+									  Margin="0,0,0,10"
+									  Classes="RecentDesignItem">
+								  <Grid ColumnDefinitions="*,Auto" Margin="10">
+									  <StackPanel Grid.Column="0">
+										  <TextBlock Text="{Binding Name}"
+													 FontSize="16"
+													 FontWeight="SemiBold"
+													 Foreground="{DynamicResource PrimaryForeground}"/>
+										  <TextBlock Text="{Binding LastOpened, StringFormat={}{0:dd/MM/yyyy HH:mm}}"
+													 FontSize="12"
+													 Foreground="{DynamicResource ThemeDesignStudioTextColor}"/>
+									  </StackPanel>
+									  <Button Grid.Column="1"
+											  Width="36"
+											  Height="36"
+											  Padding="8"
+											  Background="{DynamicResource ThemeDesignStudioBorderBackground}"
+											  HorizontalAlignment="Right"
+											  VerticalAlignment="Center">
+										  <Image Source="{DynamicResource ThreeDotsIcon}" Width="16" Height="16"/>
+									  </Button>
+								  </Grid>
+							  </Border>
+						  </DataTemplate>
+					  </ItemsControl.ItemTemplate>
+				  </ItemsControl>
+			  </StackPanel>
 
-            <!-- Open a Project -->
+
+			  <!-- Open a Project -->
             <Button Command="{Binding onOpenProject}" Grid.Row="3" Grid.Column="0"
                     Margin="0,0,10,0" Padding="0" Background="Transparent" BorderThickness="0" Cursor="Hand">
               <Border CornerRadius="10"

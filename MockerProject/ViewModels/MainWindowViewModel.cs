@@ -19,6 +19,8 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+
 //using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -173,6 +175,8 @@ namespace MockerProject.ViewModels
         public ICommand onPlatForm7 { get; }
         public ICommand onHorViewPort { get; }
         public ICommand onVerViewPort { get; }
+
+        public ObservableCollection<RecentProject> RecentProjects { get; } = new();
 
         public bool w_IsStartMockerState = true;
         public bool w_IsMenuOpenState = false;
@@ -552,7 +556,8 @@ namespace MockerProject.ViewModels
             onSaveProject = new AsyncRelayCommand(async () => await SaveProjFile());
             onOpenProject = new AsyncRelayCommand(async () => await OpenProjFile());
             onSearchProject = new AsyncRelayCommand(async () => await OpenProjFile());
-
+           // RecentProjects = new AsyncRelayCommand(async () => await GetAllRecentProjects());
+            _ = InitializeRecentProjects();
             DataContent = new TabItemModel[] {
                 new TabItemModel("One", "first"),
                 new TabItemModel("Two", "second"),
@@ -1122,6 +1127,43 @@ namespace MockerProject.ViewModels
                 // Handle or log the exception appropriately
                 Console.WriteLine($"Error opening project folder: {ex.Message}");
                 // You might want to show a message to the user here
+            }
+        }
+        private async Task GetAllRecentProjects()
+        {
+            //var result = await storageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            //{
+            //    Title = "Open Project",
+            //    FileTypeFilter = GetCodeFileTypes(),
+            //    AllowMultiple = true
+            //});
+
+            //var files = result.TakeLast(2);
+            RecentProjects.Clear();
+            RecentProjects.Add(new RecentProject { Name = "Test Demo", LastOpened = DateTime.Now });
+            RecentProjects.Add(new RecentProject { Name = "Final test", LastOpened = DateTime.Now });
+        }
+        private async Task InitializeRecentProjects()
+        {
+            try
+            {
+                // Wait for the UI to be fully initialized if needed
+                await Task.Delay(100); // Small delay to ensure services are ready
+
+                var storageProvider = StorageService.GetStorageProvider();
+                if (storageProvider != null)
+                {
+                    await GetAllRecentProjects();
+                }
+                else
+                {
+                    Debug.WriteLine("Storage provider not available yet");
+                    // You might want to retry after a delay
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error initializing recent projects: {ex.Message}");
             }
         }
         private async Task OpenProjFile()
@@ -1936,7 +1978,11 @@ namespace MockerProject.ViewModels
             }
         }
     }
-
+    public class RecentProject
+    {
+        public string Name { get; set; }
+        public DateTime LastOpened { get; set; }
+    }
     public class TabItemModel
     {
         public string Header { get; }
