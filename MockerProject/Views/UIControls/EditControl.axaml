@@ -5,47 +5,85 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MockerProject.Views.EditControl"
              xmlns:vm="clr-namespace:MockerProject.ViewModels"
-			 x:CompileBindings="True" x:DataType="vm:UIControlViewModel">
-    <!--<TextBox Name="edit" IsReadOnly="True" PointerPressed="onMousePressed" PointerReleased="onMouseReleased" Text="Edit"></TextBox>-->
-    <TextBox Name="edit" 
-             Text="{Binding text}"
-             ToolTip.Tip="{Binding Control_Tip}"
-             Opacity="{Binding opacity}"
-             IsEnabled="{Binding isEnabled}"
-             Width="{Binding width}"
-			 Height="{Binding height}"
-             MinHeight="10"
-             Background="{Binding background}"
-             Foreground="{Binding foreground}"
-             BorderBrush="{Binding borderColor}"
-             BorderThickness="{Binding borderThickness}"
-             CornerRadius="{Binding borderRound}"
-             FontSize="{Binding fontSize}"
-             FontWeight="{Binding fontWeight}"
-             FontStyle="{Binding fontStyle}"
-             FontFamily="{Binding fontFamily}"
-             FontStretch="Expanded"
-			 PasswordChar="{Binding passwordChar}"
-			 AcceptsReturn="{Binding IsTextMultiEnable}"/>
-    <!--<Border Name="edit" Background="{Binding background}"
-            BorderBrush="{Binding borderColor}"
-            BorderThickness="1"
-            CornerRadius="{Binding borderRound}"
-            PointerPressed="onMousePressed"
-            PointerReleased="onMouseReleased"
-            Opacity="{Binding opacity}"
-            ToolTip.Tip="{Binding Control_Tip}"
-            Width="{Binding width}" Padding="10 1">
-        <TextBlock Name="label"
-                   Text="{Binding text}" 
-                   IsEnabled="{Binding isEnabled}"
-                   Foreground="{Binding foreground}"
-                   FontSize="{Binding fontSize}"
-                   FontWeight="{Binding fontWeight}"
-                   FontStyle="{Binding fontStyle}"
-                   FontFamily="{Binding fontFamily}"
-                   FontStretch="Expanded"/>
-    </Border>-->
-    
-    
+             x:CompileBindings="True" x:DataType="vm:UIControlViewModel">
+
+  <UserControl.Styles>
+
+    <!-- Base TextBox Template -->
+    <Style Selector="TextBox">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Name="PART_BorderElement"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{TemplateBinding CornerRadius}">
+            <ScrollViewer Name="PART_ScrollViewer"
+                          Padding="{TemplateBinding Padding}"
+                          HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                          VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+              <TextPresenter Name="PART_TextPresenter"
+                             Text="{TemplateBinding Text}"
+                             CaretBrush="{TemplateBinding CaretBrush}"
+                             SelectionBrush="{TemplateBinding SelectionBrush}"
+                             SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
+                             PasswordChar="{TemplateBinding PasswordChar}"
+                             TextAlignment="{TemplateBinding TextAlignment}"
+                             TextWrapping="{TemplateBinding TextWrapping}" />
+            </ScrollViewer>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <!-- Remove hover effect -->
+    <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+      <Setter Property="Background" Value="{TemplateBinding Background}" />
+      <Setter Property="BorderBrush" Value="{TemplateBinding BorderBrush}" />
+    </Style>
+
+    <!-- Remove pressed effect -->
+    <Style Selector="TextBox:pressed /template/ Border#PART_BorderElement">
+      <Setter Property="Background" Value="{TemplateBinding Background}" />
+      <Setter Property="BorderBrush" Value="{TemplateBinding BorderBrush}" />
+    </Style>
+
+    <!-- Remove focus background -->
+    <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+      <Setter Property="Background" Value="{TemplateBinding Background}" />
+      <Setter Property="BorderBrush" Value="{TemplateBinding BorderBrush}" />
+    </Style>
+
+    <!-- Remove focus-within background -->
+    <Style Selector="TextBox:focus-within /template/ Border#PART_BorderElement">
+      <Setter Property="Background" Value="{TemplateBinding Background}" />
+      <Setter Property="BorderBrush" Value="{TemplateBinding BorderBrush}" />
+    </Style>
+
+    <!-- Text color binding -->
+    <Style Selector="TextBox TextPresenter">
+      <Setter Property="TextElement.Foreground" Value="{Binding foreground}" />
+    </Style>
+
+  </UserControl.Styles>
+
+  <TextBox Name="edit"
+           Text="{Binding text}"
+           ToolTip.Tip="{Binding Control_Tip}"
+           Opacity="{Binding opacity}"
+           IsEnabled="{Binding isEnabled}"
+           Width="{Binding width}"
+           Height="{Binding height}"
+           MinHeight="10"
+           Background="{Binding background}"
+           BorderBrush="{Binding borderColor}"
+           BorderThickness="{Binding borderThickness}"
+           CornerRadius="{Binding borderRound}"
+           FontSize="{Binding fontSize}"
+           FontWeight="{Binding fontWeight}"
+           FontStyle="{Binding fontStyle}"
+           FontFamily="{Binding fontFamily}"
+           FontStretch="Expanded"
+           PasswordChar="{Binding passwordChar}"
+           AcceptsReturn="{Binding IsTextMultiEnable}"/>
 </UserControl>
