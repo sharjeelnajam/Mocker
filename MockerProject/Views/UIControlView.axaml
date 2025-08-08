@@ -155,7 +155,7 @@
           <Border Width="52" Height="52" Padding="12" HorizontalAlignment="Center">
             <Image Name="MultilineButton" Source="{DynamicResource MultilineButton}" Stretch="Uniform" />
           </Border>
-          <TextBlock Text="Multiline Button" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
+          <TextBlock Text="MultilineBtn" Foreground="{DynamicResource PrimaryForeground}" FontFamily="Inter" FontWeight="Medium" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Padding="5" Margin="0"/>
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
