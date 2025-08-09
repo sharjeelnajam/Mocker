@@ -89,131 +89,113 @@ namespace MockerProject
             for (int i = start; i < sourceCanvas.Children.Count; i++)
             {
                 UIControl w_UIControl = (UIControl)sourceCanvas.Children[i];
+                w_UIControl.m_MainViewModel = this.m_MainVM;
+
                 if (w_UIControl.m_nUIControlType == CONTROL_TYPE.BUTTON || w_UIControl.m_nUIControlType == CONTROL_TYPE.MULTIBUTTON)
                 {
-                    w_Control = new Button();
-                    ((Button)w_Control).HorizontalContentAlignment = HorizontalAlignment.Center;
-                    ((Button)w_Control).VerticalContentAlignment = VerticalAlignment.Center;
-                    ((Button)w_Control).Padding = new Thickness(0);
-                    ((Button)w_Control).Content = w_UIControl.m_strText;
-                    ((Button)w_Control).FontSize = w_UIControl.m_nFontSize;
-                    ((Button)w_Control).Opacity = w_UIControl.m_Opacity;
-                    ToolTip.SetTip(w_Control, w_UIControl.m_Tooltip);
-                    ((Button)w_Control).Background = w_UIControl.m_Background;
-                    ((Button)w_Control).Foreground = w_UIControl.m_Foreground;
-                    ((Button)w_Control).BorderThickness = w_UIControl.m_BorderThickness;
-                    ((Button)w_Control).CornerRadius = w_UIControl.m_BorderRound;
-                    ((Button)w_Control).BorderBrush = w_UIControl.m_BorderColor;
-                    ((Button)w_Control).FontFamily = w_UIControl.m_FontFamily;
+                    var buttonControl = new ButtonControl
+                    {
+                        DataContext = w_UIControl.m_ControlViewModel
+                    };
 
+                    var innerButton = buttonControl.FindControl<Button>("button");
 
-                    if (w_UIControl.m_bBold)
-                        ((Button)w_Control).FontWeight = FontWeight.Bold;
-                    if (w_UIControl.m_bItalic)
-                        ((Button)w_Control).FontStyle = FontStyle.Italic;
-                    ((Button)w_Control).IsEnabled = !w_UIControl.m_bDisable;
-
-                    if (w_UIControl.m_TapEvent != null)
+                    if (innerButton != null)
                     {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_TapEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((Button)w_Control).AddHandler(Button.ClickEvent, (sender, e) =>
-                            {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
+                        if (w_UIControl.m_TapEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_TapEvent);
+                            if (w_EventID != -1 && w_EventID != id)
+                                innerButton.AddHandler(Button.ClickEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                        }
+                        if (w_UIControl.m_DTapEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_DTapEvent);
+                            if (w_EventID != -1 && w_EventID != id)
+                                innerButton.AddHandler(Button.DoubleTappedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                        }
+                        if (w_UIControl.m_HPressEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_HPressEvent);
+                            if (w_EventID != -1 && w_EventID != id)
+                                innerButton.AddHandler(Button.HoldingEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                        }
+                        if (w_UIControl.m_SwipeLeftEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_SwipeLeftEvent);
+                            if (w_EventID != -1 && w_EventID != id)
+                                innerButton.AddHandler(Button.PointerMovedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                        }
                     }
-                    if (w_UIControl.m_DTapEvent != null)
-                    {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_DTapEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((Button)w_Control).AddHandler(Button.DoubleTappedEvent, (sender, e) =>
-                            {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_HPressEvent != null)
-                    {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_HPressEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((Button)w_Control).AddHandler(Button.HoldingEvent, (sender, e) =>
-                            {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_SwipeLeftEvent != null)
-                    {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_SwipeLeftEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((Button)w_Control).AddHandler(Button.PointerMovedEvent, (sender, e) =>
-                            {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
+                    w_Control = buttonControl;
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.TEXTBOX || w_UIControl.m_nUIControlType == CONTROL_TYPE.PASSWORD || w_UIControl.m_nUIControlType == CONTROL_TYPE.TEXTAREA)
                 {
-                    w_Control = new TextBox();
-                    ((TextBox)w_Control).Text = w_UIControl.m_strText;
-                    ((TextBox)w_Control).FontSize = w_UIControl.m_nFontSize;
-                    ((TextBox)w_Control).Opacity = w_UIControl.m_Opacity;
-                    ToolTip.SetTip(w_Control, w_UIControl.m_Tooltip);
-                    ((TextBox)w_Control).Background = w_UIControl.m_Background;
-                    ((TextBox)w_Control).Foreground = w_UIControl.m_Foreground;
-                    ((TextBox)w_Control).BorderThickness = w_UIControl.m_BorderThickness;
-                    ((TextBox)w_Control).CornerRadius = w_UIControl.m_BorderRound;
-                    ((TextBox)w_Control).BorderBrush = w_UIControl.m_BorderColor;
-                    ((TextBox)w_Control).FontFamily = w_UIControl.m_FontFamily;
-                    if (w_UIControl.m_nUIControlType == CONTROL_TYPE.PASSWORD) ((TextBox)w_Control).PasswordChar = w_UIControl.m_strPasswordChar.ToCharArray()[0];
-                    if (w_UIControl.m_bBold)
-                        ((TextBox)w_Control).FontWeight = FontWeight.Bold;
-                    if (w_UIControl.m_bItalic)
-                        ((TextBox)w_Control).FontStyle = FontStyle.Italic;
-                    ((TextBox)w_Control).IsEnabled = !w_UIControl.m_bDisable;
-                    if (w_UIControl.m_TapEvent != null)
+                    var editControl = new EditControl();
+                    editControl.DataContext = w_UIControl.m_ControlViewModel;
+                    var innerTextBox = editControl.FindControl<TextBox>("textBox");
+
+                    if (innerTextBox != null)
                     {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_TapEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((TextBox)w_Control).AddHandler(TextBox.TappedEvent, (sender, e) =>
-                            {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_DTapEvent != null)
-                    {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_DTapEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((TextBox)w_Control).AddHandler(TextBox.DoubleTappedEvent, (sender, e) =>
-                            {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_HPressEvent != null)
-                    {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_HPressEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((TextBox)w_Control).AddHandler(TextBox.HoldingEvent, (sender, e) =>
-                            {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_SwipeLeftEvent != null)
-                    {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_SwipeLeftEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((TextBox)w_Control).AddHandler(TextBox.PointerMovedEvent, (sender, e) =>
-                            {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
+                        if (w_UIControl.m_TapEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_TapEvent);
+                            if (w_EventID != -1 && w_EventID != id)
+                                innerTextBox.AddHandler(TextBox.TappedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                        }
+                        if (w_UIControl.m_DTapEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_DTapEvent);
+                            if (w_EventID != -1 && w_EventID != id)
+                                innerTextBox.AddHandler(TextBox.DoubleTappedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                        }
+                        if (w_UIControl.m_HPressEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_HPressEvent);
+                            if (w_EventID != -1 && w_EventID != id)
+                                innerTextBox.AddHandler(TextBox.HoldingEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                        }
+                        if (w_UIControl.m_SwipeLeftEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_SwipeLeftEvent);
+                            if (w_EventID != -1 && w_EventID != id)
+                                innerTextBox.AddHandler(TextBox.PointerMovedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                        }
                     }
 
+                    w_Control = editControl;
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.LABEL || w_UIControl.m_nUIControlType == CONTROL_TYPE.LINK || w_UIControl.m_nUIControlType == CONTROL_TYPE.TITLE)
                 {
@@ -286,7 +268,6 @@ namespace MockerProject
                                 SetControltoCanvas(w_EventID);
                             }, handledEventsToo: true);
                     }
-
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.IMAGE)
                 {
@@ -338,69 +319,68 @@ namespace MockerProject
                                 SetControltoCanvas(w_EventID);
                             }, handledEventsToo: true);
                     }
-
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.CHECK)
                 {
-                    w_Control = new CheckBox();
-                    ((CheckBox)w_Control).HorizontalContentAlignment = HorizontalAlignment.Center;
-                    ((CheckBox)w_Control).VerticalContentAlignment = VerticalAlignment.Center;
-                    ((CheckBox)w_Control).Padding = new Thickness(0);
-                    ((CheckBox)w_Control).Content = w_UIControl.m_strText;
-                    ((CheckBox)w_Control).FontSize = w_UIControl.m_nFontSize;
-                    ((CheckBox)w_Control).Opacity = w_UIControl.m_Opacity;
-                    ToolTip.SetTip(w_Control, w_UIControl.m_Tooltip);
-                    ((CheckBox)w_Control).Background = w_UIControl.m_Background;
-                    ((CheckBox)w_Control).Foreground = w_UIControl.m_Foreground;
-                    ((CheckBox)w_Control).BorderThickness = w_UIControl.m_BorderThickness;
-                    ((CheckBox)w_Control).CornerRadius = w_UIControl.m_BorderRound;
-                    ((CheckBox)w_Control).BorderBrush = w_UIControl.m_BorderColor;
-                    ((CheckBox)w_Control).FontFamily = w_UIControl.m_FontFamily;
-                    if (w_UIControl.m_bBold)
-                        ((CheckBox)w_Control).FontWeight = FontWeight.Bold;
-                    if (w_UIControl.m_bItalic)
-                        ((CheckBox)w_Control).FontStyle = FontStyle.Italic;
-                    ((CheckBox)w_Control).IsEnabled = !w_UIControl.m_bDisable;
-                    if (w_UIControl.m_TapEvent != null)
+                    var checkControl = new CheckControl
                     {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_TapEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((CheckBox)w_Control).AddHandler(CheckBox.TappedEvent, (sender, e) =>
-                            {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_DTapEvent != null)
+                        DataContext = w_UIControl.m_ControlViewModel
+                    };
+
+                    var innerCheckBox = checkControl.FindControl<CheckBox>("checkBox");
+
+                    if (innerCheckBox != null)
                     {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_DTapEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((CheckBox)w_Control).AddHandler(CheckBox.DoubleTappedEvent, (sender, e) =>
+                        if (w_UIControl.m_TapEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_TapEvent);
+                            if (w_EventID != -1 && w_EventID != id)
                             {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_HPressEvent != null)
-                    {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_HPressEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((CheckBox)w_Control).AddHandler(CheckBox.HoldingEvent, (sender, e) =>
+                                innerCheckBox.AddHandler(CheckBox.TappedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                            }
+                        }
+                        if (w_UIControl.m_DTapEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_DTapEvent);
+                            if (w_EventID != -1 && w_EventID != id)
                             {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_SwipeLeftEvent != null)
-                    {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_SwipeLeftEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((CheckBox)w_Control).AddHandler(CheckBox.PointerMovedEvent, (sender, e) =>
+                                innerCheckBox.AddHandler(CheckBox.DoubleTappedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                            }
+                        }
+                        if (w_UIControl.m_HPressEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_HPressEvent);
+                            if (w_EventID != -1 && w_EventID != id)
                             {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
+                                innerCheckBox.AddHandler(CheckBox.HoldingEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                            }
+                        }
+                        if (w_UIControl.m_SwipeLeftEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_SwipeLeftEvent);
+                            if (w_EventID != -1 && w_EventID != id)
+                            {
+                                innerCheckBox.AddHandler(CheckBox.PointerMovedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                            }
+                        }
                     }
+                    w_Control = checkControl;
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.DROPDOWN)
                 {
@@ -451,10 +431,6 @@ namespace MockerProject
                                 }, handledEventsToo: true);
                         }
                     }
-
-
-
-
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.CONTAINERBOX)
                 {

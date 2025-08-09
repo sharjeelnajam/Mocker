@@ -14,35 +14,8 @@
         x:CompileBindings="True" x:DataType="vm:MainWindowViewModel">
 
   <Window.Styles>
-    <Style Selector="Button:pointerover">
-      <Setter Property="Background" Value="{TemplateBinding Background}" />
-      <Setter Property="BorderBrush" Value="{TemplateBinding BorderBrush}" />
-    </Style>
-    <Style Selector="TextBox:pointerover">
-      <Setter Property="Background" Value="{DynamicResource TextBoxBackground}" />
-      <Setter Property="Foreground" Value="{DynamicResource TextBoxForeground}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
-    </Style>
-    <Style Selector="ListBoxItem:pointerover">
-      <Setter Property="Background" Value="{DynamicResource ListBoxItemBackground}" />
-      <Setter Property="Foreground" Value="{DynamicResource ListBoxItemForeground}" />
-    </Style>
-    <Style Selector="ComboBox:pointerover">
-      <Setter Property="Background" Value="{DynamicResource ComboBoxBackground}" />
-      <Setter Property="Foreground" Value="{DynamicResource ComboBoxForeground}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource ComboBoxBorderBrush}" />
-    </Style>
-    <Style Selector="CheckBox:pointerover">
-      <Setter Property="Background" Value="{DynamicResource CheckBoxBackground}" />
-      <Setter Property="Foreground" Value="{DynamicResource CheckBoxForeground}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrush}" />
-    </Style>
-    <Style Selector="Slider:pointerover">
-      <Setter Property="Background" Value="{DynamicResource SliderTrackBackground}" />
-      <Setter Property="Foreground" Value="{DynamicResource SliderTrackForeground}" />
-    </Style>
   </Window.Styles>
-  
+
   <ScrollViewer HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Auto">
     <Canvas Height="{Binding RunWindowHeight}" Background="{DynamicResource MainBackgroundImageBrush}" >

@@ -298,6 +298,8 @@ public class UIControl : UserControl
     }
     public virtual void doubleClickHandler(object sender,TappedEventArgs e)
     {
+        if (m_MainViewModel == null) return;
+
         if (m_MainViewModel.ContainerFlag == 0 && this.Parent != m_MainViewModel.WorkScreen.screenCanvas) return;
         if (m_MainViewModel.ContainerFlag > 0 && this.Parent != m_MainViewModel.ContainerCanvas[m_MainViewModel.ContainerFlag-1]) return;
 
