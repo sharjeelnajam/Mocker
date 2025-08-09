@@ -3,14 +3,15 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.VisualTree;
 using MockerProject.Action;
 using MockerProject.Models;
 //using Avalonia.Remote.Protocol.Input;
 using MockerProject.ViewModels;
+using MockerProject.Views.UIControls;
 using System;
 using System.Collections.Generic;
 using Size = System.Drawing.Size;
-
 
 namespace MockerProject.Views
 {
@@ -18,12 +19,13 @@ namespace MockerProject.Views
     {
         public int Index;
         public string Cmd;
-        
+
         public CONTROL_TYPE id;
         public Type type;
         public Control oldInfo;
         public Control curInfo;
     }
+
     public partial class ScreenView : UserControl
     {
         private MainWindowViewModel m_MainViewModel;
@@ -36,7 +38,7 @@ namespace MockerProject.Views
         public double m_Opacity = 0.33;
         private Control? selectedElement;
         private MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext!;
-        
+
         public ScreenView()
         {
             InitializeComponent();
@@ -63,21 +65,19 @@ namespace MockerProject.Views
             }
             if (e.Key == Key.S && e.KeyModifiers == KeyModifiers.Control)
             {
-                
-                    // Execute the Save command
-                    var vm = this.DataContext as MainWindowViewModel;
-                    vm?.onSaveProject?.Execute(null);
-
-                    e.Handled = true;
+                // Execute the Save command
+                var vm = this.DataContext as MainWindowViewModel;
+                vm?.onSaveProject?.Execute(null);
+                e.Handled = true;
             }
         }
 
-        private void OnElementSelected(object sender, PointerPressedEventArgs e)
+        public void OnElementSelected(object sender, PointerPressedEventArgs e)
         {
             if (e.Source is Control clickedControl)
             {
                 // Traverse up to find the draggable container (e.g. LayoutTransformControl)
-                var rootControl = FindDraggableParent((Control)clickedControl.Parent);
+                var rootControl = FindDraggableParent(clickedControl);
 
                 if (rootControl != null)
                 {
@@ -86,7 +86,7 @@ namespace MockerProject.Views
                 }
             }
         }
-        
+
         private void onMousePressed(object sender, PointerPressedEventArgs e)
         {
             m_MainViewModel = (MainWindowViewModel)this.DataContext;
@@ -100,7 +100,7 @@ namespace MockerProject.Views
                 m_MainViewModel.m_UIControlType = CONTROL_TYPE.NONE;
             }
         }
-        
+
         private void onMouseReleased(object sender, PointerReleasedEventArgs e)
         {
             m_MainViewModel.m_UIControlType = 0;
@@ -112,12 +112,11 @@ namespace MockerProject.Views
 
             while (current != null)
             {
-               // if (current is LayoutTransformControl || current is Border) // or any root drag container
-               // {
-                    //return (Control)current;
-               // }
+                // If it's your custom controls, stop here
+                if (current is ButtonControl || current is CheckControl || current is EditControl)
+                    return (Control)current;
 
-                //current = current.GetVisualParent();
+                current = current.GetVisualParent();
                 return (Control)current;
             }
 

@@ -36,7 +36,7 @@
 
             <!-- Label -->
             <ContentPresenter Grid.Column="1"
-                              Name="PART_ContentPresenter"
+                              Name="PART_TextPresenter"
                               Content="{TemplateBinding Content}"
                               ContentTemplate="{TemplateBinding ContentTemplate}"
                               Margin="6,0,0,0"

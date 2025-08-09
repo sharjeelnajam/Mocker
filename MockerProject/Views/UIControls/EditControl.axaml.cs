@@ -28,6 +28,16 @@ namespace MockerProject.Views
                 //m_IsDoubleTapped = true;
                 base.doubleClickHandler(sender, e);
             }, handledEventsToo: true);
+
+            var editControl = this.FindControl<TextBox>("edit");
+            if (editControl != null)
+            {
+                editControl.AddHandler(PointerPressedEvent, (sender, e) =>
+                {
+                    this.RaiseEvent(e);
+                }, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            }
+
             /*edit.AddHandler(Border.TappedEvent, (sender, e) =>
             {
                 //m_MainViewModel.m_nSelectedUIControl = m_nIndex;

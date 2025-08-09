@@ -1,3 +1,6 @@
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 
 namespace MockerProject.Views
@@ -19,6 +22,15 @@ namespace MockerProject.Views
             setBorderColor(new SolidColorBrush(new Color(255, 77, 77, 77)));
             setBorderThickness(1);
             setBorderRound(5);
+
+            var innerButton = this.FindControl<Button>("button");
+            if (innerButton != null)
+            {
+                innerButton.AddHandler(PointerPressedEvent, (sender, e) =>
+                {
+                    this.RaiseEvent(e);
+                }, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            }
 
             //m_MainViewModel = (MainWindowViewModel)this.DataContext;
 
