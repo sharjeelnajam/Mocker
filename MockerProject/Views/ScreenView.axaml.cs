@@ -72,12 +72,25 @@ namespace MockerProject.Views
             }
         }
 
-        public void OnElementSelected(object sender, PointerPressedEventArgs e)
+        private void OnElementSelected(object sender, PointerPressedEventArgs e)
         {
             if (e.Source is Control clickedControl)
             {
                 // Traverse up to find the draggable container (e.g. LayoutTransformControl)
-                var rootControl = FindDraggableParent(clickedControl);
+                var rootControl = new Control();
+                if (clickedControl is ButtonControl || clickedControl is CheckControl || clickedControl is EditControl)
+                {
+                    rootControl = clickedControl;
+                }
+                else
+                {
+                    rootControl = FindDraggableParent((Control)clickedControl.Parent);
+                }
+
+                if (rootControl is Canvas)
+                {
+                    rootControl = null;
+                }
 
                 if (rootControl != null)
                 {
@@ -112,15 +125,12 @@ namespace MockerProject.Views
 
             while (current != null)
             {
-                // If it's your custom controls, stop here
-                if (current is ButtonControl || current is CheckControl || current is EditControl)
-                    return (Control)current;
+                // if (current is LayoutTransformControl || current is Border) // or any root drag container
+                // {
+                //return (Control)current;
+                // }
 
-                current = current.GetVisualParent();
-
-                if (current is Canvas)
-                    return null;
-
+                //current = current.GetVisualParent();
                 return (Control)current;
             }
 
