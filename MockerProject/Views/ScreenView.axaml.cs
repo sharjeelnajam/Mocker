@@ -117,6 +117,10 @@ namespace MockerProject.Views
                     return (Control)current;
 
                 current = current.GetVisualParent();
+
+                if (current is Canvas)
+                    return null;
+
                 return (Control)current;
             }
 
