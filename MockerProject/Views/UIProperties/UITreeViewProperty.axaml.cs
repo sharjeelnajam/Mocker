@@ -14,23 +14,22 @@ namespace MockerProject.Views.UIProperties
         public UITreeViewProperty()
         {
             InitializeComponent();
-            ItemBGButton.PropertyChanged += (s, e) =>
-            {
-                if (e.Property == AvaloniaColorPicker.ColorButton.ColorProperty)
-                {
+            //ItemBGButton.PropertyChanged += (s, e) =>
+            //{
+            //    if (e.Property == AvaloniaColorPicker.ColorButton.ColorProperty)
+            //    {
 
-                    Color w_Color = ItemBGButton.Color;
-                    SolidColorBrush w_Brush = new SolidColorBrush(w_Color);
-                    if (m_ControlModel == null) return;
-                    m_ControlModel.itemBackground = w_Brush;
+            //        Color w_Color = ItemBGButton.Color;
+            //        SolidColorBrush w_Brush = new SolidColorBrush(w_Color);
+            //        if (m_ControlModel == null) return;
+            //        m_ControlModel.itemBackground = w_Brush;
 
-                }
-            };
+            //    }
+            //};
         }
 
         public void setModel(UIControlViewModel model, UIControl uIControl)
         {
-
             TreeViewViewModel listBoxViewModel = (TreeViewViewModel)uIControl.DataContext;
             m_UIControl = uIControl;
             m_ControlModel = (TreeViewViewModel)uIControl.DataContext;
@@ -43,7 +42,7 @@ namespace MockerProject.Views.UIProperties
                 int index = BaseProperty.Event.SelectedIndex;
                 if (index != 0) return;
 
-                Node selectedItem = (Node) SelectItems.SelectedItem;
+                Node selectedItem = (Node)SelectItems.SelectedItem;
                 if (selectedItem == null) return;
 
                 ComboBoxItem item = (ComboBoxItem)BaseProperty.ListPage.SelectedItem;
@@ -56,7 +55,7 @@ namespace MockerProject.Views.UIProperties
                 if (index < 1)
                 {
                     SelectStack.IsVisible = true;
-                    Node SelectedItem =(Node) SelectItems.SelectedItem;
+                    Node SelectedItem = (Node)SelectItems.SelectedItem;
 
                     if (SelectedItem == null) return;
                     ItemCollection items = BaseProperty.ListPage.Items;
@@ -75,8 +74,6 @@ namespace MockerProject.Views.UIProperties
                     SelectStack.IsVisible = false;
                 }
             });
-
-
         }
 
         private void onSelectItems(object? sender, SelectionChangedEventArgs e)
@@ -86,7 +83,7 @@ namespace MockerProject.Views.UIProperties
             if (index != 0) return;
 
             Node selectedItem = (Node)SelectItems.SelectedItem;
-            if(selectedItem == null) return;
+            if (selectedItem == null) return;
 
             ItemCollection items = BaseProperty.ListPage.Items;
             foreach (ComboBoxItem item in items)
@@ -99,16 +96,4 @@ namespace MockerProject.Views.UIProperties
             }
         }
     }
-
 }
-    
-  
-
-    
-
-
-
-
-    
-
-

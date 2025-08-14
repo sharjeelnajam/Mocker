@@ -13,7 +13,7 @@
         Opacity="0.95" Background="#252525" FontSize="12"
         x:CompileBindings="True" x:DataType="vm:UIControlViewModel">
 
-  <DockPanel>
+  <DockPanel> 
     <StackPanel Name="Base" Orientation="Vertical">
       <Button Name="Action" HorizontalAlignment="Center" Width="200" Height="50" Margin="10" Click="onADDACTION">
         <StackPanel Orientation="Vertical">

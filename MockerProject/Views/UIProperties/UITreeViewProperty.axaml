@@ -4,21 +4,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="MockerProject.Views.UIProperties.UITreeViewProperty"	
-		xmlns:v="clr-namespace:MockerProject.Views.UIProperties"
-		xmlns:vm="clr-namespace:MockerProject.ViewModels.UIViewModels"
-		xmlns:colorpicker="clr-namespace:AvaloniaColorPicker;assembly=AvaloniaColorPicker"
+				xmlns:v="clr-namespace:MockerProject.Views.UIProperties"
+				xmlns:vm="clr-namespace:MockerProject.ViewModels.UIViewModels"
+				xmlns:colorpicker="clr-namespace:AvaloniaColorPicker;assembly=AvaloniaColorPicker"
         x:CompileBindings="True"
-		 SizeToContent="WidthAndHeight"
-		x:DataType="vm:TreeViewViewModel"
-		Title="{Binding Control_Name}"
-		CanResize="False"
-		ShowInTaskbar="False"
-		 Opacity="0.95" Background="#252525" FontSize="12"
-		
-		>
+				SizeToContent="WidthAndHeight"
+				x:DataType="vm:TreeViewViewModel"
+				Title="{Binding Control_Name}"
+				CanResize="False"
+				ShowInTaskbar="False"
+        RequestedThemeVariant="Dark"
+				Opacity="0.95" Background="#252525" FontSize="12">
+  
 	<StackPanel Orientation="Vertical">
 		<v:UIPropertyBase Name="BaseProperty"/>
-		<StackPanel IsVisible="{Binding !IterationVisible}">
+		
+    <StackPanel IsVisible="{Binding !IterationVisible}">
 			<StackPanel Grid.Row="2" Orientation="Horizontal"  Background="#555555" Margin="5 5 5 0">
 				<TextBlock Text="Actions" TextAlignment="Left" ></TextBlock>
 			</StackPanel>
@@ -39,7 +40,8 @@
 				<colorpicker:ColorButton Name="ItemBGButton" Color="{Binding itemBackground.Color}" Margin="0 0 5 0"  ></colorpicker:ColorButton>
 			</StackPanel>
 		</StackPanel>
-		<StackPanel Name="SelectStack" IsVisible="{Binding IterationVisible}">
+		
+    <StackPanel Name="SelectStack" IsVisible="{Binding IterationVisible}">
 			<StackPanel Grid.Row="2" Orientation="Horizontal"  Background="#555555" Margin="5 5 5 0">
 				<TextBlock Text="Selected Item" TextAlignment="Left" ></TextBlock>
 			</StackPanel>

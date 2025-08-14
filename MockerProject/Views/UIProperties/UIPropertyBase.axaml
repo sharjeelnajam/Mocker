@@ -7,16 +7,16 @@
 				xmlns:vm="clr-namespace:MockerProject.ViewModels"
 				xmlns:colorpicker="clr-namespace:AvaloniaColorPicker;assembly=AvaloniaColorPicker"
         x:CompileBindings="True" x:DataType="vm:UIControlViewModel">
-	
+
   <StackPanel>
-		<StackPanel Name="Base" Orientation="Vertical" IsVisible="{Binding !IterationVisible}">
-			<Button Name="Action" HorizontalAlignment="Center" Width="200" Height="50" Margin="10" Click="onADDACTION">
-				<StackPanel Orientation="Vertical">
-					<TextBlock Text="ADD INTERACTION" FontSize="17" HorizontalAlignment="Center"></TextBlock>
-					<TextBlock Text="When the User..." HorizontalAlignment="Center" Foreground="DarkGray"></TextBlock>
-				</StackPanel>
-			</Button>
-			<!--<TextBlock Grid.Row="1" Text="ACTIONS" HorizontalAlignment="Left" Width="240" Background="#555555" Margin="5"></TextBlock>
+    <StackPanel Name="Base" Orientation="Vertical" IsVisible="{Binding !IterationVisible}">
+      <Button Name="Action" HorizontalAlignment="Center" Width="200" Height="50" Margin="10" Click="onADDACTION">
+        <StackPanel Orientation="Vertical">
+          <TextBlock Text="ADD INTERACTION" FontSize="17" HorizontalAlignment="Center"></TextBlock>
+          <TextBlock Text="When the User..." HorizontalAlignment="Center" Foreground="DarkGray"></TextBlock>
+        </StackPanel>
+      </Button>
+      <!--<TextBlock Grid.Row="1" Text="ACTIONS" HorizontalAlignment="Left" Width="240" Background="#555555" Margin="5"></TextBlock>
 			<Border Name="TapBorder" IsVisible="False" BorderThickness="1" BorderBrush="Gray" Margin="10 0 10 2">
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Margin="5 0" Width="110">Tapped</TextBlock>
@@ -48,164 +48,163 @@
 					</Style>
 				</TextBlock.Styles>
 			</TextBlock>-->
-			<StackPanel Grid.Row="2" Orientation="Horizontal"  Background="#555555" Margin="5 5 5 0">
-				<TextBlock Text="PROPERTIES" TextAlignment="Left" ></TextBlock>
-			</StackPanel>
-			<StackPanel Orientation="Vertical" Background="#505050" Margin="5 0 5 5">
-				<!--
-				<StackPanel Orientation="Horizontal" Margin="5 10 5 5">
+      <StackPanel Grid.Row="2" Orientation="Horizontal"  Background="#555555" Margin="5 5 5 0">
+        <TextBlock Text="PROPERTIES" TextAlignment="Left" ></TextBlock>
+      </StackPanel>
+      <StackPanel Orientation="Vertical" Background="#505050" Margin="5 0 5 5">
+        <!--<StackPanel Orientation="Horizontal" Margin="5 10 5 5">
 					<TextBlock Grid.Column="0" Text="Text" VerticalAlignment="Center" Margin="5 0"/>
 					<TextBox Grid.Column="1" Text="{Binding text}" Width="180" Height="20" Margin="5 0"></TextBox>
 				</StackPanel>-->
-				<StackPanel Orientation="Horizontal" Margin=" 5">
-					<StackPanel Orientation="Vertical" Margin="0 0 10 0">
-						<StackPanel Orientation="Horizontal">
-							<Button Name="Move" HorizontalAlignment="Right" Margin="5">
-								<Image Source="/Assets/move.png" Width="20" Height="20"></Image>
-							</Button>
-							<CheckBox Name="Disable" FontSize= "12" Content="Disable" Click="onDisable" Margin="5"></CheckBox>
-						</StackPanel>
-						<TextBox  Name="tooltipe" Text="{Binding Control_Tip}" Watermark="tooltip" Width="120" TextAlignment="Left" Margin="5"></TextBox>
-					</StackPanel>
-					<StackPanel Orientation="Vertical">
-						<Slider Name="opical"
+        <StackPanel Orientation="Horizontal" Margin=" 5">
+          <StackPanel Orientation="Vertical" Margin="0 0 10 0">
+            <StackPanel Orientation="Horizontal">
+              <Button Name="Move" HorizontalAlignment="Right" Margin="5">
+                <Image Source="/Assets/move.png" Width="20" Height="20"></Image>
+              </Button>
+              <CheckBox Name="Disable" FontSize= "12" Content="Disable" Click="onDisable" Margin="5"></CheckBox>
+            </StackPanel>
+            <TextBox  Name="tooltipe" Text="{Binding Control_Tip}" Watermark="tooltip" Width="120" TextAlignment="Left" Margin="5"></TextBox>
+          </StackPanel>
+          <StackPanel Orientation="Vertical">
+            <Slider Name="opical"
                                 Value="{Binding opacity}"
                                 Minimum="0"
                                 Maximum="1"
                                 TickFrequency="0.01"
                                 Width="80"
                                 HorizontalAlignment="Right"/>
-						<TextBlock Text="Transparency" />
-					</StackPanel>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal" Margin="5 5 0 5">
-					<TextBlock Text="Position and Size"></TextBlock>
-					<Separator IsEnabled="False" Width="110"
+            <TextBlock Text="Transparency" />
+          </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5 5 0 5">
+          <TextBlock Text="Position and Size"></TextBlock>
+          <Separator IsEnabled="False" Width="110"
                                Background="{DynamicResource SystemChromeAltLowColor}" Opacity="0.3">
-					</Separator>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-					<TextBlock Text="X" Margin="10 0 0 0" Width="15"></TextBlock>
-					<TextBox Name="Pos_X" Margin="5 0" Text="{Binding Control_sX}" LostFocus="SetControlPostionX" Width="35"></TextBox>
-					<TextBlock Text="W" Margin="10 0 0 0" Width="15" ></TextBlock>
-					<TextBox Name="Size_W" Margin="5 0"  Width="35" Text="{Binding width}"></TextBox>
-					<ToggleButton Name="fitWidth"  IsChecked="{Binding IsFitWidth}" IsVisible="{Binding IsFitVisible}">
-						<Image Source="/Assets/FitW.png" Width="15"></Image>
-					</ToggleButton>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 3">
-					<TextBlock Text="Y" Margin="10 0 0 0" Width="15"></TextBlock>
-					<TextBox Name="Pos_Y" Margin="5 0"  Text="{Binding Control_sY}"  LostFocus="SetControlPostionY" Width="35"></TextBox>
-					<TextBlock Text="H" Margin="10 0 0 0" Width="15"></TextBlock>
-					<TextBox Name="Size_H" Margin="5 0"  Width="35" Text="{Binding height}" IsReadOnly="{Binding ReadOnlyHeight}"></TextBox>
-					<ToggleButton Name="fitHeight"  IsChecked="{Binding IsFitHeight}" IsVisible="{Binding IsFitVisible}">
-						<Image Source="/Assets/FitH.png" Width="15"></Image>
-					</ToggleButton>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal" Margin="5 5 0 5">
-					<TextBlock Text="Background and Border"></TextBlock>
-					<Separator IsEnabled="False"  Width="75"
+          </Separator>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+          <TextBlock Text="X" Margin="10 0 0 0" Width="15"></TextBlock>
+          <TextBox Name="Pos_X" Margin="5 0" Text="{Binding Control_sX}" LostFocus="SetControlPostionX" Width="35"></TextBox>
+          <TextBlock Text="W" Margin="10 0 0 0" Width="15" ></TextBlock>
+          <TextBox Name="Size_W" Margin="5 0"  Width="35" Text="{Binding width}"></TextBox>
+          <ToggleButton Name="fitWidth"  IsChecked="{Binding IsFitWidth}" IsVisible="{Binding IsFitVisible}">
+            <Image Source="/Assets/FitW.png" Width="15"></Image>
+          </ToggleButton>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 3">
+          <TextBlock Text="Y" Margin="10 0 0 0" Width="15"></TextBlock>
+          <TextBox Name="Pos_Y" Margin="5 0"  Text="{Binding Control_sY}"  LostFocus="SetControlPostionY" Width="35"></TextBox>
+          <TextBlock Text="H" Margin="10 0 0 0" Width="15"></TextBlock>
+          <TextBox Name="Size_H" Margin="5 0"  Width="35" Text="{Binding height}" IsReadOnly="{Binding ReadOnlyHeight}"></TextBox>
+          <ToggleButton Name="fitHeight"  IsChecked="{Binding IsFitHeight}" IsVisible="{Binding IsFitVisible}">
+            <Image Source="/Assets/FitH.png" Width="15"></Image>
+          </ToggleButton>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5 5 0 5">
+          <TextBlock Text="Background and Border"></TextBlock>
+          <Separator IsEnabled="False"  Width="75"
                                Background="{DynamicResource SystemChromeAltLowColor}" Opacity="0.3">
-					</Separator>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal" Margin="5 0">
-					<TextBlock Text="BorderBrush" VerticalAlignment="Center" FontSize="10" Margin="1" Foreground="DarkGray" Width="60"  IsVisible="{Binding IsBorderColorVisible}"></TextBlock>
-					<colorpicker:ColorButton Name="BCButton" Color="{Binding borderColor.Color}" Margin="0 0 5 0"  IsVisible="{Binding IsBorderColorVisible}"></colorpicker:ColorButton>
-					<TextBlock Text="Thickness" VerticalAlignment="Center" TextAlignment="Right" FontSize="10" Margin="1" Foreground="DarkGray" Width="50"  IsVisible="{Binding IsBorderVisible}"></TextBlock>
-					<ComboBox Name="ThickCom" ItemsSource="{Binding List_Thickness}"
+          </Separator>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5 0">
+          <TextBlock Text="BorderBrush" VerticalAlignment="Center" FontSize="10" Margin="1" Foreground="DarkGray" Width="60"  IsVisible="{Binding IsBorderColorVisible}"></TextBlock>
+          <colorpicker:ColorButton Name="BCButton" Color="{Binding borderColor.Color}" Margin="0 0 5 0"  IsVisible="{Binding IsBorderColorVisible}"></colorpicker:ColorButton>
+          <TextBlock Text="Thickness" VerticalAlignment="Center" TextAlignment="Right" FontSize="10" Margin="1" Foreground="DarkGray" Width="50"  IsVisible="{Binding IsBorderVisible}"></TextBlock>
+          <ComboBox Name="ThickCom" ItemsSource="{Binding List_Thickness}"
                               SelectedIndex="{Binding ThicknessID}"  IsVisible="{Binding IsBorderVisible}">
-						<ComboBox.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal" Margin="5 3" >
-					<TextBlock Text="Background" VerticalAlignment="Center" FontSize="10" Margin="1" Foreground="DarkGray" Width="60"  IsVisible="{Binding IsBackgroundVisible}"></TextBlock>
-					<colorpicker:ColorButton Name="BGButton" Color="{Binding background.Color}" Margin="0 0 5 0"  IsVisible="{Binding IsBackgroundVisible}"></colorpicker:ColorButton>
-					<TextBlock Text="Rounding" VerticalAlignment="Center" TextAlignment="Right" FontSize="10" Margin="1" Foreground="DarkGray" Width="50"  IsVisible="{Binding IsBorderVisible}"></TextBlock>
-					<ComboBox ItemsSource="{Binding List_Round}"
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding}"/>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5 3" >
+          <TextBlock Text="Background" VerticalAlignment="Center" FontSize="10" Margin="1" Foreground="DarkGray" Width="60"  IsVisible="{Binding IsBackgroundVisible}"></TextBlock>
+          <colorpicker:ColorButton Name="BGButton" Color="{Binding background.Color}" Margin="0 0 5 0"  IsVisible="{Binding IsBackgroundVisible}"></colorpicker:ColorButton>
+          <TextBlock Text="Rounding" VerticalAlignment="Center" TextAlignment="Right" FontSize="10" Margin="1" Foreground="DarkGray" Width="50"  IsVisible="{Binding IsBorderVisible}"></TextBlock>
+          <ComboBox ItemsSource="{Binding List_Round}"
                               SelectedIndex="{Binding RoundID}" IsVisible="{Binding IsBorderVisible}">
-						<ComboBox.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal" Margin="5" IsVisible="{Binding IsTextPropertiesVisible}">
-					<TextBlock Text="Text"></TextBlock>
-					<Separator IsEnabled="False" Width="180"
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding}"/>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5" IsVisible="{Binding IsTextPropertiesVisible}">
+          <TextBlock Text="Text"></TextBlock>
+          <Separator IsEnabled="False" Width="180"
                                Background="{DynamicResource SystemChromeAltLowColor}" Opacity="0.3">
-					</Separator>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal" Margin="5" IsVisible="{Binding IsTextPropertiesVisible}">
-					<Grid>
-						<ComboBox ItemsSource="{Binding List_FontSize}"
+          </Separator>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5" IsVisible="{Binding IsTextPropertiesVisible}">
+          <Grid>
+            <ComboBox ItemsSource="{Binding List_FontSize}"
                                   SelectedIndex="{Binding fontSizeID}">
-							<ComboBox.ItemTemplate>
-								<DataTemplate>
-									<TextBlock Text="{Binding}"/>
-								</DataTemplate>
-							</ComboBox.ItemTemplate>
-						</ComboBox>
-						<Popup Name="ppopup" Width="30" Height="100" Topmost="False">
-							<ListBox SelectedIndex="1" FontSize="8" Width="30" Padding="0" Margin="0">
-								<ListBox.Styles>
-									<Style Selector="ListBoxItem">
-										<Setter Property="Width" Value="30"/>
-										<Setter Property="HorizontalAlignment" Value="Right"/>
-									</Style>
-								</ListBox.Styles>
-								<ListBoxItem  Padding="0" Margin="0"> 8</ListBoxItem>
-								<ListBoxItem  Padding="0" Margin="0">12</ListBoxItem>
-							</ListBox>
-						</Popup>
-					</Grid>
-					<colorpicker:ColorButton Name="FGButton" Color="{Binding foreground.Color}" Margin="20 0 5 0"></colorpicker:ColorButton>
-					
-					<ToggleButton Name="BoldButton" IsChecked="{Binding textBold}" Width="27" Height="27" Margin="5 0">B</ToggleButton>
-					<ToggleButton Name="ItalicButton"  IsChecked="{Binding textItalic}" Width="27" Height="27" Margin="5 0" HorizontalAlignment="Center">I</ToggleButton>
-				</StackPanel>
-			</StackPanel>
-		</StackPanel>
-		<StackPanel Name="AddAction" Orientation="Vertical" IsVisible="{Binding IterationVisible}">
-			<StackPanel Orientation="Horizontal" Background="#555555">
-				<Button Name="Back" Content="Back" Click="onBack"></Button>
-				<TextBlock Text="ADD INTERACTION" TextAlignment="Center" Width="150" Background="Transparent" Margin="5"></TextBlock>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="When User" VerticalAlignment="Center" Margin="15 10"></TextBlock>
-				<ComboBox x:Name="Event" SelectionChanged="onSelectEvent" SelectedIndex="{Binding SelectedIterationIndex}"  Width="130" Margin="10"  ItemsSource="{Binding iterationItems}"
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding}"/>
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Popup Name="ppopup" Width="30" Height="100" Topmost="False">
+              <ListBox SelectedIndex="1" FontSize="8" Width="30" Padding="0" Margin="0">
+                <ListBox.Styles>
+                  <Style Selector="ListBoxItem">
+                    <Setter Property="Width" Value="30"/>
+                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                  </Style>
+                </ListBox.Styles>
+                <ListBoxItem  Padding="0" Margin="0"> 8</ListBoxItem>
+                <ListBoxItem  Padding="0" Margin="0">12</ListBoxItem>
+              </ListBox>
+            </Popup>
+          </Grid>
+          <colorpicker:ColorButton Name="FGButton" Color="{Binding foreground.Color}" Margin="20 0 5 0"></colorpicker:ColorButton>
+
+          <ToggleButton Name="BoldButton" IsChecked="{Binding textBold}" Width="27" Height="27" Margin="5 0">B</ToggleButton>
+          <ToggleButton Name="ItalicButton"  IsChecked="{Binding textItalic}" Width="27" Height="27" Margin="5 0" HorizontalAlignment="Center">I</ToggleButton>
+        </StackPanel>
+      </StackPanel>
+    </StackPanel>
+    <StackPanel Name="AddAction" Orientation="Vertical" IsVisible="{Binding IterationVisible}">
+      <StackPanel Orientation="Horizontal" Background="#555555">
+        <Button Name="Back" Content="Back" Click="onBack"></Button>
+        <TextBlock Text="ADD INTERACTION" TextAlignment="Center" Width="150" Background="Transparent" Margin="5"></TextBlock>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="When User" VerticalAlignment="Center" Margin="15 10"></TextBlock>
+        <ComboBox x:Name="Event" SelectionChanged="onSelectEvent" SelectedIndex="{Binding SelectedIterationIndex}"  Width="130" Margin="10"  ItemsSource="{Binding iterationItems}"
 				  >
-					<ComboBox.ItemTemplate>
-						<DataTemplate>
-							<!-- Define your DataTemplate here -->
-							<Border  CornerRadius="4" Padding="4">
-									<TextBlock Text="{Binding text}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0" />
-							</Border>
-						</DataTemplate>
-					</ComboBox.ItemTemplate>
-				</ComboBox>
-			</StackPanel>
-			<Separator IsEnabled="False" Width="240" Margin="5"
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <!-- Define your DataTemplate here -->
+              <Border  CornerRadius="4" Padding="4">
+                <TextBlock Text="{Binding text}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0" />
+              </Border>
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+      <Separator IsEnabled="False" Width="240" Margin="5"
                        Background="{DynamicResource SystemChromeAltLowColor}" Opacity="0.3">
-			</Separator>
-			<Button Name="NewScreen" HorizontalAlignment="Center" Width="200" Height="50" Margin="10" Click="onNewScreen">
-				<StackPanel Orientation="Vertical">
-					<TextBlock Text="New Screen" FontSize="17" HorizontalAlignment="Center"></TextBlock>
-					<TextBlock Text="New screen to Create New State" HorizontalAlignment="Center" Foreground="DarkGray"></TextBlock>
-				</StackPanel>
-			</Button>
-			<StackPanel Orientation="Horizontal" Margin="25 0">
-				<TextBlock Text="Existed Screen" Margin="5"></TextBlock>
-				<Separator IsEnabled="False" Width="95" Margin="5"
+      </Separator>
+      <Button Name="NewScreen" HorizontalAlignment="Center" Width="200" Height="50" Margin="10" Click="onNewScreen">
+        <StackPanel Orientation="Vertical">
+          <TextBlock Text="New Screen" FontSize="17" HorizontalAlignment="Center"></TextBlock>
+          <TextBlock Text="New screen to Create New State" HorizontalAlignment="Center" Foreground="DarkGray"></TextBlock>
+        </StackPanel>
+      </Button>
+      <StackPanel Orientation="Horizontal" Margin="25 0">
+        <TextBlock Text="Existed Screen" Margin="5"></TextBlock>
+        <Separator IsEnabled="False" Width="95" Margin="5"
 									 Background="{DynamicResource SystemChromeAltLowColor}" Opacity="0.3">
-				</Separator>
-			</StackPanel>
-			<ComboBox Name="ListPage"  SelectionChanged="onSelectPage" Width="200" Margin="25 0 25 25">
-			</ComboBox>
-		</StackPanel>
-	</StackPanel>
+        </Separator>
+      </StackPanel>
+      <ComboBox Name="ListPage"  SelectionChanged="onSelectPage" Width="200" Margin="25 0 25 25">
+      </ComboBox>
+    </StackPanel>
+  </StackPanel>
 </UserControl>

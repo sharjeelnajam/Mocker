@@ -17,12 +17,12 @@ namespace MockerProject.Views.UIProperties
         public UIPropertyBase()
         {
             InitializeComponent();
-           
+
             BGButton.PropertyChanged += (s, e) =>
             {
                 if (e.Property == AvaloniaColorPicker.ColorButton.ColorProperty)
                 {
-                    
+
                     Color w_Color = BGButton.Color;
                     SolidColorBrush w_Brush = new SolidColorBrush(w_Color);
                     if (m_ControlModel == null) return;
@@ -58,26 +58,27 @@ namespace MockerProject.Views.UIProperties
             };
         }
 
-        public virtual void setModel(UIControlViewModel model,UIControl uIControl)
+        public virtual void setModel(UIControlViewModel model, UIControl uIControl)
         {
             m_ControlModel = model;
             this.DataContext = m_ControlModel;
             m_UIControl = uIControl;
+            BGButton.Color = model.background.Color;
+            BCButton.Color = model.borderColor.Color;
+            FGButton.Color = model.foreground.Color;
 
-           
-           
             int index = 0;
             ComboBoxItem item0 = new ComboBoxItem();
             item0.Content = "None";
             ListPage.Items.Add(item0);
-           
+
             for (int i = 0; i < m_UIControl.m_MainViewModel.m_lstWorkScreen.Count; i++)
             {
                 ComboBoxItem item = new ComboBoxItem();
                 item.Content = m_UIControl.m_MainViewModel.m_lstWorkScreen[i].m_strName;
                 ListPage.Items.Add(item);
-                
             }
+
             index = Event.SelectedIndex;
             ItemCollection items = ListPage.Items;
             foreach (ComboBoxItem item in items)
@@ -88,14 +89,13 @@ namespace MockerProject.Views.UIProperties
                     break;
                 }
             }
-           
-
         }
+
         private void onADDACTION(object sender, RoutedEventArgs e)
         {
-            if(m_ControlModel==null) return;
+            if (m_ControlModel == null) return;
             m_ControlModel.IterationVisible = true;
-         }
+        }
 
         private void onBack(object sender, RoutedEventArgs e)
         {
@@ -109,12 +109,11 @@ namespace MockerProject.Views.UIProperties
             IterationItem selectedItem = ((IterationItem)Event.SelectedItem);
             if (selectedItem == null) return;
             if (selectedItem.text == "Selects") return;
-
-
-            ItemCollection items = ListPage.Items ;
-            foreach(ComboBoxItem item in items)
+            
+            ItemCollection items = ListPage.Items;
+            foreach (ComboBoxItem item in items)
             {
-                if(item.Content == m_ControlModel.iterationItems[index].iteration)
+                if (item.Content == m_ControlModel.iterationItems[index].iteration)
                 {
                     ListPage.SelectedItem = item;
                     break;
@@ -124,11 +123,9 @@ namespace MockerProject.Views.UIProperties
 
         private void onSelectPage(object? sender, SelectionChangedEventArgs e)
         {
-            
             int index = Event.SelectedIndex;
-            ComboBoxItem item =(ComboBoxItem) ListPage.SelectedItem;
-            m_ControlModel.iterationItems[index].iteration =(string) item.Content;
-            
+            ComboBoxItem item = (ComboBoxItem)ListPage.SelectedItem;
+            m_ControlModel.iterationItems[index].iteration = (string)item.Content;
         }
 
         private void onNewScreen(object? sender, RoutedEventArgs routedEventArgs)
@@ -152,17 +149,18 @@ namespace MockerProject.Views.UIProperties
                     int w_nControlX = int.Parse(textBox.Text);
                     if (w_nControlX >= 0)
                     {
-                      
+
                         m_UIControl.setPositionX(w_nControlX);
                     }
                 }
-                       
+
                 catch (Exception e)
                 {
                     textBox.Text = m_UIControl.m_nPositionX.ToString();
                 }
             }
         }
+        
         private void SetControlPostionY(object? sender, RoutedEventArgs routedEventArgs)
         {
             if (sender is TextBox textBox)
@@ -184,14 +182,14 @@ namespace MockerProject.Views.UIProperties
         //}
         //private void SetControlHeight(object? sender, RoutedEventArgs routedEventArgs)
         //{
-           
+
         //}
         //private void onSetFitWidth(object? sender, RoutedEventArgs e)
         //{
         //}
         //private void onSetFitHeight(object? sender, RoutedEventArgs e)
         //{
-           
+
         //}
 
         private void onDisable(object? sender, RoutedEventArgs e)
@@ -207,14 +205,12 @@ namespace MockerProject.Views.UIProperties
         }
         private void onSetEvent([AllowNull] string strPage)
         {
-            
+
             onShowEvent();
         }
         private void onShowEvent()
         {
 
         }
-
-        
     }
 }
