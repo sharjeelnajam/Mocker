@@ -442,7 +442,6 @@ namespace MockerProject
                     BuidControl(((ContainerBoxControl)w_UIControl).container, ((ContainerBoxRunControl)w_Control).container, id, w, h);
                     //((ContainerBoxRunControl)w_Control).container = ((ContainerBoxControl)w_UIControl).container;
 
-
                     //foreach (IterationItem iterationItem in ((ListBoxViewModel)w_UIControl.m_ControlViewModel).iterationItems)
                     //{
                     //    if (iterationItem.text == "Tapped")
@@ -468,17 +467,11 @@ namespace MockerProject
                     //            }, handledEventsToo: true);
                     //    }
                     //}
-
-
-
-
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.REPEATER)
                 {
                     w_Control = new RepeaterRunControl();
-
                     setBaseProperty((TemplatedControl)w_Control, (UIControlViewModel)w_UIControl.m_ControlViewModel);
-
                     foreach (ContainerBoxControl item in ((RepeaterControlViewModel)w_UIControl.m_ControlViewModel).Items)
                     {
                         ContainerBoxRunControl containerItem = new ContainerBoxRunControl();
@@ -489,16 +482,11 @@ namespace MockerProject
                         setBaseProperty((TemplatedControl)containerItem, (UIControlViewModel)item.m_ControlViewModel);
                         containerItem.Width = w;
                         containerItem.Height = h;
-
                         ((RepeaterRunControl)w_Control).itemControl.Items.Add(containerItem);
-
-
                     }
                     w_UIControl.m_nWidth = 300;
                     w_UIControl.m_nHeight = 500;
                     //((ContainerBoxRunControl)w_Control).container = ((ContainerBoxControl)w_UIControl).container;
-
-
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.TABS)
                 {
@@ -746,59 +734,67 @@ namespace MockerProject
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.RADIO)
                 {
-                    w_Control = new RadioButton();
-                    ((RadioButton)w_Control).Opacity = w_UIControl.m_Opacity;
-                    ToolTip.SetTip(w_Control, w_UIControl.m_Tooltip);
-                    ((RadioButton)w_Control).Content = w_UIControl.m_strText;
-                    ((RadioButton)w_Control).Foreground = w_UIControl.m_Foreground;
-                    ((RadioButton)w_Control).FontSize = w_UIControl.m_nFontSize;
-                    ((RadioButton)w_Control).FontFamily = w_UIControl.m_FontFamily;
-                    if (w_UIControl.m_bBold)
-                        ((RadioButton)w_Control).FontWeight = FontWeight.Bold;
-                    if (w_UIControl.m_bItalic)
-                        ((RadioButton)w_Control).FontStyle = FontStyle.Italic;
-                    ((RadioButton)w_Control).IsEnabled = !w_UIControl.m_bDisable;
-                    //((Image)w_Control).Text = w_UIControl.m_strText;
-                    if (w_UIControl.m_TapEvent != null)
+                    var radioControl = new RadioControl
                     {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_TapEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((RadioButton)w_Control).AddHandler(RadioButton.TappedEvent, (sender, e) =>
-                            {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_DTapEvent != null)
+                        DataContext = w_UIControl.m_ControlViewModel
+                    };
+
+                    // find the inner radio button
+                    var innerRadio = radioControl.FindControl<RadioButton>("radioButton");
+
+                    if (innerRadio != null)
                     {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_DTapEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((RadioButton)w_Control).AddHandler(RadioButton.DoubleTappedEvent, (sender, e) =>
+                        if (w_UIControl.m_TapEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_TapEvent);
+                            if (w_EventID != -1 && w_EventID != id)
                             {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_HPressEvent != null)
-                    {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_HPressEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((RadioButton)w_Control).AddHandler(RadioButton.HoldingEvent, (sender, e) =>
+                                innerRadio.AddHandler(RadioButton.TappedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                            }
+                        }
+                        if (w_UIControl.m_DTapEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_DTapEvent);
+                            if (w_EventID != -1 && w_EventID != id)
                             {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
-                    }
-                    if (w_UIControl.m_SwipeLeftEvent != null)
-                    {
-                        int w_EventID = GetIdtoPageName(w_UIControl.m_SwipeLeftEvent);
-                        if (w_EventID != -1 && w_EventID != id)
-                            ((RadioButton)w_Control).AddHandler(RadioButton.PointerMovedEvent, (sender, e) =>
+                                innerRadio.AddHandler(RadioButton.DoubleTappedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                            }
+                        }
+                        if (w_UIControl.m_HPressEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_HPressEvent);
+                            if (w_EventID != -1 && w_EventID != id)
                             {
-                                Init();
-                                SetControltoCanvas(w_EventID);
-                            }, handledEventsToo: true);
+                                innerRadio.AddHandler(RadioButton.HoldingEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                            }
+                        }
+                        if (w_UIControl.m_SwipeLeftEvent != null)
+                        {
+                            int w_EventID = GetIdtoPageName(w_UIControl.m_SwipeLeftEvent);
+                            if (w_EventID != -1 && w_EventID != id)
+                            {
+                                innerRadio.AddHandler(RadioButton.PointerMovedEvent, (sender, e) =>
+                                {
+                                    Init();
+                                    SetControltoCanvas(w_EventID);
+                                }, handledEventsToo: true);
+                            }
+                        }
                     }
+
+                    w_Control = radioControl;
                 }
                 else continue;
                 w_Control.Width = w_UIControl.m_nWidth;

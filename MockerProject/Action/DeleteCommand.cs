@@ -1,9 +1,4 @@
 ﻿using Avalonia.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MockerProject.Action
 {
@@ -41,6 +36,8 @@ namespace MockerProject.Action
                     .GetMethod("Remove")?
                     .Invoke(parentProp.GetValue(_element.Parent), new object[] { _element });
             }
+
+            _canvas.Children.Remove(_element);
         }
 
         public void UnExecute()

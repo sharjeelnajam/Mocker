@@ -43,8 +43,6 @@ namespace MockerProject.Views.UIControls
                 if (item.closeBtn.IsVisible) return;
             }
             base.MousePressEvent(sender, e);
-           
-
         }
 
         public override void MouseMoveEvent(object sender, PointerEventArgs e)

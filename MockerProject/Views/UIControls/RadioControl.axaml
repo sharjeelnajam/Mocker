@@ -6,17 +6,89 @@
              x:Class="MockerProject.Views.RadioControl"
              xmlns:vm="clr-namespace:MockerProject.ViewModels"
              x:CompileBindings="True" x:DataType="vm:UIControlViewModel">
-    <StackPanel Name="radio">
-        <RadioButton IsChecked="False" GroupName="First Group" Content="{Binding text}"
-                     Width="{Binding width}"
-                     Height="{Binding height}"
-                     Opacity="{Binding opacity}"
-                     ToolTip.Tip = "{Binding Control_Tip}"
-                     Foreground="{Binding foreground}"
-                     FontSize="{Binding fontSize}"
-                     FontFamily="{Binding fontFamily}"
-                     FontWeight="{Binding fontWeight}"
-                     FontStyle="{Binding fontStyle}"
-                     />
-    </StackPanel>
+
+  <UserControl.Styles>
+    <Style Selector="RadioButton">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Center">
+            <!-- Radio Circle -->
+            <Border Name="radioBorder"
+                    Width="20" Height="20"
+                    CornerRadius="10"
+                    BorderThickness="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}">
+              <!-- Inner filled dot when checked -->
+              <Ellipse x:Name="RadioDot"
+                       Width="10" Height="10"
+                       Fill="Black"
+                       IsVisible="False"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            </Border>
+
+            <!-- Label -->
+            <ContentPresenter Grid.Column="1"
+                              Name="PART_TextPresenter"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Margin="6,0,0,0"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              Foreground="{TemplateBinding Foreground}" />
+          </Grid>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <!-- Show dot when checked -->
+    <Style Selector="RadioButton:checked /template/ Ellipse#RadioDot">
+      <Setter Property="IsVisible" Value="True"/>
+    </Style>
+
+    <!-- Hide dot when unchecked -->
+    <Style Selector="RadioButton:unchecked /template/ Ellipse#RadioDot">
+      <Setter Property="IsVisible" Value="False"/>
+    </Style>
+
+    <!-- Remove hover effect -->
+    <Style Selector="RadioButton:pointerover /template/ Border#radioBorder">
+      <Setter Property="Background" Value="{TemplateBinding Background}" />
+      <Setter Property="BorderBrush" Value="{TemplateBinding BorderBrush}" />
+    </Style>
+    <Style Selector="RadioButton:pointerover /template/ ContentPresenter#PART_TextPresenter">
+      <Setter Property="TextElement.Foreground" Value="{Binding foreground}" />
+    </Style>
+
+    <!-- Remove pressed effect -->
+    <Style Selector="RadioButton:pressed /template/ Border#radioBorder">
+      <Setter Property="Background" Value="{TemplateBinding Background}" />
+      <Setter Property="BorderBrush" Value="{TemplateBinding BorderBrush}" />
+    </Style>
+    <Style Selector="RadioButton:pressed /template/ ContentPresenter#PART_TextPresenter">
+      <Setter Property="TextElement.Foreground" Value="{Binding foreground}" />
+    </Style>
+
+  </UserControl.Styles>
+
+  <StackPanel Name="radio">
+    <RadioButton IsChecked="False"
+                 GroupName="First Group"
+                 Content="{Binding text}"
+                 Width="{Binding width}"
+                 Height="{Binding height}"
+                 Opacity="{Binding opacity}"
+                 ToolTip.Tip="{Binding Control_Tip}"
+                 Foreground="{Binding foreground}"
+                 FontSize="{Binding fontSize}"
+                 FontFamily="{Binding fontFamily}"
+                 FontWeight="{Binding fontWeight}"
+                 FontStyle="{Binding fontStyle}"
+                 Background="{Binding background}"
+                 BorderBrush="{Binding borderColor}"
+                 BorderThickness="{Binding borderThickness}"/>
+  </StackPanel>
 </UserControl>

@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using Avalonia.VisualTree;
 using MockerProject.Action;
 using MockerProject.Models;
 //using Avalonia.Remote.Protocol.Input;
@@ -78,7 +77,11 @@ namespace MockerProject.Views
             {
                 // Traverse up to find the draggable container (e.g. LayoutTransformControl)
                 var rootControl = new Control();
-                if (clickedControl is ButtonControl || clickedControl is CheckControl || clickedControl is EditControl)
+                if (clickedControl is ButtonControl
+                   || clickedControl is CheckControl
+                   || clickedControl is EditControl
+                   || clickedControl is RadioControl
+                   || clickedControl is Image)
                 {
                     rootControl = clickedControl;
                 }
