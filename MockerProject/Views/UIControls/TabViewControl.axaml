@@ -3,38 +3,80 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 xmlns:vm="clr-namespace:MockerProject.ViewModels.UIViewModels;assembly=MockerProject"
-			 xmlns:v="clr-namespace:MockerProject.Views.UIControls;"
+						 xmlns:vm="clr-namespace:MockerProject.ViewModels.UIViewModels;assembly=MockerProject"
+						 xmlns:v="clr-namespace:MockerProject.Views.UIControls;"
              x:Class="MockerProject.Views.UIControls.TabViewControl"
-			 x:DataType="vm:RepeaterControlViewModel"
-			 Background="Transparent"
-			 IsVisible="True"
-			
-			 Opacity="{Binding opacity}"
-			 ToolTip.Tip="{Binding Control_Tip}"
-				  
-				  BorderBrush="{Binding borderColor}"
-				  BorderThickness="{Binding borderThickness}"
-				  CornerRadius="{Binding borderRound}"
-				  FontSize="{Binding fontSize}"
-				  FontWeight="{Binding fontWeight}"
-				  FontStyle="{Binding fontStyle}"
-				  FontFamily="{Binding fontFamily}"
-				  FontStretch="Expanded"
-				  IsEnabled="{Binding isEnabled}">
-	
-	<StackPanel Margin="0">
-		<TabControl ItemsSource="{Binding Items}" Name="tabControl" Foreground="{Binding foreground}">
-			<TabControl.Styles>
-				<Style Selector="TabItem.Header" >
-					<Setter Property="Header">
-						<Setter Property="Foreground" Value="White"/>
-					</Setter>
-				</Style>
-			</TabControl.Styles>
-			
-		</TabControl>
-		<Button Name="closeBtn" HorizontalAlignment="Left" Background="Transparent" Foreground="Black"  Command="{Binding AddItems}" >AddItems</Button>
+						 x:DataType="vm:RepeaterControlViewModel"
+						 Background="Transparent"
+             Foreground="{Binding foreground}"
+						 IsVisible="True"
+						 Opacity="{Binding opacity}"
+						 ToolTip.Tip="{Binding Control_Tip}"
+						 BorderBrush="{Binding borderColor}"
+						 BorderThickness="{Binding borderThickness}"
+						 CornerRadius="{Binding borderRound}"
+						 FontSize="{Binding fontSize}"
+						 FontWeight="{Binding fontWeight}"
+						 FontStyle="{Binding fontStyle}"
+						 FontFamily="{Binding fontFamily}"
+						 FontStretch="Expanded"
+						 IsEnabled="{Binding isEnabled}">
 
-	</StackPanel>
+  <StackPanel Margin="0">
+    <TabControl ItemsSource="{Binding Items}" Name="tabControl" Foreground="{Binding foreground}">
+      <TabControl.Styles>
+        <Style Selector="TabItem.Header" >
+          <Setter Property="Header">
+            <Setter Property="Foreground" Value="{Binding foreground}"/>
+          </Setter>
+        </Style>
+      </TabControl.Styles>
+    </TabControl>
+    <Button Name="closeBtn"
+            HorizontalAlignment="Left"
+            Background="Transparent"
+            Foreground="Black"
+            Command="{Binding AddItems}">
+      AddItems
+
+      <Button.Styles>
+        <Style Selector="Button">
+          <Setter Property="Template">
+            <ControlTemplate>
+              <Border Background="{Binding background}"
+                      BorderBrush="{Binding borderColor}"
+                      BorderThickness="{Binding borderThickness}"
+                      CornerRadius="{Binding borderRound}">
+                <ContentPresenter Padding="{TemplateBinding Padding}"
+                                  Content="{TemplateBinding Content}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  FontSize="{TemplateBinding FontSize}"
+                                  FontWeight="{TemplateBinding FontWeight}"
+                                  FontStyle="{TemplateBinding FontStyle}"
+                                  FontFamily="{TemplateBinding FontFamily}" />
+              </Border>
+            </ControlTemplate>
+          </Setter>
+        </Style>
+        <Style Selector="Button">
+          <Setter Property="Foreground" Value="{Binding foreground}" />
+        </Style>
+        <!-- No hover/pressed overrides -->
+        <Style Selector="Button:pointerover">
+          <Setter Property="Background" Value="{Binding background}" />
+          <Setter Property="BorderBrush" Value="{Binding borderColor}" />
+          <Setter Property="Foreground" Value="{Binding foreground}" />
+        </Style>
+
+        <Style Selector="Button:pressed">
+          <Setter Property="Background" Value="{Binding background}" />
+          <Setter Property="BorderBrush" Value="{Binding borderColor}" />
+          <Setter Property="Foreground" Value="{Binding foreground}" />
+        </Style>
+      </Button.Styles>
+      
+    </Button>
+
+  </StackPanel>
 </UserControl>

@@ -1,6 +1,4 @@
-using Avalonia.Controls;
 using Avalonia.Media;
-using MockerProject.ViewModels;
 
 namespace MockerProject.Views.UIControls
 {

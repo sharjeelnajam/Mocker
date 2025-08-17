@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using MockerProject.Views;
 
 namespace MockerProject.Action
 {
@@ -19,14 +20,17 @@ namespace MockerProject.Action
             if (_element.Parent is Panel panel)
             {
                 panel.Children.Remove(_element);
+                _canvas.Children.Remove(panel);
             }
             else if (_element.Parent is Decorator decorator)
             {
                 decorator.Child = null;
+                _canvas.Children.Remove(decorator);
             }
             else if (_element.Parent is ContentControl contentControl)
             {
                 contentControl.Content = null;
+                _canvas.Children.Remove(contentControl);
             }
             else if (_element.Parent != null)
             {
@@ -35,9 +39,7 @@ namespace MockerProject.Action
                 parentProp?.GetValue(_element.Parent)?.GetType()
                     .GetMethod("Remove")?
                     .Invoke(parentProp.GetValue(_element.Parent), new object[] { _element });
-            }
-
-            _canvas.Children.Remove(_element);
+            }           
         }
 
         public void UnExecute()

@@ -1,8 +1,6 @@
-using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 using MockerProject.ViewModels.UIViewModels;
-using MockerProject.ViewModels;
-using Avalonia.Input;
 
 namespace MockerProject.Views.UIControls
 {
@@ -16,7 +14,7 @@ namespace MockerProject.Views.UIControls
             setName("TabView");
             setWidth(310);
             setHeight(270);
-            setBackground(new SolidColorBrush(new Color(0, 200, 200, 200)));
+            //setBackground(new SolidColorBrush(new Color(0, 200, 200, 200)));
             setForeground(new SolidColorBrush(new Color(255, 0, 0, 0)));
         }
         public override void doubleClickHandler(object sender, TappedEventArgs e)

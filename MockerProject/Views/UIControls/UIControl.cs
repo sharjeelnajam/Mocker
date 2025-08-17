@@ -1,14 +1,12 @@
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Media;
+using MockerProject.Models;
+using MockerProject.ViewModels;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Media;
-using MockerProject.ViewModels;
-using MockerProject.Views.UIControls;
-using MockerProject.Models;
-using System.Security.Cryptography.X509Certificates;
-using Avalonia.Input;
 
 namespace MockerProject.Views;
 
@@ -51,7 +49,8 @@ public class UIControl : UserControl
     public string m_SwipeRightEvent;
     public string m_SwipeUpEvent;
     public string m_SwipeDownEvent;
-    
+    public bool IsDeleted { get; set; }
+
     public bool m_IsDoubleTapped = false;
     public List<string> subItems = new List<string>();
     public double sX;

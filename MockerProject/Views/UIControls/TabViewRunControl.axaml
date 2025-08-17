@@ -4,15 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MockerProject.Views.UIControls.TabViewRunControl"
-			  xmlns:vm="clr-namespace:MockerProject.ViewModels.UIViewModels;assembly=MockerProject"
-			 xmlns:v="clr-namespace:MockerProject.Views.UIControls;"
-            
-			 x:DataType="vm:RepeaterControlViewModel"
-			 Background="Transparent"
-			 IsVisible="True">
+						 xmlns:vm="clr-namespace:MockerProject.ViewModels.UIViewModels;assembly=MockerProject"
+						xmlns:v="clr-namespace:MockerProject.Views.UIControls;"
+						x:DataType="vm:RepeaterControlViewModel"
+						Background="Transparent"
+						IsVisible="True">
 	<StackPanel Margin="0">
 		<TabControl  Name="tabControl">
-
+      <TabControl.Styles>
+        <Style Selector="TabItem.Header" >
+          <Setter Property="Header">
+            <Setter Property="Foreground" Value="{Binding foreground}"/>
+          </Setter>
+        </Style>
+      </TabControl.Styles>
 		</TabControl>
 	</StackPanel>
 </UserControl>

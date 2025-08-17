@@ -507,16 +507,14 @@ namespace MockerProject
                         TabItem tabItem1 = new TabItem();
                         tabItem1.Header = ((RepeaterControlViewModel)w_UIControl.m_ControlViewModel).TabHeaders[index];
                         tabItem1.Content = containerItem;
+                        tabItem1.Foreground = new SolidColorBrush(new Color(255, 0, 0, 0));
 
                         ((TabViewRunControl)w_Control).tabControl.Items.Add(tabItem1);
                         index++;
-
                     }
                     w_UIControl.m_nWidth = 300;
                     w_UIControl.m_nHeight = 500;
                     //((ContainerBoxRunControl)w_Control).container = ((ContainerBoxControl)w_UIControl).container;
-
-
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.LISTBOX)
                 {
