@@ -14,7 +14,7 @@
     </ItemsControl>
     <Button Name="closeBtn"
             HorizontalAlignment="Left"
-            Foreground="{DynamicResource PrimaryForeground}"
+            Foreground="{Binding foreground}"
             Command="{Binding AddItems}">
       AddItems
 

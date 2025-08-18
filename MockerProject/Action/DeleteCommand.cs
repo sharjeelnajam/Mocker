@@ -1,5 +1,8 @@
 ﻿using Avalonia.Controls;
+using MockerProject.ViewModels.UIViewModels;
 using MockerProject.Views;
+using MockerProject.Views.UIControls;
+using System.Linq;
 
 namespace MockerProject.Action
 {
@@ -39,7 +42,21 @@ namespace MockerProject.Action
                 parentProp?.GetValue(_element.Parent)?.GetType()
                     .GetMethod("Remove")?
                     .Invoke(parentProp.GetValue(_element.Parent), new object[] { _element });
-            }           
+            }
+
+            _canvas.Children.Remove(_element);
+
+            if (_element.DataContext is TreeViewViewModel treeVm)
+            {
+                var runControl = _canvas.Children
+                                        .OfType<TreeViewControl>()
+                                        .FirstOrDefault(c => c.DataContext == treeVm);
+
+                if (runControl != null)
+                {
+                    _canvas.Children.Remove(runControl);
+                }
+            }
         }
 
         public void UnExecute()

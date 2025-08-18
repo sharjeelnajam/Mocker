@@ -593,7 +593,6 @@ namespace MockerProject
                             Init();
                             SetControltoCanvas(w_EventID);
                         }
-
                     };
 
                     foreach (IterationItem iterationItem in ((TreeViewViewModel)w_UIControl.m_ControlViewModel).iterationItems)
@@ -619,7 +618,6 @@ namespace MockerProject
                                 }, handledEventsToo: true);
                         }
                     }
-
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.SLIDER)
                 {

@@ -1,15 +1,13 @@
-
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MockerProject.Views.UIControls.TreeViewRunControl"
-			 xmlns:vm="clr-namespace:MockerProject.ViewModels.UIViewModels"
-	         x:CompileBindings="True" x:DataType="vm:TreeViewViewModel">
+			       xmlns:vm="clr-namespace:MockerProject.ViewModels.UIViewModels"
+	           x:CompileBindings="True" x:DataType="vm:TreeViewViewModel">
 
-
-	<TreeView Name="treeView"
+  <TreeView Name="treeView"
 			  ToolTip.Tip="{Binding Control_Tip}"
 			  Opacity="{Binding opacity}"
 			  Width="{Binding width}"
@@ -26,31 +24,33 @@
 			  FontStretch="Expanded"
 			  IsEnabled="{Binding isEnabled}"
 			  ItemsSource="{Binding Items}"
-			 
-			  SelectedItem="{Binding SelectedItem}"
-			  
-			 >
-		<TreeView.ItemTemplate>
-			<TreeDataTemplate ItemsSource="{Binding SubItems}" >
-				<Border   CornerRadius="4" Padding="4">
-					<Grid ColumnDefinitions="75*,25*" RowDefinitions="25*" Margin="0"  >
-						<TextBlock FontSize="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).fontSize}"
-						  FontWeight="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).fontWeight}"  Foreground="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).foreground}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0" IsVisible="{Binding Visible}" Text="{Binding text}" />
-					</Grid>
-				</Border>
-			</TreeDataTemplate>
-		</TreeView.ItemTemplate>
-		<TreeView.Styles>
-			<Style Selector="TreeViewItem">
-				<Setter Property="Padding" Value="0" />
-				<Setter Property="Background" Value="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).itemBackground}" />
-			</Style>
+			  SelectedItem="{Binding SelectedItem}">
 
-			
+    <TreeView.ItemTemplate>
+      <TreeDataTemplate ItemsSource="{Binding SubItems}" >
+        <Border CornerRadius="4" Padding="4">
+          <Grid ColumnDefinitions="75*,25*" RowDefinitions="25*" Margin="0"  >
+            <TextBlock FontSize="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).fontSize}"
+						           FontWeight="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).fontWeight}"
+                       Foreground="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).foreground}"
+                       VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0"
+                       IsVisible="{Binding Visible}" Text="{Binding text}" />
+          </Grid>
+        </Border>
+      </TreeDataTemplate>
+    </TreeView.ItemTemplate>
+    <TreeView.Styles>
+      <Style Selector="TreeViewItem">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).itemBackground}" />
+      </Style>
+      <Style Selector="TreeViewItem:expanded /template/ Path#PART_ExpandCollapsePath">
+        <Setter Property="Fill" Value="Black" />
+      </Style>
+      <Style Selector="TreeViewItem /template/ Path#PART_ExpandCollapsePath">
+        <Setter Property="Fill" Value="Black" />
+      </Style>
+    </TreeView.Styles>
 
-		</TreeView.Styles>
-
-	</TreeView>
-
+  </TreeView>
 </UserControl>
-

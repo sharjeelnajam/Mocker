@@ -1,16 +1,12 @@
-using Avalonia.Controls;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Media;
-using MockerProject.ViewModels.UIViewModels;
-using DynamicData;
-using static MockerProject.ViewModels.UIViewModels.TreeViewViewModel;
 using Avalonia.VisualTree;
-using System;
+using MockerProject.Models;
+using MockerProject.ViewModels.UIViewModels;
 using MockerProject.Views.UIProperties;
 using System.Diagnostics.CodeAnalysis;
-using MockerProject.Models;
 using static MockerProject.ViewModels.UIControlViewModel;
 
 namespace MockerProject.Views.UIControls
@@ -29,7 +25,6 @@ namespace MockerProject.Views.UIControls
                 text = "Selects",
                 type = EventType.EVENT_SELECTITEM,
                 iteration = "None",
-
             };
             m_ControlViewModel.iterationItems.Insert(0, item);
             setWidth(300);
@@ -44,7 +39,6 @@ namespace MockerProject.Views.UIControls
             {
                 if (e.Key == Key.Enter)
                 {
-
                     Node item = (Node)((Control)e.Source).DataContext;
                     item.Visible = !item.Visible;
                 }
@@ -62,7 +56,6 @@ namespace MockerProject.Views.UIControls
                             selItem.addSubItem(item);
                             var treeViewItem = (TreeViewItem)treeView.ItemContainerGenerator.Index.ContainerFromItem(selItem);
                             treeView.ExpandSubTree(treeViewItem);
-
                         }
                     }
                     else
@@ -77,16 +70,11 @@ namespace MockerProject.Views.UIControls
                             var treeViewItem = (TreeViewItem)treeView.ItemContainerGenerator.Index.ContainerFromItem(selItem);
                             treeView.ExpandSubTree(treeViewItem);
                         }
-
                     }
-                    
-                    
                 }
                 if (e.Key == Key.Left && e.KeyModifiers == KeyModifiers.Shift)
                 {
                     Node item = (Node)((Control)e.Source).DataContext;
-                    
-                    
                     if (item.parent != null)
                     {
                         Node selItem = item.parent;
@@ -108,13 +96,9 @@ namespace MockerProject.Views.UIControls
                             item.parent = selItem.parent;
                             var treeViewItem = (TreeViewItem)treeView.ItemContainerGenerator.Index.ContainerFromItem(selItem);
                             treeView.ExpandSubTree(treeViewItem);
-
                         }
-
                     }
                 }
-
-
             }, handledEventsToo: true);
         }
 
@@ -126,9 +110,6 @@ namespace MockerProject.Views.UIControls
 
         private void TreeView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            
-           
 
         }
 
@@ -148,7 +129,6 @@ namespace MockerProject.Views.UIControls
             wind.setModel((TreeViewViewModel)m_ControlViewModel, this);
             wind.Position = nPP + cPP;
             wind.Show();
-
         }
     }
 }

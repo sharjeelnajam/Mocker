@@ -1728,8 +1728,6 @@ namespace MockerProject.ViewModels
                         Items = NodeToList(((TreeViewViewModel)w_UIControl.m_ControlViewModel).Items.ToList()),
                         ItemBackground = ((TreeViewViewModel)w_UIControl.m_ControlViewModel).itemBackground,
                         itemHeight = itemHeight
-
-
                     });
                     continue;
                 }
@@ -1973,8 +1971,6 @@ namespace MockerProject.ViewModels
                         SwipeDownEvent = w_UIControl.m_SwipeDownEvent
                     });
                 }
-
-
             }
         }
     }
