@@ -67,6 +67,7 @@ namespace MockerProject.Views.UIControls
             this.AddHandler(Control.TappedEvent, (sender, e) =>
             {
                 CustomItem item = (CustomItem)listBox.SelectedItem;
+                if(item != null)
                 item.Visible = !item.Visible;
             }, handledEventsToo: true);
         }
