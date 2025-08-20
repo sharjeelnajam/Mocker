@@ -78,6 +78,14 @@
   <Color x:Key="ThemeSaveButtonGradientStart">#6366F1</Color>
   <Color x:Key="ThemeSaveButtonGradientEnd">#8B5CF6</Color>
 
+  <!-- Animation Timeline Colors for Dark Mode -->
+  <Color x:Key="ThemeTimelineBackgroundColor">#374151</Color>
+  <Color x:Key="ThemeTimelineBorderColor">#4B5563</Color>
+  <Color x:Key="ThemeTimelineTextColor">#F9FAFB</Color>
+  <Color x:Key="ThemeTimelineIconColor">#9CA3AF</Color>
+  <Color x:Key="ThemeTimelineSliderColor">#6366F1</Color>
+  <Color x:Key="ThemeTimelineSliderTrackColor">#4B5563</Color>
+
   <SolidColorBrush x:Key="HeaderBackground" Color="{DynamicResource ThemeHeaderBackgroundColor}" />
   <SolidColorBrush x:Key="ControlBackground" Color="{DynamicResource ThemeControlBackgroundColor}" />
   <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource ThemeControlBorderColor}" />
@@ -89,6 +97,14 @@
   <SolidColorBrush x:Key="DisabledForeground" Color="{DynamicResource ThemeDisabledForegroundColor}" />
   <SolidColorBrush x:Key="MenuBorder" Color="{DynamicResource ThemeMenuBorderColor}" />
   <SolidColorBrush x:Key="PlatformBorderBrush" Color="{DynamicResource PlateformBorderColor}" />
+
+  <!-- Animation Timeline Brushes for Dark Mode -->
+  <SolidColorBrush x:Key="TimelineBackground" Color="{DynamicResource ThemeTimelineBackgroundColor}" />
+  <SolidColorBrush x:Key="TimelineBorder" Color="{DynamicResource ThemeTimelineBorderColor}" />
+  <SolidColorBrush x:Key="TimelineText" Color="{DynamicResource ThemeTimelineTextColor}" />
+  <SolidColorBrush x:Key="TimelineIcon" Color="{DynamicResource ThemeTimelineIconColor}" />
+  <SolidColorBrush x:Key="TimelineSlider" Color="{DynamicResource ThemeTimelineSliderColor}" />
+  <SolidColorBrush x:Key="TimelineSliderTrack" Color="{DynamicResource ThemeTimelineSliderTrackColor}" />
 
   <LinearGradientBrush x:Key="RunButtonBackground" StartPoint="0%,50%" EndPoint="100%,50%">
     <GradientStop Color="{DynamicResource ThemeRunButtonGradientStart}" Offset="0.0" />

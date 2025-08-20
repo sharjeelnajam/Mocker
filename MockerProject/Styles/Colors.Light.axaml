@@ -78,6 +78,14 @@
   <Color x:Key="ThemeSaveButtonGradientStart">#6366F1</Color>
   <Color x:Key="ThemeSaveButtonGradientEnd">#8B5CF6</Color>
 
+  <!-- Animation Timeline Colors for Light Mode -->
+  <Color x:Key="ThemeTimelineBackgroundColor">#F9FAFB</Color>
+  <Color x:Key="ThemeTimelineBorderColor">#E5E7EB</Color>
+  <Color x:Key="ThemeTimelineTextColor">#111827</Color>
+  <Color x:Key="ThemeTimelineIconColor">#6B7280</Color>
+  <Color x:Key="ThemeTimelineSliderColor">#6366F1</Color>
+  <Color x:Key="ThemeTimelineSliderTrackColor">#D1D5DB</Color>
+
   <SolidColorBrush x:Key="HeaderBackground" Color="{DynamicResource ThemeHeaderBackgroundColor}" />
   <SolidColorBrush x:Key="ControlBackground" Color="{DynamicResource ThemeControlBackgroundColor}" />
   <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource ThemeControlBorderColor}" />
@@ -90,7 +98,15 @@
   <SolidColorBrush x:Key="MenuBorder" Color="{DynamicResource ThemeMenuBorderColor}" />
 	<SolidColorBrush x:Key="PlatformBorderBrush" Color="{DynamicResource PlateformBorderColor}" />
 
-	<LinearGradientBrush x:Key="RunButtonBackground" StartPoint="0%,50%" EndPoint="100%,50%">
+  <!-- Animation Timeline Brushes for Light Mode -->
+  <SolidColorBrush x:Key="TimelineBackground" Color="{DynamicResource ThemeTimelineBackgroundColor}" />
+  <SolidColorBrush x:Key="TimelineBorder" Color="{DynamicResource ThemeTimelineBorderColor}" />
+  <SolidColorBrush x:Key="TimelineText" Color="{DynamicResource ThemeTimelineTextColor}" />
+  <SolidColorBrush x:Key="TimelineIcon" Color="{DynamicResource ThemeTimelineIconColor}" />
+  <SolidColorBrush x:Key="TimelineSlider" Color="{DynamicResource ThemeTimelineSliderColor}" />
+  <SolidColorBrush x:Key="TimelineSliderTrack" Color="{DynamicResource ThemeTimelineSliderTrackColor}" />
+
+  <LinearGradientBrush x:Key="RunButtonBackground" StartPoint="0%,50%" EndPoint="100%,50%">
     <GradientStop Color="{DynamicResource ThemeRunButtonGradientStart}" Offset="0.0" />
     <GradientStop Color="{DynamicResource ThemeRunButtonGradientEnd}" Offset="1.0" />
   </LinearGradientBrush>
