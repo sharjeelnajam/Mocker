@@ -1,8 +1,11 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Templates;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Styling;
 using MockerProject.Models;
 using MockerProject.ViewModels;
 using MockerProject.ViewModels.UIViewModels;
@@ -518,42 +521,91 @@ namespace MockerProject
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.LISTBOX)
                 {
-                    w_Control = new ListBox();
+                    var vm = (ListBoxViewModel)w_UIControl.m_ControlViewModel;
+                    var listBox = new ListBox();
+                    w_Control = listBox;
 
-                    setBaseProperty((TemplatedControl)w_Control, (UIControlViewModel)w_UIControl.m_ControlViewModel);
+                    setBaseProperty((TemplatedControl)w_Control, vm);
 
-                    foreach (CustomItem subItem in ((ListBoxViewModel)w_UIControl.m_ControlViewModel).Items)
+                    // Force our own ItemTemplate (instead of Avalonia's default TextBlock)
+                    listBox.ItemTemplate = new FuncDataTemplate<CustomItem>((item, _) =>
                     {
+                        return new Border
+                        {
+                            Child = new TextBlock
+                            {
+                                Text = item.text,
+                                Foreground = Brushes.Black,
+                                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
+                            }
+                        };
+                    });
 
-                        ListBoxItem itm = new ListBoxItem();
-                        itm.Content = subItem.text;
-                        ((ListBox)w_Control).Items.Add(itm);
-                        itm.Background = ((ListBoxViewModel)w_UIControl.m_ControlViewModel).itemBackground;
+                    // Base style
+                    listBox.Styles.Add(new Style(x => x.OfType<ListBoxItem>())
+                    {
+                        Setters =
+                        {
+                            new Setter(ListBoxItem.BackgroundProperty, vm.itemBackground),
+                            new Setter(ListBoxItem.ForegroundProperty, Brushes.Black)
+                        }
+                    });
 
+                    // PointerOver style
+                    listBox.Styles.Add(new Style(x => x.OfType<ListBoxItem>().Class("pointerover"))
+                    {
+                        Setters =
+                        {
+                            new Setter(ListBoxItem.BackgroundProperty, Brushes.LightBlue),
+                            new Setter(ListBoxItem.ForegroundProperty, Brushes.Black)
+                        }
+                    });
+                    listBox.Styles.Add(new Style(x => x.OfType<ListBoxItem>().Class("pointerover").Template().OfType<ContentPresenter>())
+                    {
+                        Setters =
+                        {
+                            new Setter(ContentPresenter.BackgroundProperty, Brushes.LightBlue),
+                            new Setter(ContentPresenter.ForegroundProperty, Brushes.Black)
+                        }
+                    });
+
+                    // Selected style
+                    listBox.Styles.Add(new Style(x => x.OfType<ListBoxItem>().Class("selected"))
+                    {
+                        Setters =
+                        {
+                            new Setter(ListBoxItem.BackgroundProperty, Brushes.LightBlue),
+                            new Setter(ListBoxItem.ForegroundProperty, Brushes.Black)
+                        }
+                    });
+
+                    // Add items
+                    foreach (CustomItem subItem in vm.Items)
+                    {
+                        listBox.Items.Add(subItem); // add the object, not just the string
                     }
-                   ((ListBox)w_Control).SelectedIndex = ((ListBoxControl)w_UIControl).listBox.SelectedIndex;
 
+                    listBox.SelectedIndex = ((ListBoxControl)w_UIControl).listBox.SelectedIndex;
 
-                    ((ListBox)w_Control).SelectionChanged += (sender, e) =>
+                    listBox.SelectionChanged += (sender, e) =>
                     {
                         int index = (int)((ListBox)sender).SelectedIndex;
-
-                        int w_EventID = GetIdtoPageName(((ListBoxViewModel)w_UIControl.m_ControlViewModel).Items[index].iteration);
+                        int w_EventID = GetIdtoPageName(vm.Items[index].iteration);
                         if (w_EventID != -1 && w_EventID != id)
                         {
                             Init();
                             SetControltoCanvas(w_EventID);
                         }
-
                     };
-                    foreach (IterationItem iterationItem in ((ListBoxViewModel)w_UIControl.m_ControlViewModel).iterationItems)
+
+                    foreach (IterationItem iterationItem in vm.iterationItems)
                     {
                         if (iterationItem.text == "Tapped")
                         {
                             int w_EventID = GetIdtoPageName(iterationItem.iteration);
                             if (w_EventID != -1 && w_EventID != id)
                             {
-                                ((ListBox)w_Control).AddHandler(ListBox.TappedEvent, (sender, e) =>
+                                listBox.AddHandler(ListBox.TappedEvent, (sender, e) =>
                                 {
                                     Init();
                                     SetControltoCanvas(w_EventID);
@@ -564,17 +616,15 @@ namespace MockerProject
                         {
                             int w_EventID = GetIdtoPageName(iterationItem.iteration);
                             if (w_EventID != -1 && w_EventID != id)
-                                ((ListBox)w_Control).AddHandler(ListBox.DoubleTappedEvent, (sender, e) =>
+                            {
+                                listBox.AddHandler(ListBox.DoubleTappedEvent, (sender, e) =>
                                 {
                                     Init();
                                     SetControltoCanvas(w_EventID);
                                 }, handledEventsToo: true);
+                            }
                         }
                     }
-
-
-
-
                 }
                 else if (w_UIControl.m_nUIControlType == CONTROL_TYPE.TREEVIEW)
                 {

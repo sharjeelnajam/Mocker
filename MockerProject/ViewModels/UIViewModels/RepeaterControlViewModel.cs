@@ -35,17 +35,17 @@ namespace MockerProject.ViewModels.UIViewModels
         private void ExecuteAddItems()
         {
             ContainerBoxControl containerBoxControl = new ContainerBoxControl();
-            containerBoxControl.setMainVM( this.m_MainVM);
+            containerBoxControl.setMainVM(this.m_MainVM);
             containerBoxControl.m_nUIControlType = Models.CONTROL_TYPE.CONTAINERBOX;
             //containerBoxControl.container.Children.Add(new ButtonControl());
             Items.Add(containerBoxControl);
             TabHeaders.Add("Item " + Items.Count);
             if (m_UIControl.m_nUIControlType == Models.CONTROL_TYPE.TABS)
             {
-
                 int index = Items.Count - 1;
                 //ListBoxItem listBoxItem = (ListBoxItem)((DropDownControl)w_UIControl).listBox.ContainerFromIndex(index);
                 TabItem item = (TabItem)((TabViewControl)m_UIControl).tabControl.ContainerFromIndex(index);
+                if (item is null) return;
                 TextBlock textBlock = new TextBlock();
                 textBlock.Text = "Item" + Items.Count;
                 textBlock.Foreground = new SolidColorBrush(new Color(255, 0, 0, 0));

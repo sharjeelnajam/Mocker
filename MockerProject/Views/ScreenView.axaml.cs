@@ -81,6 +81,7 @@ namespace MockerProject.Views
                    || clickedControl is CheckControl
                    || clickedControl is EditControl
                    || clickedControl is RadioControl
+                   || clickedControl is TabViewControl
                    || clickedControl is UIControl)
                 {
                     rootControl = clickedControl;
