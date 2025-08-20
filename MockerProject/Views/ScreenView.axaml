@@ -13,12 +13,13 @@
             HorizontalAlignment="Center" VerticalAlignment="Center" >
       <Canvas Focusable="True" PointerPressed="OnElementSelected" Name="screenCanvas"
                      Width="{Binding PF_W}" Height="{Binding PF_H}">
+        <Canvas.RenderTransform>
+          <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}" />
+        </Canvas.RenderTransform>
         <LayoutTransformControl Name="PlatformUI" Grid.Column="1" Grid.Row="1" Canvas.Top="{Binding PF_Y}" Canvas.Left="{Binding PF_X}" >
           <LayoutTransformControl.LayoutTransform>
             <TransformGroup>
               <RotateTransform Angle="{Binding PF_Ang}"/>
-              <ScaleTransform ScaleX="1">
-              </ScaleTransform>
             </TransformGroup>
           </LayoutTransformControl.LayoutTransform>
           <Canvas Width="{Binding PF_W}" Height="{Binding PF_H}">

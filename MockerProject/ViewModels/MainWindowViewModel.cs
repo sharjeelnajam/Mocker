@@ -47,6 +47,30 @@ namespace MockerProject.ViewModels
 
         public event EventHandler<bool>? ThemeChanged;
 
+        // Zoom properties for timeline slider and canvas scaling (1%..100%)
+        private double _zoom = 1.0; // 1.0 => 100%
+        public double Zoom
+        {
+            get => _zoom;
+            set
+            {
+                var clamped = Math.Clamp(value, 0.01, 1.0);
+                this.RaiseAndSetIfChanged(ref _zoom, clamped);
+                this.RaisePropertyChanged(nameof(ZoomPercent));
+            }
+        }
+
+        public double ZoomPercent
+        {
+            get => Math.Round(Zoom * 100.0);
+            set
+            {
+                var clamped = Math.Clamp(value, 1.0, 100.0);
+                Zoom = clamped / 100.0;
+                this.RaisePropertyChanged(nameof(ZoomPercent));
+            }
+        }
+
         public CONTROL_TYPE m_UIControlType = CONTROL_TYPE.NONE;
         public CONTROL_TYPE m_nSelectedUIControl = CONTROL_TYPE.NONE;
         public UIPropertyWindow m_wndUIProperty;

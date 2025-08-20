@@ -62,16 +62,16 @@
 								HorizontalAlignment="Center"
 								VerticalAlignment="Center"
 								Spacing="12">
-						<Slider Width="120"
-								Minimum="0"
-								Maximum="100"
-								Value="50"
-								Foreground="{DynamicResource TimelineSlider}"
-								Background="{DynamicResource TimelineSliderTrack}"/>
-						<TextBlock Text="+ 10%"
-								   Foreground="{DynamicResource TimelineText}"
-								   FontSize="12"
-								   VerticalAlignment="Center"/>
+						                    <Slider Width="120" 
+                            Minimum="1" 
+                            Maximum="100" 
+                            Value="{Binding ZoomPercent, Mode=TwoWay}"
+                            Foreground="{DynamicResource TimelineSlider}"
+                            Background="{DynamicResource TimelineSliderTrack}"/>
+						                    <TextBlock Text="{Binding ZoomPercent, StringFormat='+ {0}%'}" 
+                               Foreground="{DynamicResource TimelineText}"
+                               FontSize="12"
+                               VerticalAlignment="Center"/>
 					</StackPanel>
 					
                 </StackPanel>
