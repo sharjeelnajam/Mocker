@@ -5,6 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia;
 using Avalonia.VisualTree;
 using Avalonia.Threading;
+using Avalonia.Media;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -49,25 +50,42 @@ public partial class ProjectWorkView : UserControl
                 return;
             }
 
-            // Get the screen dimensions from the view model
-            var screenWidth = (int)viewModel.WorkScreen.m_Size.Width;
-            var screenHeight = (int)viewModel.WorkScreen.m_Size.Height;
-
-            // Create render target bitmap
-            var renderTargetBitmap = new RenderTargetBitmap(new PixelSize(screenWidth, screenHeight));
+            // Get the actual visual bounds of the current view to capture everything
+            var visualBounds = this.Bounds;
+            var actualWidth = (int)visualBounds.Width;
+            var actualHeight = (int)visualBounds.Height;
             
-            // Try to render the current view content
-            // Since we're in ProjectWorkView, we'll try to render the Screen content control
+            // Use the larger of the actual bounds or the platform dimensions
+            var captureWidth = Math.Max(actualWidth, viewModel.PF_W + 200);  // Add generous padding
+            var captureHeight = Math.Max(actualHeight, viewModel.PF_H + 200); // Add generous padding
+            
+            System.Diagnostics.Debug.WriteLine($"Visual bounds: {actualWidth}x{actualHeight}");
+            System.Diagnostics.Debug.WriteLine($"Platform dimensions: {viewModel.PF_W}x{viewModel.PF_H}");
+            System.Diagnostics.Debug.WriteLine($"Final capture dimensions: {captureWidth}x{captureHeight}");
+
+            // Create render target bitmap with the larger dimensions
+            var renderTargetBitmap = new RenderTargetBitmap(new PixelSize(captureWidth, captureHeight));
+            
+            // Simple approach: Capture the entire ScreenView directly
             var screenContent = this.FindControl<ContentControl>("Screen");
             if (screenContent?.Content is Visual visualContent)
             {
+                // Render the entire ScreenView content (this should include the complete mobile phone)
                 renderTargetBitmap.Render(visualContent);
+                System.Diagnostics.Debug.WriteLine($"Successfully rendered ScreenView: {visualContent.GetType().Name}");
             }
             else
             {
-                // Fallback: try to render the entire view
-                renderTargetBitmap.Render(this);
+                System.Diagnostics.Debug.WriteLine("No ScreenView content found");
+                return;
             }
+
+            // Debug: Log the dimensions being captured
+            System.Diagnostics.Debug.WriteLine($"Capturing screenshot with actual visual bounds: {actualWidth}x{actualHeight}");
+            System.Diagnostics.Debug.WriteLine($"Capture dimensions with padding: {captureWidth}x{captureHeight}");
+            System.Diagnostics.Debug.WriteLine($"Page dimensions: {viewModel.PG_W}x{viewModel.PG_H}");
+            System.Diagnostics.Debug.WriteLine($"Platform dimensions: {viewModel.PF_W}x{viewModel.PF_H}");
+            System.Diagnostics.Debug.WriteLine($"RenderTargetBitmap size: {renderTargetBitmap.PixelSize.Width}x{renderTargetBitmap.PixelSize.Height}");
 
             // Get desktop path
             var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -171,4 +189,8 @@ public partial class ProjectWorkView : UserControl
             System.Diagnostics.Debug.WriteLine($"Failed to open folder: {ex.Message}");
         }
     }
+
+
+
+
 }
