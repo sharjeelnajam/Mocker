@@ -79,7 +79,7 @@
   <Color x:Key="ThemeSaveButtonGradientEnd">#8B5CF6</Color>
 
   <!-- Animation Timeline Colors for Dark Mode -->
-  <Color x:Key="ThemeTimelineBackgroundColor">#374151</Color>
+  <Color x:Key="ThemeTimelineBackgroundColor">#000000</Color>
   <Color x:Key="ThemeTimelineBorderColor">#4B5563</Color>
   <Color x:Key="ThemeTimelineTextColor">#F9FAFB</Color>
   <Color x:Key="ThemeTimelineIconColor">#9CA3AF</Color>

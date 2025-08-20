@@ -23,7 +23,7 @@
                 BorderThickness="0,1,0,0"
                 Height="48"
                 Padding="16 0">
-            <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto">
+            <Grid ColumnDefinitions="Auto,*,Auto">
                 <!-- ANIMATION TIMELINE Text -->
                 <TextBlock Grid.Column="0" 
                            Text="ANIMATION TIMELINE"
@@ -32,54 +32,49 @@
                            FontSize="14"
                            VerticalAlignment="Center"/>
                 
-                <!-- Camera Icon -->
-                <Button Grid.Column="1" 
-                        Margin="24 0 0 0"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Width="24" Height="24"
-                        Padding="0">
-                    <Image Source="{DynamicResource Image}" Width="20" Height="20" />
-                </Button>
+            
                 
-                <!-- Document Icon -->
-                <Button Grid.Column="2" 
-                        HorizontalAlignment="Left"
-                        Margin="16 0 0 0"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Width="24" Height="24"
-                        Padding="0">
-                    <Image Source="{DynamicResource NewFileIcon}" Width="20" Height="20" />
-                </Button>
-                
-                <!-- Zoom Slider -->
-                <StackPanel Grid.Column="3" 
+                <!-- Camera and Document Icons (Moved to Right Side) -->
+                <StackPanel Grid.Column="2" 
                             Orientation="Horizontal" 
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
-                            Spacing="12">
-                    <Slider Width="120" 
-                            Minimum="0" 
-                            Maximum="100" 
-                            Value="50"
-                            Foreground="{DynamicResource TimelineSlider}"
-                            Background="{DynamicResource TimelineSliderTrack}"/>
-                    <TextBlock Text="+ 10%" 
-                               Foreground="{DynamicResource TimelineText}"
-                               FontSize="12"
-                               VerticalAlignment="Center"/>
+                            Spacing="16">
+                    <!-- Camera Icon -->
+                    <Button Background="Transparent"
+                            BorderThickness="0"
+                            Width="24" Height="24"
+                            Padding="0">
+                        <Image Source="{DynamicResource Image}" Width="20" Height="20" />
+                    </Button>
+                    
+                    <!-- Document Icon -->
+                    <Button Background="Transparent"
+                            BorderThickness="0"
+                            Width="24" Height="24"
+                            Padding="0">
+                        <Image Source="{DynamicResource NewFileIcon}" Width="20" Height="20" />
+                    </Button>
+
+					<!-- Zoom Slider -->
+					<StackPanel Grid.Column="1"
+								Orientation="Horizontal"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Spacing="12">
+						<Slider Width="120"
+								Minimum="0"
+								Maximum="100"
+								Value="50"
+								Foreground="{DynamicResource TimelineSlider}"
+								Background="{DynamicResource TimelineSliderTrack}"/>
+						<TextBlock Text="+ 10%"
+								   Foreground="{DynamicResource TimelineText}"
+								   FontSize="12"
+								   VerticalAlignment="Center"/>
+					</StackPanel>
+					
                 </StackPanel>
-                
-                <!-- More Options Icon -->
-                <Button Grid.Column="4" 
-                        Margin="16 0 0 0"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Width="24" Height="24"
-                        Padding="0">
-                    <Image Source="{DynamicResource ThreeDotsIcon}" Width="20" Height="20" />
-                </Button>
             </Grid>
         </Border>
     </Grid>
