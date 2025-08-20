@@ -50,6 +50,7 @@
   <Bitmap x:Key="Table">avares://MockerProject/Assets/New/Icons/dark/table.png</Bitmap>
   <Bitmap x:Key="Slider">avares://MockerProject/Assets/New/Icons/dark/slider.png</Bitmap>
   <Bitmap x:Key="Progress">avares://MockerProject/Assets/New/Icons/dark/progress.png</Bitmap>
+  <Bitmap x:Key="Camera">avares://MockerProject/Assets/New/Icons/dark/camera.png</Bitmap>
 
   <Bitmap x:Key="AddScreen">avares://MockerProject/Assets/New/Icons/dark/add-screen.png</Bitmap>
 
