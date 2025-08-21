@@ -38,16 +38,19 @@
                                    Margin="8,0,0,0"/>
                         <Button Grid.Column="1" 
                                 Name="CloseNotificationButton"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Width="20" 
-                                Height="20"
+                                Background="#FFE0E0"
+                                BorderThickness="1"
+                                BorderBrush="Red"
+                                Width="24" 
+                                Height="24"
                                 Margin="0,0,2,0"
                                 Click="OnCloseNotificationClick">
                             <TextBlock Text="✕" 
-                                       Foreground="Black" 
-                                       FontSize="12" 
-                                       HorizontalAlignment="Center"/>
+                                       Foreground="Red" 
+                                       FontSize="16" 
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Button>
                     </Grid>
                 </Border>
@@ -153,14 +156,14 @@
                     </Button>
 
                     <!-- Ruler Toggle Button -->
-                    <Button Background="Transparent"
+                    <ToggleButton Background="Transparent"
                             BorderThickness="0"
                             Width="24" Height="24"
                             Padding="0"
-                            Command="{Binding onToggleRuler}"
+                            IsChecked="{Binding IsRulerVisible}"
                             ToolTip.Tip="Show rulers and guides (Ctrl + L)">
                         <Image Source="{DynamicResource Ruler}" Width="20" Height="20" />
-                    </Button>
+                    </ToggleButton>
 
                     <!-- Zoom Slider -->
                     <StackPanel Grid.Column="1"
