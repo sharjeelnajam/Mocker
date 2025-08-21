@@ -87,12 +87,28 @@
         </Border>
         
         <!-- Scrollable Content Area -->
-        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto" 
+        <ScrollViewer Name="WorkScroll" Grid.Row="0" HorizontalScrollBarVisibility="Auto" 
                       VerticalScrollBarVisibility="Auto">
             <StackPanel VerticalAlignment="Top">
                 <ContentControl Content="{Binding WorkScreen}"  Name="Screen"></ContentControl>
             </StackPanel>
         </ScrollViewer>
+
+        <!-- Ruler overlay (top and left) -->
+        <Canvas Name="RulerOverlay" Grid.Row="0" ZIndex="900" IsHitTestVisible="False" IsVisible="{Binding IsRulerVisible}"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <!-- Top ruler -->
+            <Canvas Name="TopRuler" Height="24" Background="#33000000"/>
+            <!-- Left ruler -->
+            <Canvas Name="LeftRuler" Width="24" Background="#33000000"/>
+            <!-- Guides -->
+            <Line Name="GuideV" Stroke="#CCFF00FF" StrokeThickness="1" IsVisible="False"/>
+            <Line Name="GuideH" Stroke="#CCFF00FF" StrokeThickness="1" IsVisible="False"/>
+            <!-- Measurement display -->
+            <Border Name="MeasurementDisplay" Background="#CCFF00FF" CornerRadius="3" Padding="4,2" IsVisible="False">
+                <TextBlock Name="MeasurementText" Text="0, 0" Foreground="White" FontSize="10" FontWeight="Bold"/>
+            </Border>
+        </Canvas>
         
         <!-- Fixed Animation Timeline Bar -->
         <Border Grid.Row="1" 
@@ -136,24 +152,34 @@
                         <Image Source="{DynamicResource NewFileIcon}" Width="20" Height="20" />
                     </Button>
 
-					<!-- Zoom Slider -->
-					<StackPanel Grid.Column="1"
-								Orientation="Horizontal"
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Spacing="12">
-						                    <Slider Width="120" 
+                    <!-- Ruler Toggle Button -->
+                    <Button Background="Transparent"
+                            BorderThickness="0"
+                            Width="24" Height="24"
+                            Padding="0"
+                            Command="{Binding onToggleRuler}"
+                            ToolTip.Tip="Show rulers and guides (Ctrl + L)">
+                        <Image Source="{DynamicResource Ruler}" Width="20" Height="20" />
+                    </Button>
+
+                    <!-- Zoom Slider -->
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Spacing="12">
+                                            <Slider Width="120" 
                             Minimum="1" 
                             Maximum="100" 
                             Value="{Binding ZoomPercent, Mode=TwoWay}"
                             Foreground="{DynamicResource TimelineSlider}"
                             Background="{DynamicResource TimelineSliderTrack}"/>
-						                    <TextBlock Text="{Binding ZoomPercent, StringFormat='+ {0}%'}" 
+                                            <TextBlock Text="{Binding ZoomPercent, StringFormat='+ {0}%'}" 
                                Foreground="{DynamicResource TimelineText}"
                                FontSize="12"
                                VerticalAlignment="Center"/>
-					</StackPanel>
-					
+                    </StackPanel>
+                    
                 </StackPanel>
             </Grid>
         </Border>

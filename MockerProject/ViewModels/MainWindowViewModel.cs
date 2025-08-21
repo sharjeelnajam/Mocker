@@ -190,6 +190,7 @@ namespace MockerProject.ViewModels
         public ICommand onRun { get; }
         public ICommand onShare { get; }
         public ICommand onSmallCanvas { get; }
+        public ICommand onToggleRuler { get; }
         public ICommand onPlatForm1 { get; }
         public ICommand onPlatForm2 { get; }
         public ICommand onPlatForm3 { get; }
@@ -318,6 +319,7 @@ namespace MockerProject.ViewModels
         public bool w_IsHorViewEnabled = true;
         public bool w_IsVerViewEnabled = true;
         public bool w_IsResponseVisible = false;
+        public bool w_IsRulerVisible = true; public bool IsRulerVisible { get => w_IsRulerVisible; set => this.RaiseAndSetIfChanged(ref w_IsRulerVisible, value); }
 
         public SolidColorBrush w_nPageBackground = new SolidColorBrush(new Color(255, 255, 255, 255));//Color.FromRgb(0,250,0);
         public SolidColorBrush PageBackground
@@ -821,6 +823,10 @@ namespace MockerProject.ViewModels
             onSmallCanvas = ReactiveCommand.Create(() =>
             {
 
+            });
+            onToggleRuler = ReactiveCommand.Create(() =>
+            {
+                IsRulerVisible = !IsRulerVisible;
             });
         }
         public void setMainWindow(Window window)
