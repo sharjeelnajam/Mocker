@@ -1,8 +1,9 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.VisualTree;
 using MockerProject.Action;
 using MockerProject.Models;
 //using Avalonia.Remote.Protocol.Input;
@@ -44,6 +45,7 @@ namespace MockerProject.Views
             //this.PointerMoved += onMouseMove;
             this.AttachedToVisualTree += (_, _) => this.Focus(); // or screenCanvas.Focus();
             this.AddHandler(KeyUpEvent, OnKeyDown, RoutingStrategies.Tunnel);
+            this.AddHandler(InputElement.PointerPressedEvent, OnElementSelected, RoutingStrategies.Bubble, handledEventsToo: true);
         }
 
         private void OnKeyDown(object? sender, KeyEventArgs e)
@@ -82,13 +84,28 @@ namespace MockerProject.Views
                    || clickedControl is EditControl
                    || clickedControl is RadioControl
                    || clickedControl is TabViewControl
-                   || clickedControl is UIControl)
+                   || clickedControl is UIControl
+                   || clickedControl is RepeaterControl)
                 {
                     rootControl = clickedControl;
                 }
                 else
                 {
-                    rootControl = FindDraggableParent((Control)clickedControl.Parent);
+                    // Special case: if inside ListBox → climb until ListBoxControl
+                    var listBoxParent = FindAncestor<ListBoxControl>(clickedControl);
+                    if (listBoxParent != null)
+                    {
+                        rootControl = listBoxParent;
+                    }
+                    else if(listBoxParent is null)
+                    {
+                        var sliderControl = FindAncestor<SliderControl>(clickedControl);
+                        rootControl = sliderControl;
+                    }
+                    else
+                    {
+                        rootControl = FindDraggableParent((Control)clickedControl.Parent);
+                    }
                 }
 
                 if (rootControl is Canvas)
@@ -102,6 +119,35 @@ namespace MockerProject.Views
                     e.Handled = true;
                 }
             }
+        }
+
+        private Control? FindDraggableParent(Control control)
+        {
+            Visual? current = control;
+
+            while (current != null)
+            {
+                // if (current is LayoutTransformControl || current is Border) // or any root drag container
+                // {
+                //return (Control)current;
+                // }
+
+                //current = current.GetVisualParent();
+                return (Control)current;
+            }
+
+            return null;
+        }
+
+        private T FindAncestor<T>(Visual visual) where T : Visual
+        {
+            while (visual != null)
+            {
+                if (visual is T result)
+                    return result;
+                visual = visual.GetVisualParent();
+            }
+            return null;
         }
 
         private void onMousePressed(object sender, PointerPressedEventArgs e)
@@ -121,24 +167,6 @@ namespace MockerProject.Views
         private void onMouseReleased(object sender, PointerReleasedEventArgs e)
         {
             m_MainViewModel.m_UIControlType = 0;
-        }
-
-        private Control? FindDraggableParent(Control control)
-        {
-            Visual? current = control;
-
-            while (current != null)
-            {
-                // if (current is LayoutTransformControl || current is Border) // or any root drag container
-                // {
-                //return (Control)current;
-                // }
-
-                //current = current.GetVisualParent();
-                return (Control)current;
-            }
-
-            return null;
         }
     }
 }

@@ -1,3 +1,5 @@
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 
 namespace MockerProject.Views.UIControls
@@ -18,6 +20,13 @@ namespace MockerProject.Views.UIControls
             m_ControlViewModel.IsBorderVisible = false;
             m_ControlViewModel.ReadOnlyHeight = true;
             m_ControlViewModel.IsTextPropertiesVisible = false;
+
+            this.AddHandler(InputElement.PointerPressedEvent, OnSliderPressed, RoutingStrategies.Tunnel);
+        }
+
+        private void OnSliderPressed(object? sender, PointerPressedEventArgs e)
+        {
+            e.Handled = false;
         }
     }
 }

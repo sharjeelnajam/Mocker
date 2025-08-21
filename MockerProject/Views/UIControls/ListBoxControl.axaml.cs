@@ -29,6 +29,7 @@ namespace MockerProject.Views.UIControls
             };
             listBox.Items.Add(item);
         }
+
         public ListBoxControl()
         {
             InitializeComponent();
@@ -67,11 +68,11 @@ namespace MockerProject.Views.UIControls
             this.AddHandler(Control.TappedEvent, (sender, e) =>
             {
                 CustomItem item = (CustomItem)listBox.SelectedItem;
-                if(item != null)
-                item.Visible = !item.Visible;
+                if (item != null)
+                    item.Visible = !item.Visible;
             }, handledEventsToo: true);
         }
-
+        
         public override void doubleClickHandler(object sender, TappedEventArgs e)
         {
             Point cP = e.GetPosition(this);
@@ -79,25 +80,20 @@ namespace MockerProject.Views.UIControls
             PixelPoint cPP = new PixelPoint((int)(mP.X - cP.X + m_nWidth), (int)(mP.Y - cP.Y));
             PixelPoint nPP = m_MainViewModel.m_MainWindow.Position;
 
-            if(wind != null)
+            if (wind != null)
             {
                 wind.Close();
             }
             wind = new UIListBoxProperty();
-            
-            wind.setModel((ListBoxViewModel) m_ControlViewModel,this);
+
+            wind.setModel((ListBoxViewModel)m_ControlViewModel, this);
             wind.Position = nPP + cPP;
             wind.Show();
-            
+
         }
+        
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            
-
-
         }
-       
-
     }
 }

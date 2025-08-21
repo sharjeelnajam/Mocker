@@ -1,9 +1,10 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.VisualTree;
 using MockerProject.ViewModels.UIViewModels;
 using MockerProject.Views.UIControls;
+using System.ComponentModel;
 using System.Linq;
-using Avalonia.VisualTree;
-using Avalonia;
 
 namespace MockerProject.Action
 {
@@ -27,7 +28,7 @@ namespace MockerProject.Action
             {
                 // Remove the entire TabControl
                 _canvas.Children.Remove(_element);
-                
+
                 // Also remove any associated run controls
                 var runControls = _canvas.Children.OfType<TabViewRunControl>().ToList();
                 foreach (var runControl in runControls)
@@ -37,11 +38,66 @@ namespace MockerProject.Action
                 return;
             }
 
-            // Handle ListBoxControl deletion
+            if (_element is SliderControl sliderControl)
+            {
+                _canvas.Children.Remove(_element);
+                return;
+            }
+
             if (_element is ListBoxControl listBoxControl)
             {
-                // Remove the entire ListBoxControl
                 _canvas.Children.Remove(_element);
+                return;
+            }
+
+            if (_element is ContainerBoxControl containerBoxControl)
+            {
+                var repeaterParent = FindAncestor<RepeaterControl>(containerBoxControl);
+                _canvas.Children.Remove(repeaterParent);
+                return;
+            }
+
+            if (_element is ContainerBoxControl containerBox &&
+                containerBox.Parent is Canvas parentCanvas &&
+                parentCanvas.Parent is TabViewControl tabViewControl)
+            {
+                var viewModel = tabViewControl.DataContext as RepeaterControlViewModel;
+                if (viewModel != null)
+                {
+                    // Find the index of the container in the Items collection
+                    int itemIndex = viewModel.Items.IndexOf(containerBox);
+                    if (itemIndex >= 0)
+                    {
+                        // Remove from Items collection
+                        viewModel.Items.RemoveAt(itemIndex);
+
+                        // Remove corresponding header
+                        if (itemIndex < viewModel.TabHeaders.Count)
+                        {
+                            viewModel.TabHeaders.RemoveAt(itemIndex);
+                        }
+
+                        // Remove from parent canvas
+                        parentCanvas.Children.Remove(containerBox);
+
+                        // If this was the last tab, remove the entire TabControl
+                        if (viewModel.Items.Count == 0)
+                        {
+                            var mainCanvas = tabViewControl.Parent as Canvas;
+                            if (mainCanvas != null)
+                            {
+                                mainCanvas.Children.Remove(tabViewControl);
+
+                                // Also remove any associated run controls
+                                var runControls = mainCanvas.Children.OfType<TabViewRunControl>().ToList();
+                                foreach (var runControl in runControls)
+                                {
+                                    mainCanvas.Children.Remove(runControl);
+                                }
+                            }
+                        }
+                    }
+                }
                 return;
             }
 
@@ -64,20 +120,20 @@ namespace MockerProject.Action
                             {
                                 // Remove from Items collection
                                 viewModel.Items.RemoveAt(itemIndex);
-                                
+
                                 // Remove corresponding header
                                 if (itemIndex < viewModel.TabHeaders.Count)
                                 {
                                     viewModel.TabHeaders.RemoveAt(itemIndex);
                                 }
-                                
+
                                 // Remove from parent canvas
                                 var pCanvas = containerBoxCtrl.Parent as Canvas;
                                 if (pCanvas != null)
                                 {
                                     pCanvas.Children.Remove(containerBoxCtrl);
                                 }
-                                
+
                                 // If this was the last tab, remove the entire TabControl
                                 if (viewModel.Items.Count == 0)
                                 {
@@ -85,7 +141,7 @@ namespace MockerProject.Action
                                     if (mainCanvas != null)
                                     {
                                         mainCanvas.Children.Remove(tabViewControlCtrl);
-                                        
+
                                         // Also remove any associated run controls
                                         var runControls = mainCanvas.Children.OfType<TabViewRunControl>().ToList();
                                         foreach (var runControl in runControls)
@@ -94,64 +150,26 @@ namespace MockerProject.Action
                                         }
                                     }
                                 }
-                                return;
                             }
                         }
                     }
-                    
+
                     // If not part of TabViewControl, just remove the container
                     var containerParent = containerBoxCtrl.Parent as Panel;
                     if (containerParent != null)
                     {
                         containerParent.Children.Remove(containerBoxCtrl);
                     }
-                    return;
-                }
-            }
-
-            // Handle individual tab deletion within TabControl
-            if (_element is ContainerBoxControl containerBox && 
-                containerBox.Parent is Canvas parentCanvas &&
-                parentCanvas.Parent is TabViewControl tabViewControl)
-            {
-                var viewModel = tabViewControl.DataContext as RepeaterControlViewModel;
-                if (viewModel != null)
-                {
-                    // Find the index of the container in the Items collection
-                    int itemIndex = viewModel.Items.IndexOf(containerBox);
-                    if (itemIndex >= 0)
+                    else
                     {
-                        // Remove from Items collection
-                        viewModel.Items.RemoveAt(itemIndex);
-                        
-                        // Remove corresponding header
-                        if (itemIndex < viewModel.TabHeaders.Count)
+                        var repeaterParent = FindAncestor<RepeaterControl>(containerBoxCtrl);
+                        if(repeaterParent != null)
                         {
-                            viewModel.TabHeaders.RemoveAt(itemIndex);
+                            _canvas.Children.Remove(repeaterParent);
                         }
-                        
-                        // Remove from parent canvas
-                        parentCanvas.Children.Remove(containerBox);
-                        
-                        // If this was the last tab, remove the entire TabControl
-                        if (viewModel.Items.Count == 0)
-                        {
-                            var mainCanvas = tabViewControl.Parent as Canvas;
-                            if (mainCanvas != null)
-                            {
-                                mainCanvas.Children.Remove(tabViewControl);
-                                
-                                // Also remove any associated run controls
-                                var runControls = mainCanvas.Children.OfType<TabViewRunControl>().ToList();
-                                foreach (var runControl in runControls)
-                                {
-                                    mainCanvas.Children.Remove(runControl);
-                                }
-                            }
-                        }
-                        return;
                     }
                 }
+                return;
             }
 
             // Safe removal that works with any type of parent container
