@@ -191,6 +191,7 @@ namespace MockerProject.ViewModels
         public ICommand onShare { get; }
         public ICommand onSmallCanvas { get; }
         public ICommand onToggleRuler { get; }
+        public ICommand onCenterScreen { get; }
         public ICommand onPlatForm1 { get; }
         public ICommand onPlatForm2 { get; }
         public ICommand onPlatForm3 { get; }
@@ -828,10 +829,45 @@ namespace MockerProject.ViewModels
             {
                 IsRulerVisible = !IsRulerVisible;
             });
+            onCenterScreen = ReactiveCommand.Create(() =>
+            {
+                CenterScreen();
+            });
         }
         public void setMainWindow(Window window)
         {
             m_MainWindow = (MainWindow)window;
+        }
+
+        public void CenterScreen()
+        {
+            // Center the mobile device frame within the viewport
+            if (m_MainWindow != null)
+            {
+                // Get the main window size
+                var windowWidth = m_MainWindow.Width;
+                var windowHeight = m_MainWindow.Height;
+                
+                // Calculate center position for the work area (accounting for sidebars)
+                // The work area is typically in the middle column of the 3-column layout
+                var workAreaWidth = windowWidth * 0.5; // 50% of window width (middle column)
+                var workAreaHeight = windowHeight - 42; // Subtract header height
+                
+                // Calculate center position for the mobile device frame (PF_W x PF_H)
+                var centerX = (workAreaWidth - PF_W) / 2;
+                var centerY = (workAreaHeight - PF_H) / 2;
+                
+                // Set the platform position to center the mobile device frame
+                PF_X = (int)Math.Max(0, centerX);
+                PF_Y = (int)Math.Max(0, centerY);
+                
+                // Update page position accordingly (page is positioned relative to platform)
+                PG_X = PF_X + PF_LW;
+                PG_Y = PF_Y + PF_TH;
+                
+                // Reset zoom to 100% for better centering
+                Zoom = 1.0;
+            }
         }
         private void init(bool flag = true)
         {

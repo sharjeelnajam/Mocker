@@ -11,6 +11,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Input;
 using Avalonia.Controls.Shapes;
+using Avalonia;
 using IOPath = System.IO.Path;
 using SysFileStream = System.IO.FileStream;
 using SysFileMode = System.IO.FileMode;
@@ -201,6 +202,76 @@ public partial class ProjectWorkView : UserControl
 		catch (Exception ex)
 		{
 			System.Diagnostics.Debug.WriteLine($"Failed to open folder: {ex.Message}");
+		}
+	}
+
+	private void OnCenterScreenClick(object sender, RoutedEventArgs e)
+	{
+		try
+		{
+			// Get the main window to access the ViewModel
+			var mainWindow = this.FindAncestorOfType<Window>();
+			if (mainWindow?.DataContext is ViewModels.MainWindowViewModel viewModel)
+			{
+				// Call the centering method in the ViewModel
+				viewModel.CenterScreen();
+				
+				// Also center the scroll viewer to show the centered content
+				var scrollViewer = this.FindControl<ScrollViewer>("WorkScroll");
+				if (scrollViewer != null)
+				{
+					// Use Dispatcher with a small delay to ensure UI is updated before scrolling
+					Dispatcher.UIThread.InvokeAsync(async () =>
+					{
+						// Small delay to ensure UI updates are complete
+						await Task.Delay(50);
+						{
+							// Get the screen content to calculate proper centering
+							var screenContent = this.FindControl<ContentControl>("Screen");
+							if (screenContent?.Content is Visual visualContent)
+							{
+								// Calculate the center position for the mobile device frame
+								var contentWidth = scrollViewer.Extent.Width;
+								var contentHeight = scrollViewer.Extent.Height;
+								var viewportWidth = scrollViewer.Viewport.Width;
+								var viewportHeight = scrollViewer.Viewport.Height;
+
+								// Calculate the position of the mobile device frame within the content
+								var deviceFrameX = viewModel.PF_X;
+								var deviceFrameY = viewModel.PF_Y;
+								var deviceFrameWidth = viewModel.PF_W;
+								var deviceFrameHeight = viewModel.PF_H;
+
+								// Calculate center offsets to show the mobile device frame in the center
+								var centerX = Math.Max(0, deviceFrameX - (viewportWidth - deviceFrameWidth) / 2);
+								var centerY = Math.Max(0, deviceFrameY - (viewportHeight - deviceFrameHeight) / 2);
+
+								// Scroll to center the mobile device frame
+								scrollViewer.Offset = new Vector(centerX, centerY);
+							}
+							else
+							{
+								// Fallback to simple centering if screen content is not available
+								var contentWidth = scrollViewer.Extent.Width;
+								var contentHeight = scrollViewer.Extent.Height;
+								var viewportWidth = scrollViewer.Viewport.Width;
+								var viewportHeight = scrollViewer.Viewport.Height;
+
+								// Calculate center offsets
+								var centerX = Math.Max(0, (contentWidth - viewportWidth) / 2);
+								var centerY = Math.Max(0, (contentHeight - viewportHeight) / 2);
+
+								// Scroll to center
+								scrollViewer.Offset = new Vector(centerX, centerY);
+							}
+						}
+					});
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			System.Diagnostics.Debug.WriteLine($"Failed to center screen: {ex.Message}");
 		}
 	}
 

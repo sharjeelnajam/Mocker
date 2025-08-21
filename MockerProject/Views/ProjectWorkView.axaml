@@ -147,13 +147,6 @@
                         <Image Source="{DynamicResource Camera}" Width="20" Height="20" />
                     </Button>
                     
-                    <!-- Document Icon -->
-                    <Button Background="Transparent"
-                            BorderThickness="0"
-                            Width="24" Height="24"
-                            Padding="0">
-                        <Image Source="{DynamicResource NewFileIcon}" Width="20" Height="20" />
-                    </Button>
 
                     <!-- Ruler Toggle Button -->
                     <ToggleButton Background="Transparent"
@@ -165,6 +158,16 @@
                         <Image Source="{DynamicResource Ruler}" Width="20" Height="20" />
                     </ToggleButton>
 
+					<!-- Document Icon -->
+					<Button Background="Transparent"
+                            BorderThickness="0"
+                            Width="24" Height="24"
+                            Padding="0"
+                            Click="OnCenterScreenClick"
+                            ToolTip.Tip="100%">
+						<Image Source="{DynamicResource Center}" Width="20" Height="20" />
+					</Button>
+					
                     <!-- Zoom Slider -->
                     <StackPanel Grid.Column="1"
                                 Orientation="Horizontal"
