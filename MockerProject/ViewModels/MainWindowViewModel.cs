@@ -865,8 +865,8 @@ namespace MockerProject.ViewModels
                 PG_X = PF_X + PF_LW;
                 PG_Y = PF_Y + PF_TH;
                 
-                // Reset zoom to 100% for better centering
-                Zoom = 1.0;
+                // Set zoom to 75% for better mobile screen view
+                Zoom = 0.75;
             }
         }
         private void init(bool flag = true)

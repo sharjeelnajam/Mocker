@@ -164,8 +164,18 @@
                             Width="24" Height="24"
                             Padding="0"
                             Click="OnCenterScreenClick"
-                            ToolTip.Tip="100%">
+                            ToolTip.Tip="Center">
 						<Image Source="{DynamicResource Center}" Width="20" Height="20" />
+					</Button>
+
+					<!-- Fit Icon -->
+					<Button Background="Transparent"
+                            BorderThickness="0"
+                            Width="24" Height="24"
+                            Padding="0"
+                            Click="OnCenterScreenClick"
+                            ToolTip.Tip="Fit">
+						<Image Source="{DynamicResource Fit}" Width="20" Height="20" />
 					</Button>
 					
                     <!-- Zoom Slider -->
