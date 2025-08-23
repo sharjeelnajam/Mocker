@@ -1075,7 +1075,12 @@ namespace MockerProject.ViewModels
             
             // Choose color based on the asset type
             Color color;
-            if (fileName == "Left.png" || fileName == "Right.png")
+            if (fileName == "Top_Label.png" || fileName == "Bottom_Label.png")
+            {
+                // Completely transparent for label areas (no icons)
+                color = Color.FromArgb(0, 0, 0, 0); // Transparent
+            }
+            else if (fileName == "Left.png" || fileName == "Right.png")
             {
                 // Gray color for left and right sides
                 color = Color.FromArgb(255, 128, 128, 128); // Gray
