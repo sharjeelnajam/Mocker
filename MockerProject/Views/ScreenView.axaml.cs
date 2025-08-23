@@ -91,20 +91,22 @@ namespace MockerProject.Views
                 }
                 else
                 {
-                    // Special case: if inside ListBox → climb until ListBoxControl
                     var listBoxParent = FindAncestor<ListBoxControl>(clickedControl);
                     if (listBoxParent != null)
                     {
                         rootControl = listBoxParent;
                     }
-                    else if(listBoxParent is null)
-                    {
-                        var sliderControl = FindAncestor<SliderControl>(clickedControl);
-                        rootControl = sliderControl;
-                    }
                     else
                     {
-                        rootControl = FindDraggableParent((Control)clickedControl.Parent);
+                        var sliderControl = FindAncestor<SliderControl>(clickedControl);
+                        if (sliderControl != null)
+                        {
+                            rootControl = sliderControl;
+                        }
+                        else
+                        {
+                            rootControl = FindDraggableParent((Control)clickedControl.Parent);
+                        }
                     }
                 }
 
