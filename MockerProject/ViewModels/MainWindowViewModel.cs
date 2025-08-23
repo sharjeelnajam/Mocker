@@ -201,6 +201,7 @@ namespace MockerProject.ViewModels
         public ICommand onPlatForm7 { get; }
         public ICommand onHorViewPort { get; }
         public ICommand onVerViewPort { get; }
+        public ICommand onOpenRecentProject { get; }
 
         public ObservableCollection<RecentProject> RecentProjects { get; } = new();
 
@@ -582,6 +583,7 @@ namespace MockerProject.ViewModels
             SubPlatformId = 0;
             onSaveProject = new AsyncRelayCommand(async () => await SaveProjFile());
             onOpenProject = new AsyncRelayCommand(async () => await OpenProjFile());
+            onOpenRecentProject = new AsyncRelayCommand<RecentProject>(async (project) => await OpenRecentProject(project));
             onSearchProject = new AsyncRelayCommand(async () => await OpenProjFile());
            // RecentProjects = new AsyncRelayCommand(async () => await GetAllRecentProjects());
             _ = InitializeRecentProjects();
@@ -712,6 +714,9 @@ namespace MockerProject.ViewModels
                 IsStartMocker = true;
                 IsMenuOpened = false;
                 IsProjectOpened = false;
+                
+                // Refresh recent projects when returning to start screen
+                _ = Task.Run(async () => await GetAllRecentProjects());
             });
             onPlatForm1 = ReactiveCommand.Create(() =>
             {
@@ -1028,6 +1033,12 @@ namespace MockerProject.ViewModels
                 return CreateSimpleTabletAsset(fileName);
             }
             
+            // Create programmatic browser assets for Browser platform
+            if (imagePath.Contains("Browser"))
+            {
+                return CreateBrowserAsset(fileName);
+            }
+            
             string path = Path.Combine(imagePath, fileName);
 
             if (File.Exists(path))
@@ -1047,6 +1058,127 @@ namespace MockerProject.ViewModels
                 }
                 return null; // or return fallback image if you have one
             }
+        }
+
+        private Bitmap? CreateBrowserAsset(string fileName)
+        {
+            // Define dimensions for browser assets
+            var dimensions = fileName switch
+            {
+                "Top_Left.png" => (80, 40),      // Left side with window controls
+                "Top_Middle.png" => (800, 40),   // Middle with address bar
+                "Top_Right.png" => (120, 40),    // Right side with browser buttons
+                "Top_Label.png" => (60, 60),     // Browser icon/logo
+                "Bottom_Left.png" => (50, 50),   // Bottom left corner
+                "Bottom_Middle.png" => (800, 50), // Bottom middle
+                "Bottom_Right.png" => (50, 50),  // Bottom right corner
+                "Bottom_Label.png" => (60, 60),  // Bottom label
+                "Left.png" => (50, 1200),        // Left side
+                "Right.png" => (50, 1200),       // Right side
+                _ => (50, 50) // Default size
+            };
+
+            int width = dimensions.Item1;
+            int height = dimensions.Item2;
+
+            // Create a simple colored rectangle using RenderTargetBitmap
+            var renderTargetBitmap = new RenderTargetBitmap(new PixelSize(width, height));
+            
+            // Create a drawing context
+            using (var drawingContext = renderTargetBitmap.CreateDrawingContext())
+            {
+                // Set background color based on the asset type
+                var backgroundColor = fileName switch
+                {
+                    "Top_Left.png" => new SolidColorBrush(Color.FromRgb(240, 240, 240)),    // Light gray for top bar
+                    "Top_Middle.png" => new SolidColorBrush(Color.FromRgb(240, 240, 240)),  // Light gray for top bar
+                    "Top_Right.png" => new SolidColorBrush(Color.FromRgb(240, 240, 240)),   // Light gray for top bar
+                    "Top_Label.png" => new SolidColorBrush(Color.FromRgb(240, 240, 240)),   // Light gray for top bar
+                    "Bottom_Left.png" => new SolidColorBrush(Color.FromRgb(200, 200, 200)), // Darker gray for bottom
+                    "Bottom_Middle.png" => new SolidColorBrush(Color.FromRgb(200, 200, 200)), // Darker gray for bottom
+                    "Bottom_Right.png" => new SolidColorBrush(Color.FromRgb(200, 200, 200)), // Darker gray for bottom
+                    "Bottom_Label.png" => new SolidColorBrush(Color.FromRgb(200, 200, 200)), // Darker gray for bottom
+                    "Left.png" => new SolidColorBrush(Color.FromRgb(180, 180, 180)),        // Side borders
+                    "Right.png" => new SolidColorBrush(Color.FromRgb(180, 180, 180)),       // Side borders
+                    _ => new SolidColorBrush(Color.FromRgb(200, 200, 200)) // Default gray
+                };
+
+                // Fill the background
+                drawingContext.FillRectangle(backgroundColor, new Rect(0, 0, width, height));
+
+                // Add specific browser elements for top bar assets
+                if (fileName == "Top_Left.png")
+                {
+                    // Draw window control buttons (close, minimize, maximize)
+                    var buttonColors = new[] { Color.FromRgb(255, 95, 87), Color.FromRgb(255, 189, 46), Color.FromRgb(52, 199, 89) };
+                    var buttonSize = 12.0;
+                    var buttonSpacing = 8.0;
+                    var startX = 15.0;
+                    var centerY = height / 2.0;
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        var x = startX + i * (buttonSize + buttonSpacing);
+                        var y = centerY - buttonSize / 2;
+                        
+                        // Draw circle using simple rectangle with rounded corners
+                        drawingContext.FillRectangle(new SolidColorBrush(buttonColors[i]), new Rect(x, y, buttonSize, buttonSize));
+                    }
+                }
+                else if (fileName == "Top_Middle.png")
+                {
+                    // Draw address bar in the middle
+                    var addressBarWidth = width * 0.8;
+                    var addressBarHeight = 24.0;
+                    var addressBarX = (width - addressBarWidth) / 2;
+                    var addressBarY = (height - addressBarHeight) / 2;
+
+                    // Address bar background (white)
+                    drawingContext.FillRectangle(new SolidColorBrush(Color.FromRgb(255, 255, 255)), 
+                        new Rect(addressBarX, addressBarY, addressBarWidth, addressBarHeight));
+                    
+                    // Address bar border (light gray)
+                    drawingContext.DrawRectangle(new Pen(new SolidColorBrush(Color.FromRgb(200, 200, 200)), 1), 
+                        new Rect(addressBarX, addressBarY, addressBarWidth, addressBarHeight));
+
+                    // Draw a simple magnifying glass icon on the right side of address bar
+                    var iconSize = 16.0;
+                    var iconX = addressBarX + addressBarWidth - iconSize - 8;
+                    var iconY = addressBarY + (addressBarHeight - iconSize) / 2;
+                    
+                    // Simple magnifying glass (circle with handle)
+                    // Draw circle outline using rectangle border
+                    drawingContext.DrawRectangle(new Pen(new SolidColorBrush(Color.FromRgb(100, 100, 100)), 2), new Rect(iconX, iconY, iconSize, iconSize));
+                    drawingContext.DrawLine(new Pen(new SolidColorBrush(Color.FromRgb(100, 100, 100)), 2), 
+                        new Point(iconX + iconSize * 0.7, iconY + iconSize * 0.7), 
+                        new Point(iconX + iconSize + 2, iconY + iconSize + 2));
+                }
+                else if (fileName == "Top_Right.png")
+                {
+                    // Draw browser control buttons (refresh, home, extensions)
+                    var buttonSize = 20.0;
+                    var buttonSpacing = 10.0;
+                    var centerY = height / 2.0;
+                    var startX = 20.0;
+
+                    // Draw simple rectangular buttons
+                    for (int i = 0; i < 3; i++)
+                    {
+                        var x = startX + i * (buttonSize + buttonSpacing);
+                        var y = centerY - buttonSize / 2;
+                        
+                        // Button background
+                        drawingContext.FillRectangle(new SolidColorBrush(Color.FromRgb(220, 220, 220)), 
+                            new Rect(x, y, buttonSize, buttonSize));
+                        
+                        // Button border
+                        drawingContext.DrawRectangle(new Pen(new SolidColorBrush(Color.FromRgb(180, 180, 180)), 1), 
+                            new Rect(x, y, buttonSize, buttonSize));
+                    }
+                }
+            }
+
+            return renderTargetBitmap;
         }
 
         private Bitmap? CreateSimpleTabletAsset(string fileName)
@@ -1288,18 +1420,94 @@ namespace MockerProject.ViewModels
         }
         private async Task GetAllRecentProjects()
         {
-            //var result = await storageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
-            //{
-            //    Title = "Open Project",
-            //    FileTypeFilter = GetCodeFileTypes(),
-            //    AllowMultiple = true
-            //});
+            try
+            {
+                RecentProjects.Clear();
 
-            //var files = result.TakeLast(2);
-            RecentProjects.Clear();
-            RecentProjects.Add(new RecentProject { Name = "Test Demo", LastOpened = DateTime.Now });
-            RecentProjects.Add(new RecentProject { Name = "Final test", LastOpened = DateTime.Now });
+                // Paths to check
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string indigoPath = Path.Combine(documentsPath, "Indigo");
+                string defaultDrivePath = @"D:\"; // Default drive fallback
+
+                // Collect all project files from both locations
+                List<string> allFiles = new List<string>();
+
+                // Search in Documents/Indigo
+                if (Directory.Exists(indigoPath))
+                {
+                    Debug.WriteLine($"Searching for .dsproj files in: {indigoPath}");
+                    allFiles.AddRange(Directory.GetFiles(indigoPath, "*.dsproj", SearchOption.AllDirectories));
+                }
+
+                // If no projects found in Indigo, also check D:\
+                if (Directory.Exists(defaultDrivePath))
+                {
+                    Debug.WriteLine($"Checking default drive path: {defaultDrivePath}");
+                    allFiles.AddRange(Directory.GetFiles(defaultDrivePath, "*.dsproj", SearchOption.AllDirectories));
+                }
+
+                Debug.WriteLine($"Found {allFiles.Count} .dsproj files (before removing duplicates)");
+
+                // Process projects and remove duplicates by ProjectFolder name
+                var projectFiles = allFiles
+                    .Select(filePath => new
+                    {
+                        FilePath = filePath,
+                        FileName = Path.GetFileNameWithoutExtension(filePath),
+                        ProjectFolder = Path.GetFileName(Path.GetDirectoryName(filePath)), // e.g. "FirstProject"
+                        CreatedDate = File.GetCreationTime(filePath),
+                        LastModified = File.GetLastWriteTime(filePath)
+                    })
+                    .GroupBy(f => f.ProjectFolder) // group by project folder name
+                    .Select(g => g.OrderByDescending(x => x.CreatedDate).First()) // keep only the latest one
+                    .OrderByDescending(f => f.CreatedDate) // sort by created date
+                    .Take(2) // only latest 2 projects
+                    .ToList();
+
+                Debug.WriteLine($"Processing {projectFiles.Count} unique recent projects");
+
+                foreach (var project in projectFiles)
+                {
+                    Debug.WriteLine($"Adding project: {project.ProjectFolder}\\{project.FileName} (Created: {project.CreatedDate})");
+
+                    RecentProjects.Add(new RecentProject
+                    {
+                        Name = project.ProjectFolder, // Use folder name as project name
+                        LastOpened = project.LastModified,
+                        CreatedDate = project.CreatedDate,
+                        FilePath = project.FilePath
+                    });
+                }
+
+                // If still no projects found
+                if (!projectFiles.Any())
+                {
+                    Debug.WriteLine("No .dsproj files found in Indigo or D: drive");
+
+                    // Optional demo projects
+                    RecentProjects.Add(new RecentProject
+                    {
+                        Name = "Sample Project 1",
+                        LastOpened = DateTime.Now.AddDays(-1),
+                        CreatedDate = DateTime.Now.AddDays(-2),
+                        FilePath = Path.Combine(indigoPath, "Sample1", "Sample1.dsproj")
+                    });
+                    RecentProjects.Add(new RecentProject
+                    {
+                        Name = "Sample Project 2",
+                        LastOpened = DateTime.Now.AddDays(-3),
+                        CreatedDate = DateTime.Now.AddDays(-4),
+                        FilePath = Path.Combine(indigoPath, "Sample2", "Sample2.dsproj")
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error getting recent projects: {ex.Message}");
+                Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+            }
         }
+
         private async Task InitializeRecentProjects()
         {
             try
@@ -1349,6 +1557,79 @@ namespace MockerProject.ViewModels
             if (w_DeviceInfo == null) return;
             for (int i = 0; i < w_DeviceInfo.PageCount; i++)
                 createPage(getPageName(w_DeviceInfo.Pages[i]));
+        }
+        
+        private async Task OpenRecentProject(RecentProject project)
+        {
+            if (project == null || string.IsNullOrEmpty(project.FilePath)) return;
+            
+            try
+            {
+                // Check if the file still exists
+                if (!File.Exists(project.FilePath))
+                {
+                    Debug.WriteLine($"Project file not found: {project.FilePath}");
+                    // Remove the project from recent list and refresh
+                    RecentProjects.Remove(project);
+                    return;
+                }
+
+                // Create a file info object to pass to creatProject
+                var fileInfo = new FileInfo(project.FilePath);
+                
+                // Load the project using the existing logic
+                DeviceInfo w_DeviceInfo = await creatProjectFromPath(project.FilePath);
+                if (w_DeviceInfo == null) return;
+                
+                // Update the last opened time
+                project.LastOpened = DateTime.Now;
+                
+                // Create pages
+                for (int i = 0; i < w_DeviceInfo.PageCount; i++)
+                    createPage(getPageName(w_DeviceInfo.Pages[i]));
+                    
+                IsMenuOpened = false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error opening recent project: {ex.Message}");
+            }
+        }
+        
+        private async Task<DeviceInfo> creatProjectFromPath(string filePath)
+        {
+            try
+            {
+                var fileContent = await File.ReadAllTextAsync(filePath);
+                var objects = JArray.Parse(fileContent);
+                JObject items = objects[0].ToObject<JObject>();
+                if (items.Count != 7) return null;
+                List<DeviceInfo> deviceInfo = JsonConvert.DeserializeObject<List<DeviceInfo>>(fileContent);
+                if (deviceInfo == null || deviceInfo[0] == null || deviceInfo[0].Device == null || deviceInfo[0].size.W <= 0 || deviceInfo[0].size.H <= 0) return null;
+
+                string w_strName = Path.GetFileNameWithoutExtension(filePath);
+                string w_strExtension = Path.GetExtension(filePath);
+                if (w_strExtension != ".dsproj") return null;
+                
+                init(false);
+                strProjectTitle = w_strName;
+                strProjectPath = Path.GetDirectoryName(filePath);
+                strProjectLocation = Path.GetDirectoryName(strProjectPath);
+                if (strProjectLocation == null)
+                    strProjectLocation = strProjectPath;
+                IsStartMocker = false;
+                IsProjectOpened = true;
+                m_IsProjectPath = true;
+                IsProjectUnSaved = false;
+                setPlatform(deviceInfo[0].DeviceID);
+                SubPlatformId = deviceInfo[0].SubID;
+                return deviceInfo[0];
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine($"Error creating project from path: {exception.Message}");
+                return null;
+            }
         }
         private async Task<DeviceInfo> creatProject(IStorageFile file)
         {
@@ -1674,6 +1955,9 @@ namespace MockerProject.ViewModels
                 string json = JsonConvert.SerializeObject(w_DeviceInfo.ToArray());
                 System.IO.File.WriteAllText(filePath, json);
                 makeAssets(Path.Combine(path, "assets"));
+                
+                // Refresh recent projects list after saving
+               // _ = Task.Run(async () => await GetAllRecentProjects());
             }
             catch (Exception Ex)
             {
@@ -2130,11 +2414,14 @@ namespace MockerProject.ViewModels
                 }
             }
         }
+    
     }
     public class RecentProject
     {
         public string Name { get; set; }
         public DateTime LastOpened { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string FilePath { get; set; }
     }
     public class TabItemModel
     {

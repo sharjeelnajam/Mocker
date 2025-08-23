@@ -94,6 +94,7 @@
              x:Class="MockerProject.Views.StartMockerView"
              xmlns:vm="clr-namespace:MockerProject.ViewModels"
              x:DataType="vm:MainWindowViewModel"
+             Name="StartMockerViewControl"
              MaxHeight="701">
 
   <UserControl.Styles>
@@ -195,32 +196,38 @@
 				  <ItemsControl ItemsSource="{Binding RecentProjects}">
 					  <ItemsControl.ItemTemplate>
 						  <DataTemplate>
-							  <Border CornerRadius="8"
-									  BorderBrush="{DynamicResource ControlBorderBrush}"
-									  BorderThickness="1"
-									  Background="{DynamicResource ControlBackground}"
+							  <Border Background="Transparent"
+									  BorderThickness="0"
+									  Padding="0"
 									  Margin="0,0,0,10"
-									  Classes="RecentDesignItem">
-								  <Grid ColumnDefinitions="*,Auto" Margin="10">
-									  <StackPanel Grid.Column="0">
-										  <TextBlock Text="{Binding Name}"
-													 FontSize="16"
-													 FontWeight="SemiBold"
-													 Foreground="{DynamicResource PrimaryForeground}"/>
-										  <TextBlock Text="{Binding LastOpened, StringFormat={}{0:dd/MM/yyyy HH:mm}}"
-													 FontSize="12"
-													 Foreground="{DynamicResource ThemeDesignStudioTextColor}"/>
-									  </StackPanel>
-									  <Button Grid.Column="1"
-											  Width="36"
-											  Height="36"
-											  Padding="8"
-											  Background="{DynamicResource ThemeDesignStudioBorderBackground}"
-											  HorizontalAlignment="Right"
-											  VerticalAlignment="Center">
-										  <Image Source="{DynamicResource ThreeDotsIcon}" Width="16" Height="16"/>
-									  </Button>
-								  </Grid>
+									  Cursor="Hand"
+									  Tapped="RecentProject_Tapped">
+								  <Border CornerRadius="8"
+										  BorderBrush="{DynamicResource ControlBorderBrush}"
+										  BorderThickness="1"
+										  Background="{DynamicResource ControlBackground}"
+										  Classes="RecentDesignItem">
+									  <Grid ColumnDefinitions="*,Auto" Margin="10">
+										  <StackPanel Grid.Column="0">
+											  <TextBlock Text="{Binding Name}"
+														 FontSize="16"
+														 FontWeight="SemiBold"
+														 Foreground="{DynamicResource PrimaryForeground}"/>
+											  <TextBlock Text="{Binding CreatedDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}"
+														 FontSize="12"
+														 Foreground="{DynamicResource ThemeDesignStudioTextColor}"/>
+										  </StackPanel>
+										  <Button Grid.Column="1"
+												  Width="36"
+												  Height="36"
+												  Padding="8"
+												  Background="{DynamicResource ThemeDesignStudioBorderBackground}"
+												  HorizontalAlignment="Right"
+												  VerticalAlignment="Center">
+											  <Image Source="{DynamicResource ThreeDotsIcon}" Width="16" Height="16"/>
+										  </Button>
+									  </Grid>
+								  </Border>
 							  </Border>
 						  </DataTemplate>
 					  </ItemsControl.ItemTemplate>
