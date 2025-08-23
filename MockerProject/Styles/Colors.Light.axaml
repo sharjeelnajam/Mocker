@@ -53,7 +53,7 @@
   <Bitmap x:Key="Camera">avares://MockerProject/Assets/New/Icons/camera.png</Bitmap>
   <Bitmap x:Key="Ruler">avares://MockerProject/Assets/New/Icons/newruler.png</Bitmap>
   <Bitmap x:Key="Center">avares://MockerProject/Assets/New/Icons/center.png</Bitmap>
-  <Bitmap x:Key="Fit">avares://MockerProject/Assets/New/Icons/fit.png</Bitmap>
+  <Bitmap x:Key="Fit">avares://MockerProject/Assets/New/Icons/Fit.png</Bitmap>
   
   <Bitmap x:Key="AddScreen">avares://MockerProject/Assets/New/Icons/add-screen.png</Bitmap>
 	
