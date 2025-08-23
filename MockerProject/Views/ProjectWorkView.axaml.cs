@@ -32,6 +32,7 @@ public partial class ProjectWorkView : UserControl
 		this.AddHandler(PointerMovedEvent, OnPointerMoved, RoutingStrategies.Tunnel);
 		this.AddHandler(PointerPressedEvent, OnPointerPressed, RoutingStrategies.Tunnel);
 		this.AddHandler(PointerReleasedEvent, OnPointerReleased, RoutingStrategies.Tunnel);
+		this.AddHandler(KeyUpEvent, OnKeyDown, RoutingStrategies.Tunnel);
 	}
 
 	private async void OnCameraButtonClick(object sender, RoutedEventArgs e)
@@ -51,6 +52,29 @@ public partial class ProjectWorkView : UserControl
 			// For now, just silently handle errors
 			// In a production app, you might want to log this or show a notification
 			System.Diagnostics.Debug.WriteLine($"Screenshot error: {ex.Message}");
+		}
+	}
+
+	private void OnKeyDown(object? sender, KeyEventArgs e)
+	{
+		// Handle Ctrl+R shortcut for taking screenshot
+		if (e.Key == Key.R && e.KeyModifiers == KeyModifiers.Control)
+		{
+			// Trigger the same functionality as the camera button click
+			OnCameraButtonClick(this, new RoutedEventArgs());
+			e.Handled = true;
+		}
+		// Handle Ctrl+L shortcut for toggling ruler visibility
+		else if (e.Key == Key.L && e.KeyModifiers == KeyModifiers.Control)
+		{
+			// Get the main window to access the ViewModel
+			var mainWindow = this.FindAncestorOfType<Window>();
+			if (mainWindow?.DataContext is ViewModels.MainWindowViewModel viewModel)
+			{
+				// Toggle the ruler visibility
+				viewModel.IsRulerVisible = !viewModel.IsRulerVisible;
+			}
+			e.Handled = true;
 		}
 	}
 
