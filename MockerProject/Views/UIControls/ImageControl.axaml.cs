@@ -32,6 +32,7 @@ namespace MockerProject.Views
             m_strSrc = "Assets\\Mocker.png";
             setBorderColor(new SolidColorBrush(new Color(255, 77, 77, 77)));
             setBorderThickness(0);
+
             image.AddHandler(TextBox.DoubleTappedEvent, async (sender, e) =>
             {
                 //m_MainViewModel.m_wndUIProperty.Hide();
