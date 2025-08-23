@@ -518,30 +518,30 @@ namespace MockerProject.ViewModels
             w_L_Size.Add(new stSize(60, 60));
             m_PlatFormInfo.Add(new stPlatFormPosInfo("Other iPhone", w_PF_Size, 150, 150, w_PG_Size, 60, 60, 13, 13, w_L_Size));
             w_PF_Size.Clear();
-            w_PF_Size.Add(new stSize(866, 1250));
+            w_PF_Size.Add(new stSize(800, 1200));
             w_PG_Size.Clear();
-            w_PG_Size.Add(new stSize(748, 1024));
-            w_PG_Size.Add(new stSize(1004, 768));
+            w_PG_Size.Add(new stSize(700, 1000));
+            w_PG_Size.Add(new stSize(1000, 700));
             w_L_Size.Clear();
             w_L_Size.Add(new stSize(13, 13));
             w_L_Size.Add(new stSize(60, 60));
-            m_PlatFormInfo.Add(new stPlatFormPosInfo("iPad", w_PF_Size, 150, 150, w_PG_Size, 111, 111, 50, 50, w_L_Size));
+            m_PlatFormInfo.Add(new stPlatFormPosInfo("iPad", w_PF_Size, 150, 150, w_PG_Size, 59, 59, 59, 59, w_L_Size));
             w_PF_Size.Clear();
-            w_PF_Size.Add(new stSize(140, 140));
+            w_PF_Size.Add(new stSize(900, 1300));
             w_PG_Size.Clear();
-            w_PG_Size.Add(new stSize(768, 1024));
-            w_PG_Size.Add(new stSize(1024, 1440));
+            w_PG_Size.Add(new stSize(800, 1200));
+            w_PG_Size.Add(new stSize(1200, 800));
             w_PG_Size.Add(new stSize(1024, 768));
             w_PG_Size.Add(new stSize(1440, 1024));
             w_L_Size.Clear();
             w_L_Size.Add(new stSize(13, 13));
             w_L_Size.Add(new stSize(60, 60));
-            m_PlatFormInfo.Add(new stPlatFormPosInfo("Other Tablet", w_PF_Size, 150, 150, w_PG_Size, 70, 70, 70, 70, w_L_Size));
+            m_PlatFormInfo.Add(new stPlatFormPosInfo("Other Tablet", w_PF_Size, 150, 150, w_PG_Size, 50, 50, 50, 50, w_L_Size));
             w_PF_Size.Clear();
-            w_PF_Size.Add(new stSize(1, 20));
+            w_PF_Size.Add(new stSize(800, 600));
             w_PG_Size.Clear();
-            w_PG_Size.Add(new stSize(320, 548));
-            w_PG_Size.Add(new stSize(640, 480));
+            w_PG_Size.Add(new stSize(720, 520));
+            w_PG_Size.Add(new stSize(600, 400));
             w_PG_Size.Add(new stSize(800, 600));
             w_PG_Size.Add(new stSize(1024, 768));
             w_PG_Size.Add(new stSize(1280, 1024));
@@ -550,7 +550,7 @@ namespace MockerProject.ViewModels
             w_L_Size.Add(new stSize(55, 23));
             m_PlatFormInfo.Add(new stPlatFormPosInfo("Browser", w_PF_Size, 150, 150, w_PG_Size, 40, 3, 3, 3, w_L_Size));
             w_PF_Size.Clear();
-            w_PF_Size.Add(new stSize(1, 1));
+            w_PF_Size.Add(new stSize(700, 500));
             w_PG_Size.Clear();
             w_PG_Size.Add(new stSize(640, 480));
             w_PG_Size.Add(new stSize(800, 600));
@@ -559,7 +559,7 @@ namespace MockerProject.ViewModels
             w_L_Size.Clear();
             w_L_Size.Add(new stSize(13, 13));
             w_L_Size.Add(new stSize(60, 60));
-            m_PlatFormInfo.Add(new stPlatFormPosInfo("Generic", w_PF_Size, 150, 150, w_PG_Size, 85, 85, 20, 20, w_L_Size));
+            m_PlatFormInfo.Add(new stPlatFormPosInfo("Generic", w_PF_Size, 150, 150, w_PG_Size, 30, 30, 30, 30, w_L_Size));
 
             /*m_PlatFormInfo.Add(new stPlatFormPosInfo("./Assets/iPhoneSE.png", 200,50,123,133,368,743,227,155,320,548));
             m_PlatFormInfo.Add(new stPlatFormPosInfo("./Assets/lumia920.png", 200,50,120,130,356,660,218,147,320,480));
@@ -865,8 +865,17 @@ namespace MockerProject.ViewModels
                 PG_X = PF_X + PF_LW;
                 PG_Y = PF_Y + PF_TH;
                 
-                // Set zoom to 75% for better mobile screen view
-                Zoom = 0.75;
+                // Set appropriate zoom based on platform type
+                if (m_nSelectedPlatFormIndex == 3 || m_nSelectedPlatFormIndex == 4 || m_nSelectedPlatFormIndex == 5 || m_nSelectedPlatFormIndex == 6) // iPad, Other Tablet, Browser, or Generic
+                {
+                    // Use smaller zoom for tablets, browser, and generic to fit better
+                    Zoom = 0.6;
+                }
+                else
+                {
+                    // Set zoom to 75% for better mobile screen view
+                    Zoom = 0.75;
+                }
             }
         }
         private void init(bool flag = true)
@@ -928,15 +937,15 @@ namespace MockerProject.ViewModels
             {
                 IsPlatForm4 = true;
                 SubPlatform.Clear();
-                SubPlatform.Add("iPad - 1024X748");
+                SubPlatform.Add("iPad - 700X1000");
                 SubPlatformId = 0;
             }
             else if (m_nSelectedPlatFormIndex == 4)
             {
                 IsPlatForm5 = true;
                 SubPlatform.Clear();
-                SubPlatform.Add("Nexus 9 - 1024X768");
-                SubPlatform.Add("Surface Pro 3 - 1440X1024");
+                SubPlatform.Add("Nexus 9 - 800X1200");
+                SubPlatform.Add("Surface Pro 3 - 1200X800");
                 SubPlatform.Add("Custom - resize");
                 SubPlatformId = 0;
             }
@@ -944,8 +953,8 @@ namespace MockerProject.ViewModels
             {
                 IsPlatForm6 = true;
                 SubPlatform.Clear();
-                SubPlatform.Add("320X548");
-                SubPlatform.Add("640X480");
+                SubPlatform.Add("720X520");
+                SubPlatform.Add("600X400");
                 SubPlatform.Add("800X600");
                 SubPlatform.Add("1024X768");
                 SubPlatform.Add("1280X1024");
@@ -1001,10 +1010,24 @@ namespace MockerProject.ViewModels
             PF_BLY = PF_H - (PF_BH + m_PlatFormInfo[m_nSelectedPlatFormIndex].L_Size[1].H) / 2;
             PG_RW = PG_W;
             PG_RH = PG_H;
+            
+            // Auto-center iPad, Other Tablet, Browser, and Generic when selected
+            if (m_nSelectedPlatFormIndex == 3 || m_nSelectedPlatFormIndex == 4 || m_nSelectedPlatFormIndex == 5 || m_nSelectedPlatFormIndex == 6) // iPad, Other Tablet, Browser, or Generic
+            {
+                CenterScreen();
+            }
         }
 
         private Bitmap? LoadBitmapOrError(string fileName, string imagePath)
         {
+            // Force use of programmatically created assets for Other Tablet
+            // This overrides any existing files
+            if (imagePath.Contains("Other Tablet"))
+            {
+                // Always use programmatically created black assets for Other Tablet
+                return CreateSimpleTabletAsset(fileName);
+            }
+            
             string path = Path.Combine(imagePath, fileName);
 
             if (File.Exists(path))
@@ -1013,10 +1036,73 @@ namespace MockerProject.ViewModels
             }
             else
             {
-
+                // Try to load from iPhone 7 as fallback for iPad, Browser, and Generic
+                if (imagePath.Contains("iPad") || imagePath.Contains("Browser") || imagePath.Contains("Generic"))
+                {
+                    string fallbackPath = Path.Combine("./Assets/Platforms/iPhone 7/", fileName);
+                    if (File.Exists(fallbackPath))
+                    {
+                        return new Bitmap(fallbackPath);
+                    }
+                }
                 return null; // or return fallback image if you have one
             }
         }
+
+        private Bitmap? CreateSimpleTabletAsset(string fileName)
+        {
+            // Define dimensions for different assets
+            var dimensions = fileName switch
+            {
+                "Right.png" => (50, 1200),
+                "Bottom_Left.png" => (50, 50),
+                "Bottom_Middle.png" => (800, 50),
+                "Bottom_Right.png" => (50, 50),
+                "Bottom_Label.png" => (60, 60),
+                "Top_Left.png" => (50, 50),
+                "Top_Middle.png" => (800, 50),
+                "Top_Right.png" => (50, 50),
+                "Top_Label.png" => (60, 60),
+                "Left.png" => (50, 1200),
+                _ => (50, 50) // Default size
+            };
+
+            int width = dimensions.Item1;
+            int height = dimensions.Item2;
+
+            // Create a simple colored rectangle using RenderTargetBitmap
+            var renderTargetBitmap = new RenderTargetBitmap(new PixelSize(width, height));
+            
+            // Choose color based on the asset type
+            Color color;
+            if (fileName == "Left.png" || fileName == "Right.png")
+            {
+                // Gray color for left and right sides
+                color = Color.FromArgb(255, 128, 128, 128); // Gray
+            }
+            else
+            {
+                // Black color for top and bottom
+                color = Color.FromArgb(255, 0, 0, 0); // Pure black
+            }
+            
+            // Create a simple Border with the appropriate color
+            var border = new Border
+            {
+                Width = width,
+                Height = height,
+                Background = new SolidColorBrush(color)
+            };
+            
+            // Apply layout
+            border.Arrange(new Rect(0, 0, width, height));
+            
+            // Render to bitmap
+            renderTargetBitmap.Render(border);
+
+            return renderTargetBitmap;
+        }
+
         public void setOrientation(bool p_Orientation)
         {
 

@@ -8,7 +8,7 @@
              x:CompileBindings="True" x:DataType="vm:MainWindowViewModel">
 
   <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-    <Canvas MinWidth="1500" MinHeight="{Binding PF_H}"
+    <Canvas MinWidth="2000" MinHeight="1500"
             Background="{DynamicResource MainBackgroundImageSource}" 
             HorizontalAlignment="Center" VerticalAlignment="Center" >
       <Canvas Focusable="True" PointerPressed="OnElementSelected" Name="screenCanvas"
