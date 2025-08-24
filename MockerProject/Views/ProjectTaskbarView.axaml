@@ -51,7 +51,7 @@
         <Button Grid.Column="1" Command="{Binding onNewScreen}" Classes="TransparentButton"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 Width="24" Height="24" Padding="0">
-          <Image Source="{DynamicResource RedoIcon}" Width="16" Height="16" />
+          <Image Source="{DynamicResource AddScreen}" Width="16" Height="16" />
         </Button>
       </Grid>
 
