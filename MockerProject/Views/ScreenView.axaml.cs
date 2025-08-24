@@ -43,18 +43,89 @@ namespace MockerProject.Views
         {
             InitializeComponent();
             //this.PointerMoved += onMouseMove;
-            this.AttachedToVisualTree += (_, _) => this.Focus(); // or screenCanvas.Focus();
+            this.AttachedToVisualTree += (_, _) =>
+            {
+                this.Focus(); // or screenCanvas.Focus();
+            };
             this.AddHandler(KeyUpEvent, OnKeyDown, RoutingStrategies.Tunnel);
-            this.AddHandler(InputElement.PointerPressedEvent, OnElementSelected, RoutingStrategies.Bubble, handledEventsToo: true);
+            this.AddHandler(InputElement.PointerPressedEvent, OnElementSelected, RoutingStrategies.Bubble, handledEventsToo: false);
+        }
+
+        public void UpdateSelectionHighlight(Control? element)
+        {
+            // Clear previous selection
+            if (selectedElement != null)
+            {
+                selectedElement.ClearValue(Border.BorderBrushProperty);
+                selectedElement.ClearValue(Border.BorderThicknessProperty);
+            }
+
+            selectedElement = element;
+
+            if (selectedElement != null)
+            {
+                selectedElement.SetValue(Border.BorderBrushProperty, Brushes.Blue);
+                selectedElement.SetValue(Border.BorderThicknessProperty, new Thickness(2));
+
+                Console.WriteLine($"Selected: {selectedElement.GetType().Name}");
+            }
+        }
+
+        public void ClearSelection()
+        {
+            if (selectedElement != null)
+            {
+                selectedElement.ClearValue(Border.BorderBrushProperty);
+                selectedElement.ClearValue(Border.BorderThicknessProperty);
+                selectedElement = null;
+            }
+        }
+
+        // Test method to verify selection is working
+        public void TestSelection()
+        {
+            var canvas = this.FindControl<Canvas>("screenCanvas");
+            if (canvas != null && canvas.Children.Count > 0)
+            {
+                // Try to select the first child
+                var firstChild = canvas.Children[0];
+                if (firstChild is Control control)
+                {
+                    UpdateSelectionHighlight(control);
+                }
+            }
+        }
+
+        // Debug method to help identify issues
+        public void DebugSelection()
+        {
+            var canvas = this.FindControl<Canvas>("screenCanvas");
+            if (canvas != null)
+            {
+                Console.WriteLine($"Canvas found with {canvas.Children.Count} children");
+                for (int i = 0; i < canvas.Children.Count; i++)
+                {
+                    var child = canvas.Children[i];
+                    Console.WriteLine($"Child {i}: {child.GetType().Name}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Canvas not found!");
+            }
         }
 
         private void OnKeyDown(object? sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete && selectedElement != null)
             {
-                var deleteAction = new DeleteCommand(screenCanvas, selectedElement);
-                ViewModel.ExecuteAction(deleteAction);
-                selectedElement = null;
+                var canvas = this.FindControl<Canvas>("screenCanvas");
+                if (canvas != null)
+                {
+                    var deleteAction = new DeleteCommand(canvas, selectedElement);
+                    ViewModel.ExecuteAction(deleteAction);
+                    ClearSelection();
+                }
             }
             else if (e.KeyModifiers == KeyModifiers.Control && e.Key == Key.Z)
             {
@@ -64,63 +135,84 @@ namespace MockerProject.Views
             {
                 ViewModel.Redo();
             }
-            if (e.Key == Key.S && e.KeyModifiers == KeyModifiers.Control)
+            else if (e.Key == Key.Escape)
+            {
+                // Clear selection when Escape is pressed
+                ClearSelection();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.S && e.KeyModifiers == KeyModifiers.Control)
             {
                 // Execute the Save command
                 var vm = this.DataContext as MainWindowViewModel;
                 vm?.onSaveProject?.Execute(null);
                 e.Handled = true;
             }
+            else if (e.Key == Key.T)
+            {
+                // Test selection with T key
+                TestSelection();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.D)
+            {
+                // Debug selection with D key
+                DebugSelection();
+                e.Handled = true;
+            }
         }
 
         private void OnElementSelected(object sender, PointerPressedEventArgs e)
         {
+            // Don't handle double-clicks - let them pass through to the UIControl
+            if (e.ClickCount > 1) return;
+
             if (e.Source is Control clickedControl)
             {
-                // Traverse up to find the draggable container (e.g. LayoutTransformControl)
-                var rootControl = new Control();
-                if (clickedControl is ButtonControl
-                   || clickedControl is CheckControl
-                   || clickedControl is EditControl
-                   || clickedControl is RadioControl
-                   || clickedControl is TabViewControl
-                   || clickedControl is UIControl
-                   || clickedControl is RepeaterControl)
+                // Find the top-level UI control that should be selected
+                var rootControl = FindTopLevelUIControl(clickedControl);
+
+                if (rootControl != null && rootControl is not Canvas)
                 {
-                    rootControl = clickedControl;
+                    // Update the selection highlight
+                    UpdateSelectionHighlight(rootControl);
+                    e.Handled = true;
                 }
                 else
                 {
-                    var listBoxParent = FindAncestor<ListBoxControl>(clickedControl);
-                    if (listBoxParent != null)
-                    {
-                        rootControl = listBoxParent;
-                    }
-                    else
-                    {
-                        var sliderControl = FindAncestor<SliderControl>(clickedControl);
-                        if (sliderControl != null)
-                        {
-                            rootControl = sliderControl;
-                        }
-                        else
-                        {
-                            rootControl = FindDraggableParent((Control)clickedControl.Parent);
-                        }
-                    }
-                }
-
-                if (rootControl is Canvas)
-                {
-                    rootControl = null;
-                }
-
-                if (rootControl != null)
-                {
-                    selectedElement = rootControl;
-                    e.Handled = true;
+                    // Clear selection if clicking on empty space
+                    ClearSelection();
                 }
             }
+        }
+
+        private Control? FindTopLevelUIControl(Control control)
+        {
+            // First, check if the control itself is a UI control
+            if (control is ButtonControl || control is CheckControl || control is EditControl ||
+                control is RadioControl || control is TabViewControl || control is UIControl ||
+                control is RepeaterControl || control is ListBoxControl || control is SliderControl ||
+                control is ImageControl || control is ContainerBoxControl || control is TreeViewControl)
+            {
+                return control;
+            }
+
+            // Look for UI controls in the ancestry
+            var current = control;
+            while (current != null)
+            {
+                if (current is ButtonControl || current is CheckControl || current is EditControl ||
+                    current is RadioControl || current is TabViewControl || current is UIControl ||
+                    current is RepeaterControl || current is ListBoxControl || current is SliderControl ||
+                    current is ImageControl || current is ContainerBoxControl || current is TreeViewControl)
+                {
+                    return current;
+                }
+
+                current = current.GetVisualParent() as Control;
+            }
+
+            return null;
         }
 
         private Control? FindDraggableParent(Control control)

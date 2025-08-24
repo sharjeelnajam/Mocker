@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.VisualTree;
 using MockerProject.ViewModels.UIViewModels;
+using MockerProject.Views;
 using MockerProject.Views.UIControls;
 using System.ComponentModel;
 using System.Linq;
@@ -23,6 +24,12 @@ namespace MockerProject.Action
 
         public void Execute()
         {
+            // Clear selection if the deleted element was selected
+            if (_canvas is Canvas canvas && canvas.Parent is ScreenView screenView)
+            {
+                screenView.ClearSelection();
+            }
+
             // Handle TabControl deletion
             if (_element is TabViewControl tabControl)
             {
@@ -52,8 +59,71 @@ namespace MockerProject.Action
 
             if (_element is ContainerBoxControl containerBoxControl)
             {
-                var repeaterParent = FindAncestor<RepeaterControl>(containerBoxControl);
-                _canvas.Children.Remove(repeaterParent);
+                var containerBoxCtrl = FindAncestor<ContainerBoxControl>(containerBoxControl);
+                if (containerBoxCtrl != null)
+                {
+                    // Check if this container is part of a TabViewControl
+                    var tabViewControlCtrl = FindAncestor<TabViewControl>(containerBoxCtrl);
+                    if (tabViewControlCtrl != null)
+                    {
+                        var viewModel = tabViewControlCtrl.DataContext as RepeaterControlViewModel;
+                        if (viewModel != null)
+                        {
+                            // Find the index of the container in the Items collection
+                            int itemIndex = viewModel.Items.IndexOf(containerBoxCtrl);
+                            if (itemIndex >= 0)
+                            {
+                                // Remove from Items collection
+                                viewModel.Items.RemoveAt(itemIndex);
+
+                                // Remove corresponding header
+                                if (itemIndex < viewModel.TabHeaders.Count)
+                                {
+                                    viewModel.TabHeaders.RemoveAt(itemIndex);
+                                }
+
+                                // Remove from parent canvas
+                                var pCanvas = containerBoxCtrl.Parent as Canvas;
+                                if (pCanvas != null)
+                                {
+                                    pCanvas.Children.Remove(containerBoxCtrl);
+                                }
+
+                                // If this was the last tab, remove the entire TabControl
+                                if (viewModel.Items.Count == 0)
+                                {
+                                    var mainCanvas = tabViewControlCtrl.Parent as Canvas;
+                                    if (mainCanvas != null)
+                                    {
+                                        mainCanvas.Children.Remove(tabViewControlCtrl);
+
+                                        // Also remove any associated run controls
+                                        var runControls = mainCanvas.Children.OfType<TabViewRunControl>().ToList();
+                                        foreach (var runControl in runControls)
+                                        {
+                                            mainCanvas.Children.Remove(runControl);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // If not part of TabViewControl, just remove the container
+                    var containerParent = containerBoxCtrl.Parent as Panel;
+                    if (containerParent != null)
+                    {
+                        containerParent.Children.Remove(containerBoxCtrl);
+                    }
+                    else
+                    {
+                        var repeaterParent = FindAncestor<RepeaterControl>(containerBoxCtrl);
+                        if (repeaterParent != null)
+                        {
+                            _canvas.Children.Remove(repeaterParent);
+                        }
+                    }
+                }
                 return;
             }
 
@@ -163,7 +233,7 @@ namespace MockerProject.Action
                     else
                     {
                         var repeaterParent = FindAncestor<RepeaterControl>(containerBoxCtrl);
-                        if(repeaterParent != null)
+                        if (repeaterParent != null)
                         {
                             _canvas.Children.Remove(repeaterParent);
                         }

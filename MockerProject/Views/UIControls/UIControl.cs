@@ -13,7 +13,7 @@ namespace MockerProject.Views;
 public class UIControl : UserControl
 {
     public MainWindowViewModel m_MainViewModel;
-    [AllowNull]  public UIControlViewModel m_ControlViewModel;
+    [AllowNull] public UIControlViewModel m_ControlViewModel;
     public CONTROL_TYPE m_nUIControlType = CONTROL_TYPE.NONE;
     public int m_nIndex = 0;
     public string m_strName;
@@ -30,7 +30,7 @@ public class UIControl : UserControl
     public bool m_bFitWidth;
     public bool m_bFitHeight;
     public SolidColorBrush m_Background;
-    
+
     public SolidColorBrush m_Foreground;
     public SolidColorBrush m_BorderColor;
     public Thickness m_BorderThickness;
@@ -68,7 +68,7 @@ public class UIControl : UserControl
     {
         m_strText = text;
         m_ControlViewModel.text = m_strText;
-            
+
     }
 
     public void setPasswordChar(string passwordChar)
@@ -78,7 +78,7 @@ public class UIControl : UserControl
 
     }
 
-    
+
     public void setOpacity(double opacity)
     {
         m_Opacity = opacity;
@@ -91,26 +91,26 @@ public class UIControl : UserControl
     public void setPositionX(double x)
     {
         m_nPositionX = x;
-        Canvas.SetLeft(this, m_nPositionX+ m_ControlViewModel.OffsetX);
-       
-       // m_ControlViewModel.Control_sX = (int)m_nPositionX ;
+        Canvas.SetLeft(this, m_nPositionX + m_ControlViewModel.OffsetX);
+
+        // m_ControlViewModel.Control_sX = (int)m_nPositionX ;
     }
-    public void setPositionY(double y )
+    public void setPositionY(double y)
     {
         m_nPositionY = y;
-        Canvas.SetTop(this, m_nPositionY+ m_ControlViewModel.OffsetY);
-        
+        Canvas.SetTop(this, m_nPositionY + m_ControlViewModel.OffsetY);
+
         //m_ControlViewModel.Control_sY = (int)m_nPositionY ;
     }
-    public void setPosition(double x, double y,double ox=150,double oy=150)
+    public void setPosition(double x, double y, double ox = 150, double oy = 150)
     {
         //m_currentControlPoint = new Point(x, y);
         m_nPositionX = (int)x;
         m_nPositionY = (int)y;
         m_ControlViewModel.OffsetX = (int)ox;
         m_ControlViewModel.OffsetY = (int)oy;
-        Canvas.SetLeft(this,(int) x + m_ControlViewModel.OffsetX);
-        Canvas.SetTop(this,(int) y + m_ControlViewModel.OffsetY);
+        Canvas.SetLeft(this, (int)x + m_ControlViewModel.OffsetX);
+        Canvas.SetTop(this, (int)y + m_ControlViewModel.OffsetY);
         m_ControlViewModel.Control_sX = (int)x;
         m_ControlViewModel.Control_sY = (int)y;
     }
@@ -146,10 +146,10 @@ public class UIControl : UserControl
         m_ControlViewModel.IsFitHeight = fitHeight;
     }
 
-    public void setImageSrc([AllowNull]string dirPath, [AllowNull] string absPath)
+    public void setImageSrc([AllowNull] string dirPath, [AllowNull] string absPath)
     {
         m_strSrc = null;
-        if(dirPath != null && absPath != null)
+        if (dirPath != null && absPath != null)
         {
             m_strSrc = Path.Combine(dirPath, absPath);
             if (this.GetType() == typeof(ImageControl))
@@ -187,7 +187,7 @@ public class UIControl : UserControl
     }
     public void setBorderRound(int round)
     {
-       m_ControlViewModel.RoundID = round;
+        m_ControlViewModel.RoundID = round;
     }
     public void setBorderRound(stRect round)
     {
@@ -246,8 +246,6 @@ public class UIControl : UserControl
         m_ControlViewModel.textUnderline = m_bUnderline;
     }
 
-    
-
     public void setTapEvent(string page)
     {
         m_TapEvent = page;
@@ -283,7 +281,7 @@ public class UIControl : UserControl
     }
     public Rect getRect()
     {
-        Rect w_Rect=new Rect(m_nPositionX, m_nPositionY, m_nWidth, m_nHeight);
+        Rect w_Rect = new Rect(m_nPositionX, m_nPositionY, m_nWidth, m_nHeight);
         return w_Rect;
     }
     public void setMainVM(MainWindowViewModel mainViewModel)
@@ -295,12 +293,12 @@ public class UIControl : UserControl
             m_ControlViewModel.setMainVM(mainViewModel);
         }
     }
-    public virtual void doubleClickHandler(object sender,TappedEventArgs e)
+    public virtual void doubleClickHandler(object sender, TappedEventArgs e)
     {
         if (m_MainViewModel == null) return;
 
         if (m_MainViewModel.ContainerFlag == 0 && this.Parent != m_MainViewModel.WorkScreen.screenCanvas) return;
-        if (m_MainViewModel.ContainerFlag > 0 && this.Parent != m_MainViewModel.ContainerCanvas[m_MainViewModel.ContainerFlag-1]) return;
+        if (m_MainViewModel.ContainerFlag > 0 && this.Parent != m_MainViewModel.ContainerCanvas[m_MainViewModel.ContainerFlag - 1]) return;
 
         m_MainViewModel.WorkScreen.LinePosition.IsVisible = false;
         if (m_IsDoubleTapped == true)
@@ -350,6 +348,12 @@ public class UIControl : UserControl
             sY += screenCoords.Y;
         }
         m_MainViewModel.m_nSelectedUIControl = (CONTROL_TYPE)m_nIndex;
+
+        // Update selection highlight
+        if (m_MainViewModel.WorkScreen is ScreenView screenView)
+        {
+            screenView.UpdateSelectionHighlight(this);
+        }
     }
 
     public virtual void MouseMoveEvent(object sender, PointerEventArgs e)
@@ -358,7 +362,7 @@ public class UIControl : UserControl
         var properties = e.GetCurrentPoint(this).Properties;
         if (m_MainViewModel == null) return;
         if (m_MainViewModel.ContainerFlag == 0 && this.Parent != m_MainViewModel.WorkScreen.screenCanvas) return;
-        if (properties.IsLeftButtonPressed )
+        if (properties.IsLeftButtonPressed)
         {
 
             m_MainViewModel.WorkScreen.LinePosition.IsVisible = true;
@@ -369,14 +373,14 @@ public class UIControl : UserControl
             double w_CsX = 0, w_CsY = 0;
             w_CsX = X - sX - m_ControlViewModel.OffsetX;
             w_CsY = Y - sY - m_ControlViewModel.OffsetY;
-            if( m_MainViewModel.ContainerFlag>0) setPosition(w_CsX, w_CsY,0,0);
+            if (m_MainViewModel.ContainerFlag > 0) setPosition(w_CsX, w_CsY, 0, 0);
             else setPosition(w_CsX, w_CsY);
         }
     }
 
     public virtual void KeyPressEvent(object sender, KeyEventArgs e)
     {
-        
+
     }
 
     public UIControl()
@@ -384,17 +388,21 @@ public class UIControl : UserControl
         m_ControlViewModel = new UIControlViewModel(this);
         this.AddHandler(Control.PointerPressedEvent, (sender, e) =>
         {
-            MousePressEvent(sender, e);
+            // Don't handle double-clicks in the pointer pressed event
+            if (e.ClickCount == 1)
+            {
+                MousePressEvent(sender, e);
+            }
         }, handledEventsToo: true);
 
         this.AddHandler(Control.PointerMovedEvent, (sender, e) =>
         {
             MouseMoveEvent(sender, e);
         }, handledEventsToo: true);
-       
+
         this.AddHandler(Control.DoubleTappedEvent, (sender, e) =>
         {
-            doubleClickHandler(sender,e);
+            doubleClickHandler(sender, e);
 
         }, handledEventsToo: true);
 
