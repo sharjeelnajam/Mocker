@@ -11,6 +11,7 @@ using MockerProject.ViewModels;
 using MockerProject.Views.UIControls;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Size = System.Drawing.Size;
 
 namespace MockerProject.Views
@@ -26,6 +27,24 @@ namespace MockerProject.Views
         public Control curInfo;
     }
 
+    /// <summary>
+    /// ScreenView provides the main design canvas for UI controls with multi-selection support.
+    /// 
+    /// Keyboard Shortcuts:
+    /// - Ctrl+A: Select all controls
+    /// - Ctrl+C: Copy selected controls (placeholder)
+    /// - Ctrl+V: Paste controls (placeholder)
+    /// - Delete: Delete selected controls
+    /// - Escape: Clear selection
+    /// - Ctrl+Z: Undo
+    /// - Ctrl+Y: Redo
+    /// 
+    /// Mouse Selection:
+    /// - Click: Select single control
+    /// - Ctrl+Click: Add/remove control from selection
+    /// - Shift+Click: Select range between last selected and clicked control
+    /// - Click empty space: Clear selection (unless Ctrl is held)
+    /// </summary>
     public partial class ScreenView : UserControl
     {
         private MainWindowViewModel m_MainViewModel;
@@ -36,7 +55,14 @@ namespace MockerProject.Views
         public Size m_Size = new Size(375, 647);
         public SolidColorBrush m_background = new SolidColorBrush(new Color(255, 255, 255, 255));
         public double m_Opacity = 0.33;
-        private Control? selectedElement;
+        
+        // Multi-selection support
+        private List<Control> selectedElements = new List<Control>();
+        private Control? lastSelectedElement;
+        private bool isMultiSelectMode = false;
+        private bool isDragging = false;
+        private Point dragStartPoint;
+        
         private MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext!;
 
         public ScreenView()
@@ -48,37 +74,185 @@ namespace MockerProject.Views
                 this.Focus(); // or screenCanvas.Focus();
             };
             this.AddHandler(KeyUpEvent, OnKeyDown, RoutingStrategies.Tunnel);
-            this.AddHandler(InputElement.PointerPressedEvent, OnElementSelected, RoutingStrategies.Bubble, handledEventsToo: false);
         }
 
         public void UpdateSelectionHighlight(Control? element)
         {
             // Clear previous selection
-            if (selectedElement != null)
+            ClearAllSelections();
+
+            if (element != null)
             {
-                selectedElement.ClearValue(Border.BorderBrushProperty);
-                selectedElement.ClearValue(Border.BorderThicknessProperty);
+                selectedElements.Add(element);
+                lastSelectedElement = element;
+                HighlightControl(element);
+                Console.WriteLine($"Selected: {element.GetType().Name}");
+                UpdateSelectionStatus();
             }
+        }
 
-            selectedElement = element;
-
-            if (selectedElement != null)
+        public void AddToSelection(Control element)
+        {
+            if (element != null && !selectedElements.Contains(element))
             {
-                selectedElement.SetValue(Border.BorderBrushProperty, Brushes.Blue);
-                selectedElement.SetValue(Border.BorderThicknessProperty, new Thickness(2));
+                selectedElements.Add(element);
+                lastSelectedElement = element;
+                HighlightControl(element);
+                Console.WriteLine($"Added to selection: {element.GetType().Name}");
+                UpdateSelectionStatus();
+            }
+        }
 
-                Console.WriteLine($"Selected: {selectedElement.GetType().Name}");
+        public void RemoveFromSelection(Control element)
+        {
+            if (element != null && selectedElements.Contains(element))
+            {
+                selectedElements.Remove(element);
+                UnhighlightControl(element);
+                if (lastSelectedElement == element)
+                {
+                    lastSelectedElement = selectedElements.Count > 0 ? selectedElements.Last() : null;
+                }
+                Console.WriteLine($"Removed from selection: {element.GetType().Name}");
+                UpdateSelectionStatus();
+            }
+        }
+
+        public void SelectAllControls()
+        {
+            var canvas = this.FindControl<Canvas>("screenCanvas");
+            if (canvas != null)
+            {
+                ClearAllSelections();
+                
+                foreach (var child in canvas.Children)
+                {
+                    if (child is Control control && IsSelectableControl(control))
+                    {
+                        selectedElements.Add(control);
+                        HighlightControl(control);
+                    }
+                }
+                
+                if (selectedElements.Count > 0)
+                {
+                    lastSelectedElement = selectedElements.Last();
+                    Console.WriteLine($"Selected all {selectedElements.Count} controls");
+                    UpdateSelectionStatus();
+                }
+            }
+        }
+
+        public void SelectRange(Control startControl, Control endControl)
+        {
+            var canvas = this.FindControl<Canvas>("screenCanvas");
+            if (canvas == null) return;
+
+            ClearAllSelections();
+            
+            bool inRange = false;
+            bool foundStart = false;
+            bool foundEnd = false;
+            
+            foreach (var child in canvas.Children)
+            {
+                if (child is Control control && IsSelectableControl(control))
+                {
+                    if (control == startControl)
+                    {
+                        foundStart = true;
+                        inRange = true;
+                    }
+                    else if (control == endControl)
+                    {
+                        foundEnd = true;
+                        inRange = true;
+                    }
+                    
+                    if (inRange)
+                    {
+                        selectedElements.Add(control);
+                        HighlightControl(control);
+                    }
+                    
+                    // If we've found both start and end, we're done
+                    if (foundStart && foundEnd)
+                    {
+                        break;
+                    }
+                }
+            }
+            
+            if (selectedElements.Count > 0)
+            {
+                lastSelectedElement = endControl;
+                Console.WriteLine($"Range selected: {selectedElements.Count} controls");
+                UpdateSelectionStatus();
             }
         }
 
         public void ClearSelection()
         {
-            if (selectedElement != null)
+            ClearAllSelections();
+            UpdateSelectionStatus();
+        }
+
+        public List<Control> GetSelectedElements()
+        {
+            return new List<Control>(selectedElements);
+        }
+
+        public int GetSelectedCount()
+        {
+            return selectedElements.Count;
+        }
+
+        private void UpdateSelectionStatus()
+        {
+            if (selectedElements.Count > 1)
             {
-                selectedElement.ClearValue(Border.BorderBrushProperty);
-                selectedElement.ClearValue(Border.BorderThicknessProperty);
-                selectedElement = null;
+                Console.WriteLine($"Multiple selection: {selectedElements.Count} controls selected");
             }
+            else if (selectedElements.Count == 1)
+            {
+                Console.WriteLine($"Single selection: {selectedElements[0].GetType().Name} selected");
+            }
+            else
+            {
+                Console.WriteLine("No controls selected");
+            }
+        }
+
+        private void ClearAllSelections()
+        {
+            foreach (var element in selectedElements)
+            {
+                UnhighlightControl(element);
+            }
+            selectedElements.Clear();
+            lastSelectedElement = null;
+        }
+
+        private void HighlightControl(Control control)
+        {
+            control.SetValue(Border.BorderBrushProperty, Brushes.Blue);
+            control.SetValue(Border.BorderThicknessProperty, new Thickness(2));
+        }
+
+        private void UnhighlightControl(Control control)
+        {
+            control.ClearValue(Border.BorderBrushProperty);
+            control.ClearValue(Border.BorderThicknessProperty);
+        }
+
+        private bool IsSelectableControl(Control control)
+        {
+            return control is ButtonControl || control is CheckControl || control is EditControl ||
+                   control is RadioControl || control is TabViewControl || control is UIControl ||
+                   control is RepeaterControl || control is ListBoxControl || control is SliderControl ||
+                   control is ImageControl || control is ContainerBoxControl || control is TreeViewControl ||
+                   control is LabelControl || control is LinkControl || control is ProgressControl ||
+                   control is DropDownControl;
         }
 
         // Test method to verify selection is working
@@ -115,15 +289,73 @@ namespace MockerProject.Views
             }
         }
 
+        // Test multi-selection functionality
+        public void TestMultiSelection()
+        {
+            var canvas = this.FindControl<Canvas>("screenCanvas");
+            if (canvas != null && canvas.Children.Count >= 2)
+            {
+                Console.WriteLine("Testing multi-selection...");
+                
+                // Clear any existing selections
+                ClearAllSelections();
+                
+                // Select the first two controls
+                var firstControl = canvas.Children[0] as Control;
+                var secondControl = canvas.Children[1] as Control;
+                
+                if (firstControl != null && IsSelectableControl(firstControl))
+                {
+                    AddToSelection(firstControl);
+                    Console.WriteLine($"Added first control: {firstControl.GetType().Name}");
+                }
+                
+                if (secondControl != null && IsSelectableControl(secondControl))
+                {
+                    AddToSelection(secondControl);
+                    Console.WriteLine($"Added second control: {secondControl.GetType().Name}");
+                }
+                
+                Console.WriteLine($"Multi-selection test complete. Selected: {selectedElements.Count} controls");
+            }
+            else
+            {
+                Console.WriteLine("Cannot test multi-selection - need at least 2 controls on canvas");
+            }
+        }
+
+        // Simulate Ctrl+Click for testing
+        public void SimulateCtrlClick(Control control)
+        {
+            Console.WriteLine($"Simulating Ctrl+Click on {control.GetType().Name}");
+            
+            if (selectedElements.Contains(control))
+            {
+                // Remove from selection if already selected
+                Console.WriteLine("Removing from selection");
+                RemoveFromSelection(control);
+            }
+            else
+            {
+                // Add to selection
+                Console.WriteLine("Adding to selection");
+                AddToSelection(control);
+            }
+        }
+
         private void OnKeyDown(object? sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete && selectedElement != null)
+            if (e.Key == Key.Delete && selectedElements.Count > 0)
             {
                 var canvas = this.FindControl<Canvas>("screenCanvas");
                 if (canvas != null)
                 {
-                    var deleteAction = new DeleteCommand(canvas, selectedElement);
-                    ViewModel.ExecuteAction(deleteAction);
+                    // Delete all selected elements
+                    foreach (var element in selectedElements.ToList())
+                    {
+                        var deleteAction = new DeleteCommand(canvas, element);
+                        ViewModel.ExecuteAction(deleteAction);
+                    }
                     ClearSelection();
                 }
             }
@@ -134,6 +366,12 @@ namespace MockerProject.Views
             else if (e.KeyModifiers == KeyModifiers.Control && e.Key == Key.Y)
             {
                 ViewModel.Redo();
+            }
+            else if (e.KeyModifiers == KeyModifiers.Control && e.Key == Key.A)
+            {
+                // Select all controls
+                SelectAllControls();
+                e.Handled = true;
             }
             else if (e.Key == Key.Escape)
             {
@@ -160,39 +398,46 @@ namespace MockerProject.Views
                 DebugSelection();
                 e.Handled = true;
             }
-        }
-
-        private void OnElementSelected(object sender, PointerPressedEventArgs e)
-        {
-            // Don't handle double-clicks - let them pass through to the UIControl
-            if (e.ClickCount > 1) return;
-
-            if (e.Source is Control clickedControl)
+            else if (e.Key == Key.M)
             {
-                // Find the top-level UI control that should be selected
-                var rootControl = FindTopLevelUIControl(clickedControl);
-
-                if (rootControl != null && rootControl is not Canvas)
+                // Test multi-selection with M key
+                TestMultiSelection();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.N)
+            {
+                // Test Ctrl+Click simulation with N key
+                var canvas = this.FindControl<Canvas>("screenCanvas");
+                if (canvas != null && canvas.Children.Count >= 2)
                 {
-                    // Update the selection highlight
-                    UpdateSelectionHighlight(rootControl);
-                    e.Handled = true;
+                    var control = canvas.Children[1] as Control;
+                    if (control != null && IsSelectableControl(control))
+                    {
+                        SimulateCtrlClick(control);
+                    }
                 }
-                else
-                {
-                    // Clear selection if clicking on empty space
-                    ClearSelection();
-                }
+                e.Handled = true;
+            }
+            else if (e.Key == Key.C && e.KeyModifiers == KeyModifiers.Control && selectedElements.Count > 0)
+            {
+                // Copy selected controls (placeholder for future implementation)
+                Console.WriteLine($"Copy {selectedElements.Count} selected controls");
+                e.Handled = true;
+            }
+            else if (e.Key == Key.V && e.KeyModifiers == KeyModifiers.Control)
+            {
+                // Paste controls (placeholder for future implementation)
+                Console.WriteLine("Paste controls");
+                e.Handled = true;
             }
         }
+
+
 
         private Control? FindTopLevelUIControl(Control control)
         {
             // First, check if the control itself is a UI control
-            if (control is ButtonControl || control is CheckControl || control is EditControl ||
-                control is RadioControl || control is TabViewControl || control is UIControl ||
-                control is RepeaterControl || control is ListBoxControl || control is SliderControl ||
-                control is ImageControl || control is ContainerBoxControl || control is TreeViewControl)
+            if (IsSelectableControl(control))
             {
                 return control;
             }
@@ -201,10 +446,7 @@ namespace MockerProject.Views
             var current = control;
             while (current != null)
             {
-                if (current is ButtonControl || current is CheckControl || current is EditControl ||
-                    current is RadioControl || current is TabViewControl || current is UIControl ||
-                    current is RepeaterControl || current is ListBoxControl || current is SliderControl ||
-                    current is ImageControl || current is ContainerBoxControl || current is TreeViewControl)
+                if (IsSelectableControl(current))
                 {
                     return current;
                 }

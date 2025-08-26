@@ -349,10 +349,20 @@ public class UIControl : UserControl
         }
         m_MainViewModel.m_nSelectedUIControl = (CONTROL_TYPE)m_nIndex;
 
-        // Update selection highlight
+        // Update selection highlight with multi-selection support
         if (m_MainViewModel.WorkScreen is ScreenView screenView)
         {
-            screenView.UpdateSelectionHighlight(this);
+            // Check if Ctrl key is pressed for multi-selection
+            if (e.KeyModifiers.HasFlag(KeyModifiers.Control))
+            {
+                // Multi-selection mode
+                screenView.AddToSelection(this);
+            }
+            else
+            {
+                // Single selection mode
+                screenView.UpdateSelectionHighlight(this);
+            }
         }
     }
 

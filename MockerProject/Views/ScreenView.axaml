@@ -11,7 +11,7 @@
     <Canvas MinWidth="2000" MinHeight="1500"
             Background="{DynamicResource MainBackgroundImageSource}" 
             HorizontalAlignment="Center" VerticalAlignment="Center" >
-      <Canvas Focusable="True" PointerPressed="OnElementSelected" Name="screenCanvas"
+      <Canvas Focusable="True" Name="screenCanvas"
                      Width="{Binding PF_W}" Height="{Binding PF_H}">
         <Canvas.RenderTransform>
           <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}" />
