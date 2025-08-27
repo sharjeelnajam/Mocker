@@ -367,15 +367,12 @@ public class UIControl : UserControl
             }
             else
             {
-                // Single selection mode - if already selected, deselect; otherwise select
                 if (screenView.GetSelectedElements().Contains(this) && screenView.GetSelectedCount() == 1)
                 {
-                    // If this is the only selected control, deselect it
                     screenView.ClearSelection();
                 }
                 else
                 {
-                    // Select this control (replaces any existing selection)
                     screenView.UpdateSelectionHighlight(this);
                 }
             }
@@ -384,13 +381,11 @@ public class UIControl : UserControl
 
     public virtual void MouseMoveEvent(object sender, PointerEventArgs e)
     {
-
         var properties = e.GetCurrentPoint(this).Properties;
         if (m_MainViewModel == null) return;
         if (m_MainViewModel.ContainerFlag == 0 && this.Parent != m_MainViewModel.WorkScreen.screenCanvas) return;
         if (properties.IsLeftButtonPressed)
         {
-
             m_MainViewModel.WorkScreen.LinePosition.IsVisible = true;
             if (m_MainViewModel.ContainerFlag > 0) m_MainViewModel.WorkScreen.LinePosition.IsVisible = false;
             var X = e.GetPosition(m_MainViewModel.WorkScreen).X;

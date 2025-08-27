@@ -6,7 +6,6 @@ using Avalonia.Media;
 using Avalonia.VisualTree;
 using MockerProject.Action;
 using MockerProject.Models;
-//using Avalonia.Remote.Protocol.Input;
 using MockerProject.ViewModels;
 using MockerProject.Views.UIControls;
 using System;
@@ -20,7 +19,6 @@ namespace MockerProject.Views
     {
         public int Index;
         public string Cmd;
-
         public CONTROL_TYPE id;
         public Type type;
         public Control oldInfo;
@@ -45,9 +43,12 @@ namespace MockerProject.Views
     /// - Shift+Click: Select range between last selected and clicked control
     /// - Click empty space: Clear selection (unless Ctrl is held)
     /// </summary>
+
     public partial class ScreenView : UserControl
     {
         private MainWindowViewModel m_MainViewModel;
+        private MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext!;
+
         public List<stControlHistory> m_UndoList = new List<stControlHistory>();
         public List<stControlHistory> m_RedoList = new List<stControlHistory>();
         public string m_strName = "Page1";
@@ -55,15 +56,10 @@ namespace MockerProject.Views
         public Size m_Size = new Size(375, 647);
         public SolidColorBrush m_background = new SolidColorBrush(new Color(255, 255, 255, 255));
         public double m_Opacity = 0.33;
-        
+
         // Multi-selection support
         private List<Control> selectedElements = new List<Control>();
         private Control? lastSelectedElement;
-        private bool isMultiSelectMode = false;
-        private bool isDragging = false;
-        private Point dragStartPoint;
-        
-        private MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext!;
 
         public ScreenView()
         {
@@ -74,6 +70,16 @@ namespace MockerProject.Views
                 this.Focus(); // or screenCanvas.Focus();
             };
             this.AddHandler(KeyUpEvent, OnKeyDown, RoutingStrategies.Tunnel);
+
+            // Add pointer pressed event handler to canvas for clearing selection when clicking outside
+            this.AttachedToVisualTree += (_, _) =>
+            {
+                var canvas = this.FindControl<Canvas>("screenCanvas");
+                if (canvas != null)
+                {
+                    canvas.AddHandler(PointerPressedEvent, OnCanvasPointerPressed, RoutingStrategies.Tunnel);
+                }
+            };
         }
 
         public void UpdateSelectionHighlight(Control? element)
@@ -124,7 +130,7 @@ namespace MockerProject.Views
             if (canvas != null)
             {
                 ClearAllSelections();
-                
+
                 foreach (var child in canvas.Children)
                 {
                     if (child is Control control && IsSelectableControl(control))
@@ -133,7 +139,7 @@ namespace MockerProject.Views
                         HighlightControl(control);
                     }
                 }
-                
+
                 if (selectedElements.Count > 0)
                 {
                     lastSelectedElement = selectedElements.Last();
@@ -149,11 +155,11 @@ namespace MockerProject.Views
             if (canvas == null) return;
 
             ClearAllSelections();
-            
+
             bool inRange = false;
             bool foundStart = false;
             bool foundEnd = false;
-            
+
             foreach (var child in canvas.Children)
             {
                 if (child is Control control && IsSelectableControl(control))
@@ -168,13 +174,13 @@ namespace MockerProject.Views
                         foundEnd = true;
                         inRange = true;
                     }
-                    
+
                     if (inRange)
                     {
                         selectedElements.Add(control);
                         HighlightControl(control);
                     }
-                    
+
                     // If we've found both start and end, we're done
                     if (foundStart && foundEnd)
                     {
@@ -182,7 +188,7 @@ namespace MockerProject.Views
                     }
                 }
             }
-            
+
             if (selectedElements.Count > 0)
             {
                 lastSelectedElement = endControl;
@@ -255,94 +261,6 @@ namespace MockerProject.Views
                    control is DropDownControl;
         }
 
-        // Test method to verify selection is working
-        public void TestSelection()
-        {
-            var canvas = this.FindControl<Canvas>("screenCanvas");
-            if (canvas != null && canvas.Children.Count > 0)
-            {
-                // Try to select the first child
-                var firstChild = canvas.Children[0];
-                if (firstChild is Control control)
-                {
-                    UpdateSelectionHighlight(control);
-                }
-            }
-        }
-
-        // Debug method to help identify issues
-        public void DebugSelection()
-        {
-            var canvas = this.FindControl<Canvas>("screenCanvas");
-            if (canvas != null)
-            {
-                Console.WriteLine($"Canvas found with {canvas.Children.Count} children");
-                for (int i = 0; i < canvas.Children.Count; i++)
-                {
-                    var child = canvas.Children[i];
-                    Console.WriteLine($"Child {i}: {child.GetType().Name}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Canvas not found!");
-            }
-        }
-
-        // Test multi-selection functionality
-        public void TestMultiSelection()
-        {
-            var canvas = this.FindControl<Canvas>("screenCanvas");
-            if (canvas != null && canvas.Children.Count >= 2)
-            {
-                Console.WriteLine("Testing multi-selection...");
-                
-                // Clear any existing selections
-                ClearAllSelections();
-                
-                // Select the first two controls
-                var firstControl = canvas.Children[0] as Control;
-                var secondControl = canvas.Children[1] as Control;
-                
-                if (firstControl != null && IsSelectableControl(firstControl))
-                {
-                    AddToSelection(firstControl);
-                    Console.WriteLine($"Added first control: {firstControl.GetType().Name}");
-                }
-                
-                if (secondControl != null && IsSelectableControl(secondControl))
-                {
-                    AddToSelection(secondControl);
-                    Console.WriteLine($"Added second control: {secondControl.GetType().Name}");
-                }
-                
-                Console.WriteLine($"Multi-selection test complete. Selected: {selectedElements.Count} controls");
-            }
-            else
-            {
-                Console.WriteLine("Cannot test multi-selection - need at least 2 controls on canvas");
-            }
-        }
-
-        // Simulate Ctrl+Click for testing
-        public void SimulateCtrlClick(Control control)
-        {
-            Console.WriteLine($"Simulating Ctrl+Click on {control.GetType().Name}");
-            
-            if (selectedElements.Contains(control))
-            {
-                // Remove from selection if already selected
-                Console.WriteLine("Removing from selection");
-                RemoveFromSelection(control);
-            }
-            else
-            {
-                // Add to selection
-                Console.WriteLine("Adding to selection");
-                AddToSelection(control);
-            }
-        }
-
         private void OnKeyDown(object? sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete && selectedElements.Count > 0)
@@ -386,38 +304,6 @@ namespace MockerProject.Views
                 vm?.onSaveProject?.Execute(null);
                 e.Handled = true;
             }
-            else if (e.Key == Key.T)
-            {
-                // Test selection with T key
-                TestSelection();
-                e.Handled = true;
-            }
-            else if (e.Key == Key.D)
-            {
-                // Debug selection with D key
-                DebugSelection();
-                e.Handled = true;
-            }
-            else if (e.Key == Key.M)
-            {
-                // Test multi-selection with M key
-                TestMultiSelection();
-                e.Handled = true;
-            }
-            else if (e.Key == Key.N)
-            {
-                // Test Ctrl+Click simulation with N key
-                var canvas = this.FindControl<Canvas>("screenCanvas");
-                if (canvas != null && canvas.Children.Count >= 2)
-                {
-                    var control = canvas.Children[1] as Control;
-                    if (control != null && IsSelectableControl(control))
-                    {
-                        SimulateCtrlClick(control);
-                    }
-                }
-                e.Handled = true;
-            }
             else if (e.Key == Key.C && e.KeyModifiers == KeyModifiers.Control && selectedElements.Count > 0)
             {
                 // Copy selected controls (placeholder for future implementation)
@@ -431,8 +317,6 @@ namespace MockerProject.Views
                 e.Handled = true;
             }
         }
-
-
 
         private Control? FindTopLevelUIControl(Control control)
         {
@@ -503,6 +387,37 @@ namespace MockerProject.Views
         private void onMouseReleased(object sender, PointerReleasedEventArgs e)
         {
             m_MainViewModel.m_UIControlType = 0;
+        }
+
+        private void OnCanvasPointerPressed(object? sender, PointerPressedEventArgs e)
+        {
+            // Check if the click was on the canvas itself (not on a control)
+            var canvas = this.FindControl<Canvas>("screenCanvas");
+            if (canvas == null) return;
+
+            // Get the position of the click relative to the canvas
+            var clickPoint = e.GetPosition(canvas);
+
+            // Check if the click was on empty space (not on any control)
+            bool clickedOnControl = false;
+            foreach (var child in canvas.Children)
+            {
+                if (child is Control control)
+                {
+                    var bounds = control.Bounds;
+                    if (bounds.Contains(clickPoint))
+                    {
+                        clickedOnControl = true;
+                        break;
+                    }
+                }
+            }
+
+            // If clicked on empty space and Ctrl is not held, clear selection
+            if (!clickedOnControl && !e.KeyModifiers.HasFlag(KeyModifiers.Control))
+            {
+                ClearSelection();
+            }
         }
     }
 }
