@@ -355,13 +355,29 @@ public class UIControl : UserControl
             // Check if Ctrl key is pressed for multi-selection
             if (e.KeyModifiers.HasFlag(KeyModifiers.Control))
             {
-                // Multi-selection mode
-                screenView.AddToSelection(this);
+                // Multi-selection mode - toggle selection
+                if (screenView.GetSelectedElements().Contains(this))
+                {
+                    screenView.RemoveFromSelection(this);
+                }
+                else
+                {
+                    screenView.AddToSelection(this);
+                }
             }
             else
             {
-                // Single selection mode
-                screenView.UpdateSelectionHighlight(this);
+                // Single selection mode - if already selected, deselect; otherwise select
+                if (screenView.GetSelectedElements().Contains(this) && screenView.GetSelectedCount() == 1)
+                {
+                    // If this is the only selected control, deselect it
+                    screenView.ClearSelection();
+                }
+                else
+                {
+                    // Select this control (replaces any existing selection)
+                    screenView.UpdateSelectionHighlight(this);
+                }
             }
         }
     }
