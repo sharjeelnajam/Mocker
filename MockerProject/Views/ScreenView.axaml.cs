@@ -60,6 +60,9 @@ namespace MockerProject.Views
         // Multi-selection support
         private List<Control> selectedElements = new List<Control>();
         private Control? lastSelectedElement;
+        
+        // Hover support
+        private Control? currentlyHoveredElement;
 
         public ScreenView()
         {
@@ -78,6 +81,7 @@ namespace MockerProject.Views
                 if (canvas != null)
                 {
                     canvas.AddHandler(PointerPressedEvent, OnCanvasPointerPressed, RoutingStrategies.Tunnel);
+                    canvas.AddHandler(PointerMovedEvent, OnCanvasPointerMoved, RoutingStrategies.Tunnel);
                 }
             };
         }
@@ -237,10 +241,22 @@ namespace MockerProject.Views
             }
             selectedElements.Clear();
             lastSelectedElement = null;
+            
+            // Restore hover state if there's a currently hovered element
+            if (currentlyHoveredElement != null)
+            {
+                AddHoverHighlight(currentlyHoveredElement);
+            }
         }
 
         private void HighlightControl(Control control)
         {
+            // Clear any hover highlighting first
+            if (currentlyHoveredElement == control)
+            {
+                currentlyHoveredElement = null;
+            }
+            
             control.SetValue(Border.BorderBrushProperty, Brushes.Blue);
             control.SetValue(Border.BorderThicknessProperty, new Thickness(2));
         }
@@ -249,6 +265,12 @@ namespace MockerProject.Views
         {
             control.ClearValue(Border.BorderBrushProperty);
             control.ClearValue(Border.BorderThicknessProperty);
+            
+            // Restore hover state if this control is currently being hovered
+            if (currentlyHoveredElement == control)
+            {
+                AddHoverHighlight(control);
+            }
         }
 
         private bool IsSelectableControl(Control control)
@@ -418,6 +440,62 @@ namespace MockerProject.Views
             {
                 ClearSelection();
             }
+        }
+
+        private void OnCanvasPointerMoved(object? sender, PointerEventArgs e)
+        {
+            var canvas = this.FindControl<Canvas>("screenCanvas");
+            if (canvas == null) return;
+
+            // Get the position of the pointer relative to the canvas
+            var pointerPoint = e.GetPosition(canvas);
+
+            // Find the control under the pointer
+            Control? hoveredControl = null;
+            foreach (var child in canvas.Children)
+            {
+                if (child is Control control && IsSelectableControl(control))
+                {
+                    var bounds = control.Bounds;
+                    if (bounds.Contains(pointerPoint))
+                    {
+                        hoveredControl = control;
+                        break;
+                    }
+                }
+            }
+
+            // Handle hover state changes
+            if (hoveredControl != currentlyHoveredElement)
+            {
+                // Remove hover from previous element
+                if (currentlyHoveredElement != null && !selectedElements.Contains(currentlyHoveredElement))
+                {
+                    RemoveHoverHighlight(currentlyHoveredElement);
+                }
+
+                // Add hover to new element
+                if (hoveredControl != null && !selectedElements.Contains(hoveredControl))
+                {
+                    AddHoverHighlight(hoveredControl);
+                }
+
+                currentlyHoveredElement = hoveredControl;
+            }
+        }
+
+        private void AddHoverHighlight(Control control)
+        {
+            // Apply hover border - darker blue for better visibility
+            control.SetValue(Border.BorderBrushProperty, Brushes.DarkBlue);
+            control.SetValue(Border.BorderThicknessProperty, new Thickness(2));
+        }
+
+        private void RemoveHoverHighlight(Control control)
+        {
+            // Remove hover border
+            control.ClearValue(Border.BorderBrushProperty);
+            control.ClearValue(Border.BorderThicknessProperty);
         }
     }
 }
