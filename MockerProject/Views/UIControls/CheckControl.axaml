@@ -78,7 +78,7 @@
   </UserControl.Styles>
 
   <StackPanel Name="check">
-    <CheckBox IsChecked="False"
+    <CheckBox IsChecked="{Binding isChecked}"
               Content="{Binding text}"
               Width="{Binding width}"
               Height="{Binding height}"

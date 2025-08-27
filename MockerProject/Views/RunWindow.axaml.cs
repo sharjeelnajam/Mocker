@@ -331,6 +331,12 @@ namespace MockerProject
                     };
 
                     var innerCheckBox = checkControl.FindControl<CheckBox>("checkBox");
+                    
+                    // Set the checked state from the ViewModel
+                    if (innerCheckBox != null)
+                    {
+                        innerCheckBox.IsChecked = w_UIControl.m_ControlViewModel.isChecked;
+                    }
 
                     if (innerCheckBox != null)
                     {
@@ -787,6 +793,12 @@ namespace MockerProject
 
                     // find the inner radio button
                     var innerRadio = radioControl.FindControl<RadioButton>("radioButton");
+                    
+                    // Set the checked state from the ViewModel
+                    if (innerRadio != null)
+                    {
+                        innerRadio.IsChecked = w_UIControl.m_ControlViewModel.isChecked;
+                    }
 
                     if (innerRadio != null)
                     {

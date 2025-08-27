@@ -9,33 +9,6 @@
 
   <UserControl.Styles>
 
-    <!-- Base TextBox Template -->
-    <Style Selector="TextBox">
-      <Setter Property="Template">
-        <ControlTemplate>
-          <Border Name="PART_BorderElement"
-                  Background="{TemplateBinding Background}"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  BorderThickness="{TemplateBinding BorderThickness}"
-                  CornerRadius="{TemplateBinding CornerRadius}">
-            <ScrollViewer Name="PART_ScrollViewer"
-                          Padding="{TemplateBinding Padding}"
-                          HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
-                          VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
-              <TextPresenter Name="PART_TextPresenter"
-                             Text="{TemplateBinding Text}"
-                             CaretBrush="{TemplateBinding CaretBrush}"
-                             SelectionBrush="{TemplateBinding SelectionBrush}"
-                             SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
-                             PasswordChar="{TemplateBinding PasswordChar}"
-                             TextAlignment="{TemplateBinding TextAlignment}"
-                             TextWrapping="{TemplateBinding TextWrapping}" />
-            </ScrollViewer>
-          </Border>
-        </ControlTemplate>
-      </Setter>
-    </Style>
-
     <!-- Remove hover effect -->
     <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
       <Setter Property="Background" Value="{TemplateBinding Background}" />

@@ -1,9 +1,5 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Media;
-using MockerProject.ViewModels;
 
 namespace MockerProject.Views
 {
@@ -14,7 +10,6 @@ namespace MockerProject.Views
             InitializeComponent();
             this.DataContext = m_ControlViewModel;
             m_ControlViewModel.IsFitVisible = m_ControlViewModel.IsBorderVisible = false;
-            //m_ControlViewModel.ReadOnlyHeight = true;
             setName("TextBox");
             setText("This is TextBox");
             setWidth(200);
@@ -29,15 +24,12 @@ namespace MockerProject.Views
                 base.doubleClickHandler(sender, e);
             }, handledEventsToo: true);
 
-
-
             /*edit.AddHandler(Border.TappedEvent, (sender, e) =>
             {
                 //m_MainViewModel.m_nSelectedUIControl = m_nIndex;
             }, handledEventsToo: true);*/
         }
 
-        
         /*private void onMousePressed(object sender, PointerPressedEventArgs e)
         {
             var properties = e.GetCurrentPoint(this).Properties;

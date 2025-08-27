@@ -43,6 +43,13 @@ public class UIControlViewModel : ReactiveObject
         get => m_isEnabled;
         set => this.RaiseAndSetIfChanged(ref m_isEnabled, value);
     }//Disable
+    
+    private bool m_isChecked = false;
+    public bool isChecked
+    {
+        get => m_isChecked;
+        set => this.RaiseAndSetIfChanged(ref m_isChecked, value);
+    }//Checked state for Radio and Checkbox controls
     private string m_strControl_Tip;
     public string Control_Tip
     {

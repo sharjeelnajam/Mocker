@@ -75,7 +75,7 @@
   </UserControl.Styles>
 
   <StackPanel Name="radio">
-    <RadioButton IsChecked="False"
+    <RadioButton IsChecked="{Binding isChecked}"
                  GroupName="First Group"
                  Content="{Binding text}"
                  Width="{Binding width}"

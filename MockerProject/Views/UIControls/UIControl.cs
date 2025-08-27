@@ -68,7 +68,6 @@ public class UIControl : UserControl
     {
         m_strText = text;
         m_ControlViewModel.text = m_strText;
-
     }
 
     public void setPasswordChar(string passwordChar)
