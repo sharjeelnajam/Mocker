@@ -104,9 +104,18 @@ namespace MockerProject.ViewModels
 
                 if (w_Cmd == "New")
                 {
-                    Control w_Control = WorkScreen.screenCanvas.Children[w_Index];
-                    WorkScreen.screenCanvas.Children.Remove(w_Control);
-                    WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                    // Validate index before accessing the collection
+                    if (w_Index >= 0 && w_Index < WorkScreen.screenCanvas.Children.Count)
+                    {
+                        Control w_Control = WorkScreen.screenCanvas.Children[w_Index];
+                        WorkScreen.screenCanvas.Children.Remove(w_Control);
+                        WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                    }
+                    else
+                    {
+                        // Index is out of range, just remove the history entry
+                        WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                    }
                 }
                 WorkScreen.m_RedoList.Add(w_ControlHistory);
                 if (ContainerFlag > 0)
@@ -131,9 +140,26 @@ namespace MockerProject.ViewModels
                 int w_Index = WorkScreen.m_RedoList[w_Count - 1].Index;
                 if (w_Cmd == "New")
                 {
-                    Control w_Control = w_ControlHistory.curInfo;
-                    WorkScreen.screenCanvas.Children.Insert(w_Index, w_Control);
-                    WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                    // Validate index before inserting
+                    if (w_Index >= 0)
+                    {
+                        Control w_Control = w_ControlHistory.curInfo;
+                        // If index is beyond current count, append to end
+                        if (w_Index >= WorkScreen.screenCanvas.Children.Count)
+                        {
+                            WorkScreen.screenCanvas.Children.Add(w_Control);
+                        }
+                        else
+                        {
+                            WorkScreen.screenCanvas.Children.Insert(w_Index, w_Control);
+                        }
+                        WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                    }
+                    else
+                    {
+                        // Invalid index, just remove the history entry
+                        WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                    }
                 }
                 WorkScreen.m_UndoList.Add(w_ControlHistory);
             }
@@ -783,9 +809,18 @@ namespace MockerProject.ViewModels
 
                     if (w_Cmd == "New")
                     {
-                        Control w_Control = WorkScreen.screenCanvas.Children[w_Index];
-                        WorkScreen.screenCanvas.Children.Remove(w_Control);
-                        WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                        // Validate index before accessing the collection
+                        if (w_Index >= 0 && w_Index < WorkScreen.screenCanvas.Children.Count)
+                        {
+                            Control w_Control = WorkScreen.screenCanvas.Children[w_Index];
+                            WorkScreen.screenCanvas.Children.Remove(w_Control);
+                            WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                        }
+                        else
+                        {
+                            // Index is out of range, just remove the history entry
+                            WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                        }
                     }
                     WorkScreen.m_RedoList.Add(w_ControlHistory);
                     if (ContainerFlag > 0)
@@ -802,9 +837,26 @@ namespace MockerProject.ViewModels
                     int w_Index = WorkScreen.m_RedoList[w_Count - 1].Index;
                     if (w_Cmd == "New")
                     {
-                        Control w_Control = w_ControlHistory.curInfo;
-                        WorkScreen.screenCanvas.Children.Insert(w_Index, w_Control);
-                        WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                        // Validate index before inserting
+                        if (w_Index >= 0)
+                        {
+                            Control w_Control = w_ControlHistory.curInfo;
+                            // If index is beyond current count, append to end
+                            if (w_Index >= WorkScreen.screenCanvas.Children.Count)
+                            {
+                                WorkScreen.screenCanvas.Children.Add(w_Control);
+                            }
+                            else
+                            {
+                                WorkScreen.screenCanvas.Children.Insert(w_Index, w_Control);
+                            }
+                            WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                        }
+                        else
+                        {
+                            // Invalid index, just remove the history entry
+                            WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                        }
                     }
                     WorkScreen.m_UndoList.Add(w_ControlHistory);
                 }
