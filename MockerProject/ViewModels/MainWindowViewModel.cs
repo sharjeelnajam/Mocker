@@ -833,15 +833,23 @@ namespace MockerProject.ViewModels
                 if (w_Count > 0)
                 {
                     stControlHistory w_ControlHistory = WorkScreen.m_RedoList[w_Count - 1];
-                    string w_Cmd = WorkScreen.m_RedoList[w_Count - 1].Cmd;
-                    int w_Index = WorkScreen.m_RedoList[w_Count - 1].Index;
+                    string w_Cmd = w_ControlHistory.Cmd;
+                    int w_Index = w_ControlHistory.Index;
+
                     if (w_Cmd == "New")
                     {
                         // Validate index before inserting
                         if (w_Index >= 0)
                         {
                             Control w_Control = w_ControlHistory.curInfo;
-                            // If index is beyond current count, append to end
+
+                            // 🔑 Ensure it's not attached to another parent
+                            if (w_Control.Parent is Panel oldParent)
+                            {
+                                oldParent.Children.Remove(w_Control);
+                            }
+
+                            // Insert or append at index
                             if (w_Index >= WorkScreen.screenCanvas.Children.Count)
                             {
                                 WorkScreen.screenCanvas.Children.Add(w_Control);
@@ -850,6 +858,7 @@ namespace MockerProject.ViewModels
                             {
                                 WorkScreen.screenCanvas.Children.Insert(w_Index, w_Control);
                             }
+
                             WorkScreen.m_RedoList.Remove(w_ControlHistory);
                         }
                         else
@@ -858,6 +867,8 @@ namespace MockerProject.ViewModels
                             WorkScreen.m_RedoList.Remove(w_ControlHistory);
                         }
                     }
+
+                    // Always push onto undo stack
                     WorkScreen.m_UndoList.Add(w_ControlHistory);
                 }
             });
