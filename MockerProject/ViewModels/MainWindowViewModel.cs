@@ -881,7 +881,7 @@ namespace MockerProject.ViewModels
                     RunWindowHeight = w_nPF_W + w_nPF_X * 2;
                     RunWindowWidth = w_nPF_H + w_nPF_Y * 2;
                 }
-                window.Show();
+                window.ShowDialog(m_MainWindow);
             });
             onShare = ReactiveCommand.Create(() =>
             {
