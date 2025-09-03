@@ -71,7 +71,20 @@ namespace MockerProject.Views
         public void setMainViewModel(MainWindowViewModel mainViewModel)
         {
             m_MainVM = mainViewModel;
+            
+            // Subscribe to theme changes from the main view model
+            if (m_MainVM != null)
+            {
+                m_MainVM.ThemeChanged += OnThemeChanged;
+            }
         }
+
+        private void OnThemeChanged(object? sender, bool isDark)
+        {
+            // Force the window to refresh its theme
+            this.InvalidateVisual();
+        }
+
         public override void Show()
         {
             Pos_X.Text = m_UIControl.m_nPositionX.ToString();

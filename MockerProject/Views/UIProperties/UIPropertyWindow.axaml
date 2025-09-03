@@ -8,58 +8,57 @@
         x:Class="MockerProject.Views.UIPropertyWindow"
         Title="{Binding Control_Name}"
 		    ShowInTaskbar="False"
-        RequestedThemeVariant="Dark"
         SizeToContent="WidthAndHeight" CanResize="False"
-        Opacity="0.95" Background="#252525" FontSize="12"
+        Opacity="0.95" Background="{DynamicResource ThemeDesignStudioBorderBackground}" FontSize="12"
         x:CompileBindings="True" x:DataType="vm:UIControlViewModel">
 
   <DockPanel> 
     <StackPanel Name="Base" Orientation="Vertical">
       <Button Name="Action" HorizontalAlignment="Center" Width="200" Height="50" Margin="10" Click="onADDACTION">
         <StackPanel Orientation="Vertical">
-          <TextBlock Text="ADD INTERACTION" FontSize="17" HorizontalAlignment="Center"></TextBlock>
-          <TextBlock Text="When the User..." HorizontalAlignment="Center" Foreground="DarkGray"></TextBlock>
+          <TextBlock Text="ADD INTERACTION" FontSize="17" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
+          <TextBlock Text="When the User..." HorizontalAlignment="Center" Foreground="{DynamicResource ThemeDesignStudioTextColor}"></TextBlock>
         </StackPanel>
       </Button>
-      <TextBlock Grid.Row="1" Text="ACTIONS" HorizontalAlignment="Left" Width="240" Background="#555555" Margin="5"></TextBlock>
-      <Border Name="TapBorder" IsVisible="False" BorderThickness="1" BorderBrush="Gray" Margin="10 0 10 2">
+      <TextBlock Grid.Row="1" Text="ACTIONS" HorizontalAlignment="Left" Width="240" Background="{DynamicResource ThemeDesignStudioBorderBackground}" Foreground="{DynamicResource PrimaryForeground}" Margin="5"></TextBlock>
+      <Border Name="TapBorder" IsVisible="False" BorderThickness="1" BorderBrush="{DynamicResource ControlBorderBrush}" Margin="10 0 10 2">
         <StackPanel Orientation="Horizontal">
-          <TextBlock Margin="5 0" Width="110">Tapped</TextBlock>
-          <Border Background="Black" Width="110">
-            <TextBlock Name="Tap" Margin="10 0">Page1</TextBlock>
+          <TextBlock Margin="5 0" Width="110" Foreground="{DynamicResource PrimaryForeground}">Tapped</TextBlock>
+          <Border Background="{DynamicResource ControlBackground}" Width="110">
+            <TextBlock Name="Tap" Margin="10 0" Foreground="{DynamicResource PrimaryForeground}">Page1</TextBlock>
           </Border>
         </StackPanel>
       </Border>
-      <Border Name="DTapBorder" IsVisible="False" BorderThickness="1" BorderBrush="Gray" Margin="10 0 10 2">
+      <Border Name="DTapBorder" IsVisible="False" BorderThickness="1" BorderBrush="{DynamicResource ControlBorderBrush}" Margin="10 0 10 2">
         <StackPanel Orientation="Horizontal">
-          <TextBlock Margin="5 0" Width="110">Double Tapped</TextBlock>
-          <Border Background="Black" Width="110">
-            <TextBlock Name="DTap" Margin="10 0">Page1</TextBlock>
+          <TextBlock Margin="5 0" Width="110" Foreground="{DynamicResource PrimaryForeground}">Double Tapped</TextBlock>
+          <Border Background="{DynamicResource ControlBackground}" Width="110">
+            <TextBlock Name="DTap" Margin="10 0" Foreground="{DynamicResource PrimaryForeground}">Page1</TextBlock>
           </Border>
         </StackPanel>
       </Border>
-      <Border Name="HPressBorder" IsVisible="False" BorderThickness="1" BorderBrush="Gray" Margin="10 0 10 2">
+      <Border Name="HPressBorder" IsVisible="False" BorderThickness="1" BorderBrush="{DynamicResource ControlBorderBrush}" Margin="10 0 10 2">
         <StackPanel Orientation="Horizontal">
-          <TextBlock Margin="5 0" Width="110">Presses and Holds</TextBlock>
-          <Border Background="Black" Width="110">
-            <TextBlock Name="HPressTap" Margin="10 0">Page1</TextBlock>
+          <TextBlock Margin="5 0" Width="110" Foreground="{DynamicResource PrimaryForeground}">Presses and Holds</TextBlock>
+          <Border Background="{DynamicResource ControlBackground}" Width="110">
+            <TextBlock Name="HPressTap" Margin="10 0" Foreground="{DynamicResource PrimaryForeground}">Page1</TextBlock>
           </Border>
         </StackPanel>
       </Border>
-      <TextBlock Name="AddItem" Text="Add Item" FontStyle="Oblique" Margin="10, 5" TextDecorations="Underline" IsVisible="{Binding IsMultiItemVisible}">
+      <TextBlock Name="AddItem" Text="Add Item" FontStyle="Oblique" Margin="10, 5" TextDecorations="Underline" Foreground="{DynamicResource PrimaryForeground}" IsVisible="{Binding IsMultiItemVisible}">
         <TextBlock.Styles>
           <Style Selector="TextBlock:pointerover">
-            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="Foreground" Value="{DynamicResource ThemeDesignStudioTextColor}"/>
           </Style>
         </TextBlock.Styles>
       </TextBlock>
       <StackPanel Grid.Row="2" Orientation="Horizontal">
-        <TextBlock Text="PROPERTIES" TextAlignment="Left" Width="240" Background="#555555" Margin="5 5 5 0"></TextBlock>
+        <TextBlock Text="PROPERTIES" TextAlignment="Left" Width="240" Background="{DynamicResource ThemeDesignStudioBorderBackground}" Foreground="{DynamicResource PrimaryForeground}" Margin="5 5 5 0"></TextBlock>
       </StackPanel>
-      <StackPanel Orientation="Vertical" Background="#505050" Margin="5 0 5 5">
+      <StackPanel Orientation="Vertical" Background="{DynamicResource ControlBackground}" Margin="5 0 5 5">
         <StackPanel Orientation="Horizontal" Margin="5 10 5 5" IsVisible="{Binding !IsMultiEnable}">
-          <TextBlock Grid.Column="0" Text="Text" VerticalAlignment="Center" Margin="5 0"/>
-          <TextBox Grid.Column="1" Text="{Binding text}"  AcceptsReturn="{Binding IsTextMultiEnable}" Width="180" Height="20" Margin="5 0"></TextBox>
+          <TextBlock Grid.Column="0" Text="Text" VerticalAlignment="Center" Margin="5 0" Foreground="{DynamicResource PrimaryForeground}"/>
+          <TextBox Grid.Column="1" Text="{Binding text}"  AcceptsReturn="{Binding IsTextMultiEnable}" Width="180" Height="20" Margin="5 0" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin=" 5">
           <StackPanel Orientation="Vertical" Margin="0 0 10 0">
@@ -67,9 +66,9 @@
               <Button Name="Move" HorizontalAlignment="Right" Margin="5">
                 <Image Source="/Assets/move.png" Width="20" Height="20"></Image>
               </Button>
-              <CheckBox Name="Disable" FontSize= "12" Content="Disable" Click="onDisable" Margin="5"></CheckBox>
+              <CheckBox Name="Disable" FontSize= "12" Content="Disable" Click="onDisable" Margin="5" Foreground="{DynamicResource PrimaryForeground}"></CheckBox>
             </StackPanel>
-            <TextBox  Name="tooltipe" Text="{Binding Control_Tip}" Watermark="tooltip" Width="120" TextAlignment="Left" Margin="5"></TextBox>
+            <TextBox  Name="tooltipe" Text="{Binding Control_Tip}" Watermark="tooltip" Width="120" TextAlignment="Left" Margin="5" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
           </StackPanel>
           <StackPanel Orientation="Vertical">
             <Slider Name="opical"
@@ -79,87 +78,91 @@
                     TickFrequency="0.01"
                     Width="80"
                     HorizontalAlignment="Right"/>
-            <TextBlock Text="Transparency" />
+            <TextBlock Text="Transparency" Foreground="{DynamicResource PrimaryForeground}" />
           </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="5 5 0 5">
-          <TextBlock Text="Position and Size"></TextBlock>
+          <TextBlock Text="Position and Size" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
           <Separator IsEnabled="False" Width="110"
-                     Background="{DynamicResource SystemChromeAltLowColor}" Opacity="0.3">
+                     Background="{DynamicResource ControlBorderBrush}" Opacity="0.3">
           </Separator>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-          <TextBlock Text="X" Margin="10 0 0 0" Width="15"></TextBlock>
-          <TextBox Name="Pos_X" Margin="5 0"  Text="{Binding Control_sX}"   LostFocus="SetControlPostionX" Width="35"></TextBox>
-          <TextBlock Text="W" Margin="10 0 0 0" Width="15" ></TextBlock>
-          <TextBox Name="Size_W" Margin="5 0" LostFocus="SetControlWidth" Text="12" Width="35"></TextBox>
+          <TextBlock Text="X" Margin="10 0 0 0" Width="15" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
+          <TextBox Name="Pos_X" Margin="5 0"  Text="{Binding Control_sX}"   LostFocus="SetControlPostionX" Width="35" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
+          <TextBlock Text="W" Margin="10 0 0 0" Width="15" Foreground="{DynamicResource PrimaryForeground}" ></TextBlock>
+          <TextBox Name="Size_W" Margin="5 0" LostFocus="SetControlWidth" Text="12" Width="35" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
           <ToggleButton Name="fitWidth"  Click="onSetFitWidth" IsChecked="{Binding IsFitWidth}" IsVisible="{Binding IsFitVisible}">
             <Image Source="/Assets/FitW.png" Width="15"></Image>
           </ToggleButton>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 3">
-          <TextBlock Text="Y" Margin="10 0 0 0" Width="15"></TextBlock>
-          <TextBox Name="Pos_Y" Margin="5 0"  Text="{Binding Control_sY}"  LostFocus="SetControlPostionY" Width="35"></TextBox>
-          <TextBlock Text="H" Margin="10 0 0 0" Width="15"></TextBlock>
-          <TextBox Name="Size_H" Margin="5 0" LostFocus="SetControlHeight" Text="12" Width="35" IsReadOnly="{Binding ReadOnlyHeight}"></TextBox>
+          <TextBlock Text="Y" Margin="10 0 0 0" Width="15" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
+          <TextBox Name="Pos_Y" Margin="5 0"  Text="{Binding Control_sY}"  LostFocus="SetControlPostionY" Width="35" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
+          <TextBlock Text="H" Margin="10 0 0 0" Width="15" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
+          <TextBox Name="Size_H" Margin="5 0" LostFocus="SetControlHeight" Text="12" Width="35" IsReadOnly="{Binding ReadOnlyHeight}" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
           <ToggleButton Name="fitHeight" Click="onSetFitHeight" IsChecked="{Binding IsFitHeight}" IsVisible="{Binding IsFitVisible}">
             <Image Source="/Assets/FitH.png" Width="15"></Image>
           </ToggleButton>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="5 5 0 5">
-          <TextBlock Text="Background and Border"></TextBlock>
+          <TextBlock Text="Background and Border" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
           <Separator IsEnabled="False"  Width="75"
-                     Background="{DynamicResource SystemChromeAltLowColor}" Opacity="0.3">
+                     Background="{DynamicResource ControlBorderBrush}" Opacity="0.3">
           </Separator>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="5 0">
-          <TextBlock Text="BorderBrush" VerticalAlignment="Center" FontSize="10" Margin="1" Foreground="DarkGray" Width="60"  IsVisible="{Binding IsBorderColorVisible}"></TextBlock>
+          <TextBlock Text="BorderBrush" VerticalAlignment="Center" FontSize="10" Margin="1" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Width="60"  IsVisible="{Binding IsBorderColorVisible}"></TextBlock>
           <colorpicker:ColorButton Name="BCButton" Color="#ff303030" Margin="0 0 5 0"  IsVisible="{Binding IsBorderColorVisible}"></colorpicker:ColorButton>
-          <TextBlock Text="Thickness" VerticalAlignment="Center" TextAlignment="Right" FontSize="10" Margin="1" Foreground="DarkGray" Width="50"  IsVisible="{Binding IsBorderVisible}"></TextBlock>
+          <TextBlock Text="Thickness" VerticalAlignment="Center" TextAlignment="Right" FontSize="10" Margin="1" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Width="50"  IsVisible="{Binding IsBorderVisible}"></TextBlock>
           <ComboBox Name="ThickCom" ItemsSource="{Binding List_Thickness}"
-                    SelectedIndex="{Binding ThicknessID}"  IsVisible="{Binding IsBorderVisible}">
+                    SelectedIndex="{Binding ThicknessID}"  IsVisible="{Binding IsBorderVisible}"
+                    Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}">
             <ComboBox.ItemTemplate>
               <DataTemplate>
-                <TextBlock Text="{Binding}"/>
+                <TextBlock Text="{Binding}" Foreground="{DynamicResource PrimaryForeground}"/>
               </DataTemplate>
             </ComboBox.ItemTemplate>
           </ComboBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="5 3" >
-          <TextBlock Text="Background" VerticalAlignment="Center" FontSize="10" Margin="1" Foreground="DarkGray" Width="60"  IsVisible="{Binding IsBackgroundVisible}"></TextBlock>
+          <TextBlock Text="Background" VerticalAlignment="Center" FontSize="10" Margin="1" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Width="60"  IsVisible="{Binding IsBackgroundVisible}"></TextBlock>
           <colorpicker:ColorButton Name="BGButton" Color="#ffc8c8c8" Margin="0 0 5 0"  IsVisible="{Binding IsBackgroundVisible}"></colorpicker:ColorButton>
-          <TextBlock Text="Rounding" VerticalAlignment="Center" TextAlignment="Right" FontSize="10" Margin="1" Foreground="DarkGray" Width="50"  IsVisible="{Binding IsBorderVisible}"></TextBlock>
+          <TextBlock Text="Rounding" VerticalAlignment="Center" TextAlignment="Right" FontSize="10" Margin="1" Foreground="{DynamicResource ThemeDesignStudioTextColor}" Width="50"  IsVisible="{Binding IsBorderVisible}"></TextBlock>
           <ComboBox ItemsSource="{Binding List_Round}"
-                    SelectedIndex="{Binding RoundID}" IsVisible="{Binding IsBorderVisible}">
+                    SelectedIndex="{Binding RoundID}" IsVisible="{Binding IsBorderVisible}"
+                    Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}">
             <ComboBox.ItemTemplate>
               <DataTemplate>
-                <TextBlock Text="{Binding}"/>
+                <TextBlock Text="{Binding}" Foreground="{DynamicResource PrimaryForeground}"/>
               </DataTemplate>
             </ComboBox.ItemTemplate>
           </ComboBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="5" IsVisible="{Binding IsTextPropertiesVisible}">
-          <TextBlock Text="Text"></TextBlock>
+          <TextBlock Text="Text" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
           <Separator IsEnabled="False" Width="180"
-                     Background="{DynamicResource SystemChromeAltLowColor}" Opacity="0.3">
+                     Background="{DynamicResource ControlBorderBrush}" Opacity="0.3">
           </Separator>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="5" IsVisible="{Binding IsTextPropertiesVisible}">
           <Grid>
             <ComboBox ItemsSource="{Binding List_FontSize}"
-                      SelectedIndex="{Binding fontSizeID}">
+                      SelectedIndex="{Binding fontSizeID}"
+                      Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}">
               <ComboBox.ItemTemplate>
                 <DataTemplate>
-                  <TextBlock Text="{Binding}"/>
+                  <TextBlock Text="{Binding}" Foreground="{DynamicResource PrimaryForeground}"/>
                 </DataTemplate>
               </ComboBox.ItemTemplate>
             </ComboBox>
             <Popup Name="ppopup" Width="30" Height="100" Topmost="False">
-              <ListBox SelectedIndex="1" FontSize="8" Width="30" Padding="0" Margin="0">
+              <ListBox SelectedIndex="1" FontSize="8" Width="30" Padding="0" Margin="0" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}">
                 <ListBox.Styles>
                   <Style Selector="ListBoxItem">
                     <Setter Property="Width" Value="30"/>
                     <Setter Property="HorizontalAlignment" Value="Right"/>
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}"/>
                   </Style>
                 </ListBox.Styles>
                 <ListBoxItem  Padding="0" Margin="0"> 8</ListBoxItem>
@@ -171,44 +174,44 @@
           <!--<Button Name="Fore" HorizontalAlignment="Right" Margin="5 0">
                         <Image Source="/Assets/A.png" Width="15"></Image>
                     </Button>-->
-          <ToggleButton Name="BoldButton" Click="setTextBold" IsChecked="{Binding textBold}" Width="27" Height="27" Margin="5 0">B</ToggleButton>
-          <ToggleButton Name="ItalicButton" Click="setTextItalic" IsChecked="{Binding textItalic}" Width="27" Height="27" Margin="5 0" HorizontalAlignment="Center">I</ToggleButton>
+          <ToggleButton Name="BoldButton" Click="setTextBold" IsChecked="{Binding textBold}" Width="27" Height="27" Margin="5 0" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}">B</ToggleButton>
+          <ToggleButton Name="ItalicButton" Click="setTextItalic" IsChecked="{Binding textItalic}" Width="27" Height="27" Margin="5 0" HorizontalAlignment="Center" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}">I</ToggleButton>
         </StackPanel>
       </StackPanel>
     </StackPanel>
     <StackPanel Name="AddAction" Orientation="Vertical" IsVisible="False">
-      <StackPanel Orientation="Horizontal" Background="#555555">
-        <Button Name="Back" Content="Back" Click="onBack"></Button>
-        <TextBlock Text="ADD INTERACTION" TextAlignment="Center" Width="150" Background="Transparent" Margin="5"></TextBlock>
+      <StackPanel Orientation="Horizontal" Background="{DynamicResource ThemeDesignStudioBorderBackground}">
+        <Button Name="Back" Content="Back" Click="onBack" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></Button>
+        <TextBlock Text="ADD INTERACTION" TextAlignment="Center" Width="150" Background="Transparent" Margin="5" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
-        <TextBlock Text="When User" VerticalAlignment="Center" Margin="15 10"></TextBlock>
-        <ComboBox x:Name="Event" SelectionChanged="onSelectEvent" SelectedIndex="0"  Width="130" Margin="10">
-          <ComboBoxItem>Tapped</ComboBoxItem>
-          <ComboBoxItem>Double Tapped</ComboBoxItem>
-          <ComboBoxItem>Presses and holds</ComboBoxItem>
-          <ComboBoxItem>SwipeLeft</ComboBoxItem>
-          <ComboBoxItem>SwipeRight</ComboBoxItem>
-          <ComboBoxItem>SwipeUp</ComboBoxItem>
-          <ComboBoxItem>SwipeDown</ComboBoxItem>
+        <TextBlock Text="When User" VerticalAlignment="Center" Margin="15 10" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
+        <ComboBox x:Name="Event" SelectionChanged="onSelectEvent" SelectedIndex="0"  Width="130" Margin="10" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}">
+          <ComboBoxItem Foreground="{DynamicResource PrimaryForeground}">Tapped</ComboBoxItem>
+          <ComboBoxItem Foreground="{DynamicResource PrimaryForeground}">Double Tapped</ComboBoxItem>
+          <ComboBoxItem Foreground="{DynamicResource PrimaryForeground}">Presses and holds</ComboBoxItem>
+          <ComboBoxItem Foreground="{DynamicResource PrimaryForeground}">SwipeLeft</ComboBoxItem>
+          <ComboBoxItem Foreground="{DynamicResource PrimaryForeground}">SwipeRight</ComboBoxItem>
+          <ComboBoxItem Foreground="{DynamicResource PrimaryForeground}">SwipeUp</ComboBoxItem>
+          <ComboBoxItem Foreground="{DynamicResource PrimaryForeground}">SwipeDown</ComboBoxItem>
         </ComboBox>
       </StackPanel>
       <Separator IsEnabled="False" Width="240" Margin="5"
-                 Background="{DynamicResource SystemChromeAltLowColor}" Opacity="0.3">
+                 Background="{DynamicResource ControlBorderBrush}" Opacity="0.3">
       </Separator>
-      <Button Name="NewScreen" HorizontalAlignment="Center" Width="200" Height="50" Margin="10" Click="onNewScreen">
+      <Button Name="NewScreen" HorizontalAlignment="Center" Width="200" Height="50" Margin="10" Click="onNewScreen" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}">
         <StackPanel Orientation="Vertical">
-          <TextBlock Text="New Screen" FontSize="17" HorizontalAlignment="Center"></TextBlock>
-          <TextBlock Text="New screen to Create New State" HorizontalAlignment="Center" Foreground="DarkGray"></TextBlock>
+          <TextBlock Text="New Screen" FontSize="17" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
+          <TextBlock Text="New screen to Create New State" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeDesignStudioTextColor}"></TextBlock>
         </StackPanel>
       </Button>
       <StackPanel Orientation="Horizontal" Margin="25 0">
-        <TextBlock Text="Existed Screen" Margin="5"></TextBlock>
+        <TextBlock Text="Existed Screen" Margin="5" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
         <Separator IsEnabled="False" Width="95" Margin="5"
-                   Background="{DynamicResource SystemChromeAltLowColor}" Opacity="0.3">
+                   Background="{DynamicResource ControlBorderBrush}" Opacity="0.3">
         </Separator>
       </StackPanel>
-      <ComboBox Name="ListPage" SelectedIndex="0" Width="200" Margin="25 0 25 25">
+      <ComboBox Name="ListPage" SelectedIndex="0" Width="200" Margin="25 0 25 25" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}">
       </ComboBox>
     </StackPanel>
   </DockPanel>

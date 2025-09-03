@@ -12,7 +12,7 @@
 		    Title="{Binding Control_Name}"
 		    CanResize="False"
 		    ShowInTaskbar="False"
-		    Opacity="0.95" Background="#252525" FontSize="12">
+		    Opacity="0.95" Background="{DynamicResource ThemeDesignStudioBorderBackground}" FontSize="12">
   <StackPanel Orientation="Vertical">
     <v:UIPropertyBase Name="BaseProperty"/>
   </StackPanel>
