@@ -148,7 +148,7 @@
 
     <DockPanel Grid.Column="1" IsEnabled="{Binding IsProjectOpened}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0">
       <StackPanel Orientation="Horizontal">
-        <Border Classes="ButtonGroup">
+        <Border Classes="ButtonGroup" IsVisible="{Binding IsProjectOpened}">
           <StackPanel Orientation="Horizontal">
             <Button Classes="IconButton" ToolTip.Tip="New Screen" Command="{Binding onNewScreen}">
               <Image Source="{DynamicResource NewFileIcon}" Height="18" Width="18" />
@@ -179,7 +179,7 @@
           </StackPanel>
         </Border>-->
 
-        <Border Classes="ButtonGroup">
+        <Border Classes="ButtonGroup" IsVisible="{Binding IsProjectOpened}">
           <StackPanel Orientation="Horizontal">
             <Button Classes="IconButton" ToolTip.Tip="Undo" Command="{Binding onUndo}">
               <Image Source="{DynamicResource UndoIcon}" Height="18" Width="18" />
@@ -193,7 +193,7 @@
     </DockPanel>
 
     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-      <Border Classes="ActionContainer" Background="{DynamicResource RunButtonBackground}" BorderThickness="0">
+      <Border Classes="ActionContainer" Background="{DynamicResource RunButtonBackground}" BorderThickness="0" IsVisible="{Binding IsProjectOpened}">
         <Button Classes="RunButton" Foreground="White" ToolTip.Tip="Run Project" Command="{Binding onRun}" IsEnabled="{Binding IsWorkView}">
           <StackPanel Orientation="Horizontal">
             <Image Source="{DynamicResource PlayIcon}" Height="16" Width="16" Margin="0,0,5,0"/>
@@ -202,7 +202,7 @@
         </Button>
       </Border>
 
-      <Border Classes="ActionContainer">
+      <Border Classes="ActionContainer" IsVisible="{Binding IsProjectOpened}">
         <Button Classes="ActionButton" Cursor="Hand" ToolTip.Tip="Share Project" Command="{Binding onShare}" IsEnabled="{Binding IsWorkView}">
           <StackPanel Orientation="Horizontal">
             <Image Source="{DynamicResource ShareIcon}" Height="16" Width="16" Margin="0,0,5,0"/>
@@ -211,7 +211,7 @@
         </Button>
       </Border>
 
-      <Border Classes="ActionContainer">
+      <Border Classes="ActionContainer" >
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="8 0" IsEnabled="{Binding IsWorkView}">
           <Image Source="{DynamicResource SearchIcon}" Width="16" Height="16" Margin="0,0,4,0"/>
           <TextBox Classes="SearchBox" Watermark="Search"/>

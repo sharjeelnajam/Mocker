@@ -1546,22 +1546,7 @@ namespace MockerProject.ViewModels
                 if (!projectFiles.Any())
                 {
                     Debug.WriteLine("No .dsproj files found in Indigo or D: drive");
-
-                    // Optional demo projects
-                    RecentProjects.Add(new RecentProject
-                    {
-                        Name = "Sample Project 1",
-                        LastOpened = DateTime.Now.AddDays(-1),
-                        CreatedDate = DateTime.Now.AddDays(-2),
-                        FilePath = Path.Combine(indigoPath, "Sample1", "Sample1.dsproj")
-                    });
-                    RecentProjects.Add(new RecentProject
-                    {
-                        Name = "Sample Project 2",
-                        LastOpened = DateTime.Now.AddDays(-3),
-                        CreatedDate = DateTime.Now.AddDays(-4),
-                        FilePath = Path.Combine(indigoPath, "Sample2", "Sample2.dsproj")
-                    });
+                    // Don't add dummy projects - let the UI show "no recent projects" message
                 }
             }
             catch (Exception ex)

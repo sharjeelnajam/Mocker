@@ -93,6 +93,7 @@
              mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="701"
              x:Class="MockerProject.Views.StartMockerView"
              xmlns:vm="clr-namespace:MockerProject.ViewModels"
+             xmlns:converters="clr-namespace:MockerProject"
              x:DataType="vm:MainWindowViewModel"
              Name="StartMockerViewControl"
              MaxHeight="701">
@@ -193,6 +194,7 @@
 
             <!-- Recent Projects -->
 			  <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,30">
+				  <!-- Show recent projects if they exist -->
 				  <ItemsControl ItemsSource="{Binding RecentProjects}">
 					  <ItemsControl.ItemTemplate>
 						  <DataTemplate>
@@ -232,6 +234,32 @@
 						  </DataTemplate>
 					  </ItemsControl.ItemTemplate>
 				  </ItemsControl>
+				  
+				  <!-- Show "no recent projects" message when there are no projects -->
+				  <Border CornerRadius="8"
+						  BorderBrush="{DynamicResource ControlBorderBrush}"
+						  BorderThickness="1"
+						  Background="{DynamicResource ControlBackground}"
+						  Padding="20"
+						  Margin="0,0,0,10"
+						  IsVisible="{Binding RecentProjects.Count, Converter={x:Static converters:CountToVisibilityConverter.Instance}}">
+					  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+						  <Border Width="40" Height="40" Background="{DynamicResource ThemeDesignStudioBorderBackground}" CornerRadius="6" Margin="0,0,0,10">
+							<Image Source="/Assets/New/Icons/folder-3-line.png" Width="20" Height="20" />
+						  </Border>
+						  <TextBlock Text="No recent projects"
+									 FontSize="16"
+									 FontWeight="SemiBold"
+									 Foreground="{DynamicResource ThemeDesignStudioTextColor}"
+									 HorizontalAlignment="Center"/>
+						  <TextBlock Text="Start creating your first project or open an existing one"
+									 TextWrapping="Wrap"
+									 TextAlignment="Center"
+									 FontSize="12"
+									 Foreground="{DynamicResource ThemeDesignStudioTextColor}"
+									 Margin="0,5,0,0"/>
+					  </StackPanel>
+				  </Border>
 			  </StackPanel>
 
 
