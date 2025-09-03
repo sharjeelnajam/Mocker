@@ -74,8 +74,12 @@ namespace MockerProject.ViewModels.UIViewModels
 
         public string SelectText
         {
-            get { return Items[SelectedIndex].text; }
-
+            get 
+            { 
+                if (SelectedIndex >= 0 && SelectedIndex < Items.Count)
+                    return Items[SelectedIndex].text;
+                return string.Empty;
+            }
         }
 
         public ObservableCollection<CustomItem> _Items = new ObservableCollection<CustomItem>();

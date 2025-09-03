@@ -58,14 +58,16 @@ namespace MockerProject.Views.UIControls
                 if (e.Key == Key.Enter)
                 {
                     CustomItem item = (CustomItem)listBox.SelectedItem;
-                    item.Visible = !item.Visible;
+                    if (item != null)
+                        item.Visible = !item.Visible;
                 }
             }, handledEventsToo: true);
 
             this.AddHandler(Control.TappedEvent, (sender, e) =>
             {
                 CustomItem item = (CustomItem)listBox.SelectedItem;
-                item.Visible = !item.Visible;
+                if (item != null)
+                    item.Visible = !item.Visible;
             }, handledEventsToo: true);
         }
       
@@ -95,7 +97,10 @@ namespace MockerProject.Views.UIControls
 
         private void Selected_Item(object sender, SelectionChangedEventArgs e)
         {
-            SelectText.Text = ((CustomItem)listBox.SelectedItem).text;
+            if (listBox.SelectedItem != null)
+            {
+                SelectText.Text = ((CustomItem)listBox.SelectedItem).text;
+            }
         }
     }
 }

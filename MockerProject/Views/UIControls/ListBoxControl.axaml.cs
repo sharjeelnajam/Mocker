@@ -61,7 +61,8 @@ namespace MockerProject.Views.UIControls
                 if (e.Key == Key.Enter)
                 {
                     CustomItem item = (CustomItem)listBox.SelectedItem;
-                    item.Visible = !item.Visible;
+                    if (item != null)
+                        item.Visible = !item.Visible;
                 }
             }, handledEventsToo: true);
 
