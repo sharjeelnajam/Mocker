@@ -3,10 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using MockerProject.Models;
-using MockerProject.ViewModels;
-using MockerProject.ViewModels.UIViewModels;
-using MockerProject.Views.UIProperties;
 using System.Diagnostics.CodeAnalysis;
 
 namespace MockerProject.Views.UIControls
@@ -32,9 +28,8 @@ namespace MockerProject.Views.UIControls
             
             m_ControlViewModel.IsTextPropertiesVisible = false;
             m_ControlViewModel.IsMultiEnable = false;
-            
-            
         }
+
         public override void doubleClickHandler(object sender, TappedEventArgs e)
         {
             t_event = e;
@@ -43,7 +38,8 @@ namespace MockerProject.Views.UIControls
             {
                 //base.doubleClickHandler(sender, e);
             } 
-            else {
+            else 
+            {
                 closeBtn.IsVisible = true;
                 editBtn.IsVisible = true;
                 Canvas.SetLeft(closeBtn, -closeBtn.Width);
@@ -72,14 +68,11 @@ namespace MockerProject.Views.UIControls
                     m_ControlViewModel.m_MainVM.ContainerFlag++;
                     m_ControlViewModel.m_MainVM.ContainerCanvas.Add(container);
                 }
-                    
             }
         }
 
         public override void KeyPressEvent(object sender, KeyEventArgs e)
         {
-            
-
         }
 
         public override void MousePressEvent(object sender, PointerEventArgs e)
@@ -98,6 +91,7 @@ namespace MockerProject.Views.UIControls
                 base.MouseMoveEvent(sender, e);
             }
         }
+
         public void Click_CloseButton(object sender, RoutedEventArgs e)
         {
             closeBtn.IsVisible = false;
@@ -122,7 +116,6 @@ namespace MockerProject.Views.UIControls
 
         public void Click_EditButton(object sender, RoutedEventArgs e)
         {
-
             var ttv = this.TransformToVisual(m_ControlViewModel.m_MainVM.WorkScreen.screenCanvas);
             Point screenCoords = (new Point(0, 0)).Transform((Matrix)ttv);
             PixelPoint cPP = new PixelPoint((int)(screenCoords.X + m_nWidth), (int)(screenCoords.Y));
@@ -142,6 +135,4 @@ namespace MockerProject.Views.UIControls
 
         }
     }
-
-   
 }
