@@ -65,6 +65,7 @@
       <DockPanel.ContextMenu>
         <ContextMenu>
           <MenuItem Header="New Screen" Command="{Binding onNewScreen}"/>
+          <MenuItem Header="Duplicate" Command="{Binding onDuplicateScreen}"/>
           <MenuItem Header="Delete" Command="{Binding onDeleteScreen}"/>
           <MenuItem Header="Rename" Command="{Binding onRenameScreen}"/>
         </ContextMenu>

@@ -212,6 +212,7 @@ namespace MockerProject.ViewModels
         public ICommand onNewScreen { get; }
         public ICommand onDeleteScreen { get; }
         public ICommand onRenameScreen { get; }
+        public ICommand onDuplicateScreen { get; }
         public ICommand onUndo { get; }
         public ICommand onRedo { get; }
         public ICommand onRun { get; }
@@ -801,6 +802,10 @@ namespace MockerProject.ViewModels
             onRenameScreen = ReactiveCommand.Create(async () =>
             {
                 await RenameCurrentScreen();
+            });
+            onDuplicateScreen = ReactiveCommand.Create(() =>
+            {
+                DuplicateCurrentScreen();
             });
             onUndo = ReactiveCommand.Create(() =>
             {
@@ -1458,6 +1463,121 @@ namespace MockerProject.ViewModels
                 }
             }
         }
+        
+        private void DuplicateCurrentScreen()
+        {
+            if (SmallScreenID < 0 || SmallScreenID >= m_lstWorkScreen.Count)
+                return;
+
+            var currentScreen = m_lstWorkScreen[SmallScreenID];
+            var currentName = currentScreen.m_strName;
+            
+            // Create a new unique name for the duplicate
+            var newName = getPageName(currentName + " Copy");
+            
+            // Create new screen view
+            var newScreenView = new ScreenView();
+            newScreenView.m_strName = newName;
+            newScreenView.m_Orientation = currentScreen.m_Orientation;
+            newScreenView.m_Size = currentScreen.m_Size;
+            newScreenView.m_background = new SolidColorBrush(currentScreen.m_background.Color);
+            newScreenView.m_Opacity = currentScreen.m_Opacity;
+            
+            // Copy all UI controls from the current screen to the new screen
+            for (int i = 0; i < currentScreen.screenCanvas.Children.Count; i++)
+            {
+                var control = currentScreen.screenCanvas.Children[i];
+                if (control is UIControl uiControl)
+                {
+                    // Create a deep copy of the control
+                    var newControl = CreateControlCopy(uiControl);
+                    if (newControl != null)
+                    {
+                        newScreenView.screenCanvas.Children.Add(newControl);
+                    }
+                }
+            }
+            
+            // Create new small screen view
+            var newSmallScreenView = new ScreenSmallView();
+            newSmallScreenView.SmallCanvasText.Text = newName;
+            
+            // Add to collections
+            m_lstWorkScreen.Add(newScreenView);
+            m_ScreenSmallView.Add(newSmallScreenView);
+            SmallScreens = m_ScreenSmallView;
+            
+            // Set the new screen as the current one
+            SmallScreenID = m_lstWorkScreen.Count - 1;
+            WorkScreen = newScreenView;
+            
+            // Mark project as unsaved
+            IsProjectUnSaved = true;
+        }
+        
+        private UIControl CreateControlCopy(UIControl originalControl)
+        {
+            try
+            {
+                // Create a new instance of the same type
+                var newControl = (UIControl)Activator.CreateInstance(originalControl.GetType());
+                
+                // Set the main view model reference
+                newControl.setMainVM(this);
+                
+                // Ensure the control is properly initialized
+                newControl.DataContext = newControl.m_ControlViewModel;
+                
+                // Copy basic properties using proper methods
+                newControl.setName(originalControl.m_strName + " Copy");
+                newControl.setText(originalControl.m_strText);
+                newControl.setPasswordChar(originalControl.m_strPasswordChar);
+                newControl.setType(originalControl.m_nUIControlType);
+                newControl.m_nIndex = originalControl.m_nIndex;
+                
+                // Copy size first
+                var originalWidth = originalControl.Width;
+                var originalHeight = originalControl.Height;
+                
+                if (double.IsNaN(originalWidth) || originalWidth <= 0)
+                {
+                    originalWidth = 100; // Default width
+                }
+                if (double.IsNaN(originalHeight) || originalHeight <= 0)
+                {
+                    originalHeight = 30; // Default height
+                }
+                
+                newControl.setSize(originalWidth, originalHeight);
+                
+                // Copy position using the original position values (without offset)
+                var originalLeft = originalControl.m_nPositionX;
+                var originalTop = originalControl.m_nPositionY;
+                
+                if (double.IsNaN(originalLeft)) originalLeft = 0;
+                if (double.IsNaN(originalTop)) originalTop = 0;
+                
+                newControl.setPosition(originalLeft, originalTop);
+                
+                // Copy other properties based on control type
+                if (originalControl is ImageControl originalImage && newControl is ImageControl newImage)
+                {
+                    newImage.m_strSrc = originalImage.m_strSrc;
+                    // Copy image source if it exists
+                    if (originalImage.image.Source != null)
+                    {
+                        newImage.image.Source = originalImage.image.Source;
+                    }
+                }
+                
+                return newControl;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        
         private static List<FilePickerFileType> GetCodeFileTypes()
         {
             return new List<FilePickerFileType>
