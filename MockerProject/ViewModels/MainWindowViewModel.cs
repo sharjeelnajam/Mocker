@@ -1371,6 +1371,9 @@ namespace MockerProject.ViewModels
         }
         public void setScreenSmallView(int id)
         {
+            if (id < 0 || id >= m_ScreenSmallView.Count)
+                return;
+                
             /*if(id<0)
                 return;
             int height = 0;
