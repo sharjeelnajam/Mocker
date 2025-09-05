@@ -130,9 +130,8 @@ public partial class ProjectWorkView : UserControl
 			var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 			var projectName = viewModel.strProjectTitle ?? "MockerProject";
 			
-			// Create filename with timestamp
-			var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmm");
-			var fileName = $"{projectName}_Screenshot_{timestamp}.png";
+			// Create fixed filename (will overwrite existing file)
+			var fileName = $"{projectName}_Screenshot.png";
 			var filePath = IOPath.Combine(desktopPath, fileName);
 
 			// Save the screenshot
