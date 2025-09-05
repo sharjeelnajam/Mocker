@@ -211,6 +211,7 @@ namespace MockerProject.ViewModels
         public ICommand onSearchProject { get; }
         public ICommand onNewScreen { get; }
         public ICommand onDeleteScreen { get; }
+        public ICommand onRenameScreen { get; }
         public ICommand onUndo { get; }
         public ICommand onRedo { get; }
         public ICommand onRun { get; }
@@ -796,6 +797,10 @@ namespace MockerProject.ViewModels
                     SmallScreenID = id;
                 else
                     SmallScreenID = 0;
+            });
+            onRenameScreen = ReactiveCommand.Create(async () =>
+            {
+                await RenameCurrentScreen();
             });
             onUndo = ReactiveCommand.Create(() =>
             {
@@ -1389,6 +1394,66 @@ namespace MockerProject.ViewModels
             image.Height = 150;
             image.Stretch = Stretch.Fill;*/
             m_ScreenSmallView[id].iamge.Source = getImage(id); //renderTargetBitmap;
+        }
+        
+        private async Task RenameCurrentScreen()
+        {
+            if (SmallScreenID < 0 || SmallScreenID >= m_lstWorkScreen.Count)
+                return;
+
+            var currentScreen = m_lstWorkScreen[SmallScreenID];
+            var currentName = currentScreen.m_strName;
+
+            // Simple input dialog
+            var inputDialog = new Window
+            {
+                Title = "Rename Screen",
+                Width = 300,
+                Height = 120,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+
+            var textBox = new TextBox
+            {
+                Text = currentName,
+                Margin = new Thickness(20)
+            };
+
+            inputDialog.Content = textBox;
+
+            // Handle Enter key to save
+            textBox.KeyDown += (s, e) =>
+            {
+                if (e.Key == Avalonia.Input.Key.Enter)
+                {
+                    inputDialog.Close();
+                }
+            };
+
+            // Show dialog and get result
+            await inputDialog.ShowDialog(m_MainWindow);
+            
+            var newName = textBox.Text?.Trim();
+            if (!string.IsNullOrWhiteSpace(newName) && newName != currentName)
+            {
+                // Check if name already exists
+                bool nameExists = m_lstWorkScreen.Any(screen => screen.m_strName == newName);
+                
+                if (!nameExists)
+                {
+                    // Update the screen name
+                    currentScreen.m_strName = newName;
+                    
+                    // Update the small screen view text
+                    if (SmallScreenID < m_ScreenSmallView.Count)
+                    {
+                        m_ScreenSmallView[SmallScreenID].SmallCanvasText.Text = newName;
+                    }
+                    
+                    // Mark project as unsaved
+                    IsProjectUnSaved = true;
+                }
+            }
         }
         private static List<FilePickerFileType> GetCodeFileTypes()
         {
