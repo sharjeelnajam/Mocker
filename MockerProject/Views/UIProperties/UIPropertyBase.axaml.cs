@@ -143,18 +143,16 @@ namespace MockerProject.Views.UIProperties
 
         private void SetControlPostionX(object? sender, RoutedEventArgs routedEventArgs)
         {
-            if (sender is TextBox textBox)
+            if (sender is TextBox textBox && m_UIControl != null)
             {
                 try
                 {
                     int w_nControlX = int.Parse(textBox.Text);
                     if (w_nControlX >= 0)
                     {
-
                         m_UIControl.setPositionX(w_nControlX);
                     }
                 }
-
                 catch (Exception e)
                 {
                     textBox.Text = m_UIControl.m_nPositionX.ToString();
@@ -164,7 +162,7 @@ namespace MockerProject.Views.UIProperties
         
         private void SetControlPostionY(object? sender, RoutedEventArgs routedEventArgs)
         {
-            if (sender is TextBox textBox)
+            if (sender is TextBox textBox && m_UIControl != null)
             {
                 try
                 {
@@ -178,13 +176,16 @@ namespace MockerProject.Views.UIProperties
                 }
             }
         }
-        private void OnWidthTextChanged(object? sender, TextChangedEventArgs e)
+        private void OnXTextChanged(object? sender, TextChangedEventArgs e)
         {
             if (sender is TextBox textBox)
             {
-                // Remove non-numeric characters
-                string originalText = textBox.Text;
-                string numericOnly = new string(originalText.Where(c => char.IsDigit(c)).ToArray());
+                // Handle null or empty text
+                string originalText = textBox.Text ?? "";
+                
+                // Remove non-numeric characters - handle empty string case
+                string numericOnly = string.IsNullOrEmpty(originalText) ? "" : 
+                    new string(originalText.Where(c => char.IsDigit(c)).ToArray());
                 
                 if (originalText != numericOnly)
                 {
@@ -193,7 +194,111 @@ namespace MockerProject.Views.UIProperties
                     textBox.CaretIndex = Math.Min(cursorPosition, numericOnly.Length);
                 }
                 
-                // Apply min/max limits
+                // Apply min/max limits only if we have a valid number
+                if (!string.IsNullOrEmpty(numericOnly) && int.TryParse(numericOnly, out int value))
+                {
+                    const int minX = 0;
+                    const int maxX = 2000;
+                    
+                    if (value < minX)
+                    {
+                        textBox.Text = minX.ToString();
+                    }
+                    else if (value > maxX)
+                    {
+                        textBox.Text = maxX.ToString();
+                    }
+                }
+                
+                // Update the binding - handle empty string case
+                if (m_ControlModel != null)
+                {
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        m_ControlModel.Control_sX = 0;
+                    }
+                    else if (int.TryParse(textBox.Text, out int xValue))
+                    {
+                        m_ControlModel.Control_sX = xValue;
+                    }
+                    
+                    // Update the TextBox to reflect the actual value (since we use OneWay binding)
+                    textBox.Text = m_ControlModel.Control_sX.ToString();
+                }
+            }
+        }
+        
+        private void OnYTextChanged(object? sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                // Handle null or empty text
+                string originalText = textBox.Text ?? "";
+                
+                // Remove non-numeric characters - handle empty string case
+                string numericOnly = string.IsNullOrEmpty(originalText) ? "" : 
+                    new string(originalText.Where(c => char.IsDigit(c)).ToArray());
+                
+                if (originalText != numericOnly)
+                {
+                    int cursorPosition = textBox.CaretIndex;
+                    textBox.Text = numericOnly;
+                    textBox.CaretIndex = Math.Min(cursorPosition, numericOnly.Length);
+                }
+                
+                // Apply min/max limits only if we have a valid number
+                if (!string.IsNullOrEmpty(numericOnly) && int.TryParse(numericOnly, out int value))
+                {
+                    const int minY = 0;
+                    const int maxY = 2000;
+                    
+                    if (value < minY)
+                    {
+                        textBox.Text = minY.ToString();
+                    }
+                    else if (value > maxY)
+                    {
+                        textBox.Text = maxY.ToString();
+                    }
+                }
+                
+                // Update the binding - handle empty string case
+                if (m_ControlModel != null)
+                {
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        m_ControlModel.Control_sY = 0;
+                    }
+                    else if (int.TryParse(textBox.Text, out int yValue))
+                    {
+                        m_ControlModel.Control_sY = yValue;
+                    }
+                    
+                    // Update the TextBox to reflect the actual value (since we use OneWay binding)
+                    textBox.Text = m_ControlModel.Control_sY.ToString();
+                }
+            }
+        }
+        
+        private void OnWidthTextChanged(object? sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                // Handle null or empty text
+                string originalText = textBox.Text ?? "";
+                
+                // Remove non-numeric characters - handle empty string case
+                string numericOnly = string.IsNullOrEmpty(originalText) ? "" : 
+                    new string(originalText.Where(c => char.IsDigit(c)).ToArray());
+                
+                if (originalText != numericOnly)
+                {
+                    int cursorPosition = textBox.CaretIndex;
+                    textBox.Text = numericOnly;
+                    textBox.CaretIndex = Math.Min(cursorPosition, numericOnly.Length);
+                }
+                
+                // Apply min/max limits only if we have a valid number
                 if (!string.IsNullOrEmpty(numericOnly) && int.TryParse(numericOnly, out int value))
                 {
                     const int minWidth = 1;
@@ -209,10 +314,20 @@ namespace MockerProject.Views.UIProperties
                     }
                 }
                 
-                // Update the binding
-                if (m_ControlModel != null && int.TryParse(textBox.Text, out int widthValue))
+                // Update the binding - handle empty string case
+                if (m_ControlModel != null)
                 {
-                    m_ControlModel.width = widthValue;
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        m_ControlModel.width = 1; // Default minimum width
+                    }
+                    else if (int.TryParse(textBox.Text, out int widthValue))
+                    {
+                        m_ControlModel.width = widthValue;
+                    }
+                    
+                    // Update the TextBox to reflect the actual value (since we use OneWay binding)
+                    textBox.Text = m_ControlModel.width.ToString();
                 }
             }
         }
@@ -221,9 +336,12 @@ namespace MockerProject.Views.UIProperties
         {
             if (sender is TextBox textBox)
             {
-                // Remove non-numeric characters
-                string originalText = textBox.Text;
-                string numericOnly = new string(originalText.Where(c => char.IsDigit(c)).ToArray());
+                // Handle null or empty text
+                string originalText = textBox.Text ?? "";
+                
+                // Remove non-numeric characters - handle empty string case
+                string numericOnly = string.IsNullOrEmpty(originalText) ? "" : 
+                    new string(originalText.Where(c => char.IsDigit(c)).ToArray());
                 
                 if (originalText != numericOnly)
                 {
@@ -232,7 +350,7 @@ namespace MockerProject.Views.UIProperties
                     textBox.CaretIndex = Math.Min(cursorPosition, numericOnly.Length);
                 }
                 
-                // Apply min/max limits
+                // Apply min/max limits only if we have a valid number
                 if (!string.IsNullOrEmpty(numericOnly) && int.TryParse(numericOnly, out int value))
                 {
                     const int minHeight = 1;
@@ -248,10 +366,20 @@ namespace MockerProject.Views.UIProperties
                     }
                 }
                 
-                // Update the binding
-                if (m_ControlModel != null && int.TryParse(textBox.Text, out int heightValue))
+                // Update the binding - handle empty string case
+                if (m_ControlModel != null)
                 {
-                    m_ControlModel.height = heightValue;
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        m_ControlModel.height = 1; // Default minimum height
+                    }
+                    else if (int.TryParse(textBox.Text, out int heightValue))
+                    {
+                        m_ControlModel.height = heightValue;
+                    }
+                    
+                    // Update the TextBox to reflect the actual value (since we use OneWay binding)
+                    textBox.Text = m_ControlModel.height.ToString();
                 }
             }
         }

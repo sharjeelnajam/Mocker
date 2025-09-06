@@ -23,13 +23,13 @@ public class UIControlViewModel : ReactiveObject
     public string Control_Name
     {
         get => m_strControl_Name;
-        set { this.RaiseAndSetIfChanged(ref m_strControl_Name, value); m_UIControl.m_strName = Control_Name; }
+        set { this.RaiseAndSetIfChanged(ref m_strControl_Name, value); if (m_UIControl != null) m_UIControl.m_strName = Control_Name; }
     } //Text
     public string m_text = "Label";
     public string text
     {
         get => m_text;
-        set { this.RaiseAndSetIfChanged(ref m_text, value); m_UIControl.m_strText=text;  setFitSize();}
+        set { this.RaiseAndSetIfChanged(ref m_text, value); if (m_UIControl != null) m_UIControl.m_strText=text;  setFitSize();}
     }//Text
 
     // Slider value property for proper binding
@@ -56,7 +56,7 @@ public class UIControlViewModel : ReactiveObject
     public string passwordChar
     {
         get => m_passwordChar;
-        set { this.RaiseAndSetIfChanged(ref m_passwordChar, value); m_UIControl.m_strPasswordChar = passwordChar; setFitSize(); }
+        set { this.RaiseAndSetIfChanged(ref m_passwordChar, value); if (m_UIControl != null) m_UIControl.m_strPasswordChar = passwordChar; setFitSize(); }
     }//Text
     private bool m_isEnabled = true;
     public bool isEnabled
@@ -78,7 +78,7 @@ public class UIControlViewModel : ReactiveObject
         set
         {
             this.RaiseAndSetIfChanged(ref m_strControl_Tip, value);
-            m_UIControl.m_Tooltip = Control_Tip;
+            if (m_UIControl != null) m_UIControl.m_Tooltip = Control_Tip;
         }
     }//Tooltip
     public double m_opacity= 1;
@@ -88,7 +88,7 @@ public class UIControlViewModel : ReactiveObject
         set
         {
             this.RaiseAndSetIfChanged(ref m_opacity, value);
-            m_UIControl.m_Opacity = opacity;
+            if (m_UIControl != null) m_UIControl.m_Opacity = opacity;
         }
     }//Opacity
     private int m_nControl_sX;
@@ -124,13 +124,13 @@ public class UIControlViewModel : ReactiveObject
     public int width
     {
         get => m_width;
-        set { this.RaiseAndSetIfChanged(ref m_width, value); m_UIControl.m_nWidth = width; }
+        set { this.RaiseAndSetIfChanged(ref m_width, value); if (m_UIControl != null) m_UIControl.m_nWidth = width; }
     } //Width
     private int m_height;
     public int height
     {
         get => m_height;
-        set { this.RaiseAndSetIfChanged(ref m_height, value); m_UIControl.m_nHeight = m_height; }
+        set { this.RaiseAndSetIfChanged(ref m_height, value); if (m_UIControl != null) m_UIControl.m_nHeight = m_height; }
     } //Height
 
 
@@ -200,7 +200,7 @@ public class UIControlViewModel : ReactiveObject
     public Thickness borderThickness
     {
         get => m_borderThickness;
-        set { this.RaiseAndSetIfChanged(ref m_borderThickness, value); m_UIControl.m_BorderThickness = borderThickness; }
+        set { this.RaiseAndSetIfChanged(ref m_borderThickness, value); if (m_UIControl != null) m_UIControl.m_BorderThickness = borderThickness; }
     } //Border Thickness
     public ObservableCollection<int> List_Round { get; set; }
     public int w_nRoundID = 0;
@@ -223,7 +223,7 @@ public class UIControlViewModel : ReactiveObject
     public CornerRadius borderRound
     {
         get => m_borderRound;
-        set { this.RaiseAndSetIfChanged(ref m_borderRound, value); m_UIControl.m_BorderRound = borderRound; }
+        set { this.RaiseAndSetIfChanged(ref m_borderRound, value); if (m_UIControl != null) m_UIControl.m_BorderRound = borderRound; }
     } //Border Rounding
     private SolidColorBrush m_foreground = new SolidColorBrush(new Color(255, 33, 33, 33));
     public SolidColorBrush foreground
@@ -253,7 +253,7 @@ public class UIControlViewModel : ReactiveObject
     {
         get => m_fontSize;
         set { 
-            this.RaiseAndSetIfChanged(ref m_fontSize, value); m_UIControl.m_nFontSize = fontSize; 
+            this.RaiseAndSetIfChanged(ref m_fontSize, value); if (m_UIControl != null) m_UIControl.m_nFontSize = fontSize; 
             setFitSize(); }
     }//Text_FontSize
     
@@ -261,7 +261,7 @@ public class UIControlViewModel : ReactiveObject
     public FontFamily fontFamily
     {
         get => m_fontFamily;
-        set { this.RaiseAndSetIfChanged(ref m_fontFamily, value); m_UIControl.m_FontFamily = fontFamily; setFitSize(); }
+        set { this.RaiseAndSetIfChanged(ref m_fontFamily, value); if (m_UIControl != null) m_UIControl.m_FontFamily = fontFamily; setFitSize(); }
     }//Text_FontFamily
     private bool m_bTextBold= false;
     public bool textBold
@@ -419,6 +419,10 @@ public class UIControlViewModel : ReactiveObject
         List_Thickness =new ObservableCollection<int>();
         List_Round =new ObservableCollection<int>();
         
+        // Initialize position properties with default values
+        m_nControl_sX = (int)uiControl.m_nPositionX;
+        m_nControl_sY = (int)uiControl.m_nPositionY;
+        
         //if (uiControl.GetType() == typeof(LabelControl))
         {
             for (int i = 0; i < m_listTextSize.Length; i++)
@@ -497,6 +501,8 @@ public class UIControlViewModel : ReactiveObject
     }
     public void setLinePosition()
     {
+        if (m_MainVM == null || m_MainVM.WorkScreen == null) return;
+        
         m_MainVM.WorkScreen.lineY.StartPoint = new Avalonia.Point(Control_sX+OffsetX, 0);
         m_MainVM.WorkScreen.lineY.EndPoint = new Avalonia.Point(Control_sX + OffsetX, Control_sY+OffsetY);
         m_MainVM.WorkScreen.PosY.Text = (Control_sY ).ToString();
