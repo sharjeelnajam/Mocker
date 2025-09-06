@@ -12,9 +12,9 @@ namespace MockerProject.Views
             setText("Option");
             setFontSizeID(7);
 
-            m_ControlViewModel.IsBorderVisible = false;
-            m_ControlViewModel.IsBackgroundVisible = false;
-            m_ControlViewModel.IsBorderColorVisible = false;
+            m_ControlViewModel.IsBorderVisible = true;
+            m_ControlViewModel.IsBackgroundVisible = true;
+            m_ControlViewModel.IsBorderColorVisible = true;
         }
     }
 }
