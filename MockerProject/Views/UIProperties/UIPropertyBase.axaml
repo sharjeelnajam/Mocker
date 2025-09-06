@@ -87,7 +87,7 @@
           <TextBlock Text="X" Margin="10 0 0 0" Width="15" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
           <TextBox Name="Pos_X" Margin="5 0" Text="{Binding Control_sX}" LostFocus="SetControlPostionX" Width="35" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
           <TextBlock Text="W" Margin="10 0 0 0" Width="15" Foreground="{DynamicResource PrimaryForeground}" ></TextBlock>
-          <TextBox Name="Size_W" Margin="5 0"  Width="35" Text="{Binding width}" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
+          <TextBox Name="Size_W" Margin="5 0"  Width="35" Text="{Binding width}" TextChanged="OnWidthTextChanged" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
           <ToggleButton Name="fitWidth"  IsChecked="{Binding IsFitWidth}" IsVisible="{Binding IsFitVisible}">
             <Image Source="/Assets/FitW.png" Width="15"></Image>
           </ToggleButton>
@@ -96,7 +96,7 @@
           <TextBlock Text="Y" Margin="10 0 0 0" Width="15" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
           <TextBox Name="Pos_Y" Margin="5 0"  Text="{Binding Control_sY}"  LostFocus="SetControlPostionY" Width="35" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
           <TextBlock Text="H" Margin="10 0 0 0" Width="15" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
-          <TextBox Name="Size_H" Margin="5 0"  Width="35" Text="{Binding height}" IsReadOnly="{Binding ReadOnlyHeight}" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
+          <TextBox Name="Size_H" Margin="5 0"  Width="35" Text="{Binding height}" TextChanged="OnHeightTextChanged" IsReadOnly="{Binding ReadOnlyHeight}" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
           <ToggleButton Name="fitHeight"  IsChecked="{Binding IsFitHeight}" IsVisible="{Binding IsFitVisible}">
             <Image Source="/Assets/FitH.png" Width="15"></Image>
           </ToggleButton>

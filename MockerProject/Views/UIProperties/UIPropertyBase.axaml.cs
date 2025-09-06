@@ -6,6 +6,7 @@ using HarfBuzzSharp;
 using MockerProject.ViewModels;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using static MockerProject.ViewModels.UIControlViewModel;
 
 namespace MockerProject.Views.UIProperties
@@ -177,13 +178,83 @@ namespace MockerProject.Views.UIProperties
                 }
             }
         }
-        //private void SetControlWidth(object? sender, RoutedEventArgs routedEventArgs)
-        //{
-        //}
-        //private void SetControlHeight(object? sender, RoutedEventArgs routedEventArgs)
-        //{
-
-        //}
+        private void OnWidthTextChanged(object? sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                // Remove non-numeric characters
+                string originalText = textBox.Text;
+                string numericOnly = new string(originalText.Where(c => char.IsDigit(c)).ToArray());
+                
+                if (originalText != numericOnly)
+                {
+                    int cursorPosition = textBox.CaretIndex;
+                    textBox.Text = numericOnly;
+                    textBox.CaretIndex = Math.Min(cursorPosition, numericOnly.Length);
+                }
+                
+                // Apply min/max limits
+                if (!string.IsNullOrEmpty(numericOnly) && int.TryParse(numericOnly, out int value))
+                {
+                    const int minWidth = 1;
+                    const int maxWidth = 2000;
+                    
+                    if (value < minWidth)
+                    {
+                        textBox.Text = minWidth.ToString();
+                    }
+                    else if (value > maxWidth)
+                    {
+                        textBox.Text = maxWidth.ToString();
+                    }
+                }
+                
+                // Update the binding
+                if (m_ControlModel != null && int.TryParse(textBox.Text, out int widthValue))
+                {
+                    m_ControlModel.width = widthValue;
+                }
+            }
+        }
+        
+        private void OnHeightTextChanged(object? sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                // Remove non-numeric characters
+                string originalText = textBox.Text;
+                string numericOnly = new string(originalText.Where(c => char.IsDigit(c)).ToArray());
+                
+                if (originalText != numericOnly)
+                {
+                    int cursorPosition = textBox.CaretIndex;
+                    textBox.Text = numericOnly;
+                    textBox.CaretIndex = Math.Min(cursorPosition, numericOnly.Length);
+                }
+                
+                // Apply min/max limits
+                if (!string.IsNullOrEmpty(numericOnly) && int.TryParse(numericOnly, out int value))
+                {
+                    const int minHeight = 1;
+                    const int maxHeight = 2000;
+                    
+                    if (value < minHeight)
+                    {
+                        textBox.Text = minHeight.ToString();
+                    }
+                    else if (value > maxHeight)
+                    {
+                        textBox.Text = maxHeight.ToString();
+                    }
+                }
+                
+                // Update the binding
+                if (m_ControlModel != null && int.TryParse(textBox.Text, out int heightValue))
+                {
+                    m_ControlModel.height = heightValue;
+                }
+            }
+        }
         //private void onSetFitWidth(object? sender, RoutedEventArgs e)
         //{
         //}

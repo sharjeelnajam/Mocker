@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net.Mime;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
@@ -278,6 +279,39 @@ namespace MockerProject.Views
                 }
             }
         }
+        private void OnWidthTextChanged(object? sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                // Remove non-numeric characters
+                string originalText = textBox.Text;
+                string numericOnly = new string(originalText.Where(c => char.IsDigit(c)).ToArray());
+                
+                if (originalText != numericOnly)
+                {
+                    int cursorPosition = textBox.CaretIndex;
+                    textBox.Text = numericOnly;
+                    textBox.CaretIndex = Math.Min(cursorPosition, numericOnly.Length);
+                }
+                
+                // Apply min/max limits
+                if (!string.IsNullOrEmpty(numericOnly) && int.TryParse(numericOnly, out int value))
+                {
+                    const int minWidth = 1;
+                    const int maxWidth = 2000;
+                    
+                    if (value < minWidth)
+                    {
+                        textBox.Text = minWidth.ToString();
+                    }
+                    else if (value > maxWidth)
+                    {
+                        textBox.Text = maxWidth.ToString();
+                    }
+                }
+            }
+        }
+        
         private void SetControlWidth(object? sender, RoutedEventArgs routedEventArgs)
         {
             if (sender is TextBox textBox)
@@ -296,6 +330,39 @@ namespace MockerProject.Views
                 }
             }
         }
+        private void OnHeightTextChanged(object? sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                // Remove non-numeric characters
+                string originalText = textBox.Text;
+                string numericOnly = new string(originalText.Where(c => char.IsDigit(c)).ToArray());
+                
+                if (originalText != numericOnly)
+                {
+                    int cursorPosition = textBox.CaretIndex;
+                    textBox.Text = numericOnly;
+                    textBox.CaretIndex = Math.Min(cursorPosition, numericOnly.Length);
+                }
+                
+                // Apply min/max limits
+                if (!string.IsNullOrEmpty(numericOnly) && int.TryParse(numericOnly, out int value))
+                {
+                    const int minHeight = 1;
+                    const int maxHeight = 2000;
+                    
+                    if (value < minHeight)
+                    {
+                        textBox.Text = minHeight.ToString();
+                    }
+                    else if (value > maxHeight)
+                    {
+                        textBox.Text = maxHeight.ToString();
+                    }
+                }
+            }
+        }
+        
         private void SetControlHeight(object? sender, RoutedEventArgs routedEventArgs)
         {
             if (sender is TextBox textBox)
