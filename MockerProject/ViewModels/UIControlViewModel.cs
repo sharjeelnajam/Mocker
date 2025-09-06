@@ -5,6 +5,7 @@ using Avalonia.Media.Immutable;
 using MockerProject.Models;
 using MockerProject.Views;
 using ReactiveUI;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Color = Avalonia.Media.Color;
@@ -30,6 +31,26 @@ public class UIControlViewModel : ReactiveObject
         get => m_text;
         set { this.RaiseAndSetIfChanged(ref m_text, value); m_UIControl.m_strText=text;  setFitSize();}
     }//Text
+
+    // Slider value property for proper binding
+    private double m_sliderValue = 50.0;
+    public double sliderValue
+    {
+        get => m_sliderValue;
+        set 
+        { 
+            m_sliderValue = Math.Round(value, 2); // Round to 2 decimal places
+            this.RaiseAndSetIfChanged(ref m_sliderValue, m_sliderValue);
+            
+            // Update the text property with formatted value
+            if (m_UIControl != null && m_UIControl.m_nUIControlType == CONTROL_TYPE.SLIDER)
+            {
+                m_text = m_sliderValue.ToString("F2");
+                this.RaisePropertyChanged(nameof(text));
+                m_UIControl.m_strText = m_text;
+            }
+        }
+    }
 
     private string m_passwordChar = "";
     public string passwordChar

@@ -58,7 +58,7 @@
   <Slider Name="opical"
           Minimum="0"
           Maximum="100"
-          Value="{Binding text}"
+          Value="{Binding sliderValue}"
           TickFrequency="1"
           ToolTip.Tip="{Binding Control_Tip}"
           Opacity="{Binding opacity}"

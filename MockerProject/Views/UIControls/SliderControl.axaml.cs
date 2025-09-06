@@ -1,6 +1,7 @@
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using MockerProject.Models;
 
 namespace MockerProject.Views.UIControls
 {
@@ -10,8 +11,10 @@ namespace MockerProject.Views.UIControls
         {
             InitializeComponent();
             this.DataContext = m_ControlViewModel;
+            setType(CONTROL_TYPE.SLIDER);
             setName("Slider");
-            setText("50");
+            setText("50.00");
+            m_ControlViewModel.sliderValue = 50.0;
             setSize(100, 50);
             setBackground(new SolidColorBrush(new Color(255, 0, 0, 255)));
             setForeground(new SolidColorBrush(new Color(0, 0, 0, 0)));
