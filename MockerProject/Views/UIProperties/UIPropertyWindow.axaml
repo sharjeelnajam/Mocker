@@ -58,16 +58,7 @@
       <StackPanel Orientation="Vertical" Background="{DynamicResource ControlBackground}" Margin="5 0 5 5">
         <StackPanel Orientation="Horizontal" Margin="5 10 5 5" IsVisible="{Binding !IsMultiEnable}">
           <TextBlock Grid.Column="0" Text="Text" VerticalAlignment="Center" Margin="5 0" Foreground="{DynamicResource PrimaryForeground}"/>
-          <TextBox Grid.Column="1" Text="{Binding text}"  AcceptsReturn="{Binding IsTextMultiEnable}" Width="180" MinHeight="20" Margin="5 0" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}" TextWrapping="Wrap">
-            <TextBox.Styles>
-              <Style Selector="TextBox">
-                <Setter Property="Height" Value="20"/>
-              </Style>
-              <Style Selector="TextBox[AcceptsReturn=True]">
-                <Setter Property="Height" Value="60"/>
-              </Style>
-            </TextBox.Styles>
-          </TextBox>
+			<TextBox Grid.Column="1" Text="{Binding text}"  AcceptsReturn="{Binding IsTextMultiEnable}" Width="180" Height="20" Margin="5 0" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin=" 5">
           <StackPanel Orientation="Vertical" Margin="0 0 10 0">
