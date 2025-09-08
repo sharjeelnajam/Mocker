@@ -155,11 +155,11 @@
           </DockPanel>
           <DockPanel Margin="10">
             <TextBlock Foreground="{DynamicResource PrimaryForeground}">Width</TextBlock>
-            <TextBox Foreground="{DynamicResource PrimaryForeground}" Width="70" HorizontalAlignment="Right" Text="{Binding PG_RW}"></TextBox>
+            <TextBox Name="WidthTextBox" Foreground="{DynamicResource PrimaryForeground}" Width="70" HorizontalAlignment="Right" TextChanged="OnWidthTextChanged" LostFocus="OnWidthLostFocus" KeyDown="OnWidthKeyDown"></TextBox>
           </DockPanel>
           <DockPanel Margin="10">
             <TextBlock Foreground="{DynamicResource PrimaryForeground}">Height</TextBlock>
-            <TextBox Foreground="{DynamicResource PrimaryForeground}" Width="70" HorizontalAlignment="Right" Text="{Binding PG_RH}"></TextBox>
+            <TextBox Name="HeightTextBox" Foreground="{DynamicResource PrimaryForeground}" Width="70" HorizontalAlignment="Right" TextChanged="OnHeightTextChanged" LostFocus="OnHeightLostFocus" KeyDown="OnHeightKeyDown"></TextBox>
           </DockPanel>
           <DockPanel Margin="10">
             <TextBlock Foreground="{DynamicResource PrimaryForeground}">Background</TextBlock>

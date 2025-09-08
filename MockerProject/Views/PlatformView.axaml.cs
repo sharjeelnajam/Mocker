@@ -4,6 +4,9 @@ using Avalonia.Media;
 using MockerProject.Models;
 using MockerProject.ViewModels;
 using static MockerProject.ViewModels.MainWindowViewModel;
+using System.Linq;
+using System;
+using Avalonia.Input;
 
 namespace MockerProject.Views
 {
@@ -13,6 +16,30 @@ namespace MockerProject.Views
         public PlatformView()
         {
             InitializeComponent(); 
+
+            // Initialize the TextBox values when the control loads
+            this.Loaded += (s, e) =>
+            {
+                if (DataContext is MainWindowViewModel viewModel)
+                {
+                    m_MainViewModel = viewModel;
+                    WidthTextBox.Text = viewModel.PG_RW.ToString();
+                    HeightTextBox.Text = viewModel.PG_RH.ToString();
+                    
+                    // Subscribe to property changes to update TextBox values
+                    viewModel.PropertyChanged += (sender, args) =>
+                    {
+                        if (args.PropertyName == nameof(viewModel.PG_RW))
+                        {
+                            WidthTextBox.Text = viewModel.PG_RW.ToString();
+                        }
+                        else if (args.PropertyName == nameof(viewModel.PG_RH))
+                        {
+                            HeightTextBox.Text = viewModel.PG_RH.ToString();
+                        }
+                    };
+                }
+            };
 
             colorButton.PropertyChanged += (s, e) =>
             {
@@ -54,6 +81,178 @@ namespace MockerProject.Views
                     }
                 }
             };
+        }
+
+        private void OnWidthTextChanged(object? sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                // Handle null or empty text
+                string originalText = textBox.Text ?? "";
+                
+                // Only filter non-numeric characters, don't apply limits during typing
+                string numericOnly = string.IsNullOrEmpty(originalText) ? "" : 
+                    new string(originalText.Where(c => char.IsDigit(c)).ToArray());
+                
+                if (originalText != numericOnly)
+                {
+                    int cursorPosition = textBox.CaretIndex;
+                    textBox.Text = numericOnly;
+                    textBox.CaretIndex = Math.Min(cursorPosition, numericOnly.Length);
+                }
+            }
+        }
+
+        private void OnHeightTextChanged(object? sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                // Handle null or empty text
+                string originalText = textBox.Text ?? "";
+                
+                // Only filter non-numeric characters, don't apply limits during typing
+                string numericOnly = string.IsNullOrEmpty(originalText) ? "" : 
+                    new string(originalText.Where(c => char.IsDigit(c)).ToArray());
+                
+                if (originalText != numericOnly)
+                {
+                    int cursorPosition = textBox.CaretIndex;
+                    textBox.Text = numericOnly;
+                    textBox.CaretIndex = Math.Min(cursorPosition, numericOnly.Length);
+                }
+            }
+        }
+
+        private void OnWidthLostFocus(object? sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox && m_MainViewModel != null)
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        // If empty, restore the current value
+                        textBox.Text = m_MainViewModel.PG_RW.ToString();
+                    }
+                    else if (int.TryParse(textBox.Text, out int width))
+                    {
+                        // Validate and set the width - allow values from 50 to 3000
+                        const int minWidth = 50;
+                        const int maxWidth = 3000;
+                        
+                        if (width < minWidth)
+                        {
+                            width = minWidth;
+                            textBox.Text = width.ToString();
+                        }
+                        else if (width > maxWidth)
+                        {
+                            width = maxWidth;
+                            textBox.Text = width.ToString();
+                        }
+                        
+                        // Update the ViewModel with the new width
+                        if (m_MainViewModel.PG_RW != width)
+                        {
+                            m_MainViewModel.PG_RW = width;
+                            System.Diagnostics.Debug.WriteLine($"Width updated to: {width}");
+                        }
+                    }
+                    else
+                    {
+                        // Invalid input, restore the current value
+                        textBox.Text = m_MainViewModel.PG_RW.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // If any error occurs, restore the current value
+                    textBox.Text = m_MainViewModel.PG_RW.ToString();
+                    System.Diagnostics.Debug.WriteLine($"Error in OnWidthLostFocus: {ex.Message}");
+                }
+            }
+        }
+
+        private void OnHeightLostFocus(object? sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox && m_MainViewModel != null)
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        // If empty, restore the current value
+                        textBox.Text = m_MainViewModel.PG_RH.ToString();
+                    }
+                    else if (int.TryParse(textBox.Text, out int height))
+                    {
+                        // Validate and set the height - allow values from 50 to 3000
+                        const int minHeight = 50;
+                        const int maxHeight = 3000;
+                        
+                        if (height < minHeight)
+                        {
+                            height = minHeight;
+                            textBox.Text = height.ToString();
+                        }
+                        else if (height > maxHeight)
+                        {
+                            height = maxHeight;
+                            textBox.Text = height.ToString();
+                        }
+                        
+                        // Update the ViewModel with the new height
+                        if (m_MainViewModel.PG_RH != height)
+                        {
+                            m_MainViewModel.PG_RH = height;
+                            System.Diagnostics.Debug.WriteLine($"Height updated to: {height}");
+                        }
+                    }
+                    else
+                    {
+                        // Invalid input, restore the current value
+                        textBox.Text = m_MainViewModel.PG_RH.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // If any error occurs, restore the current value
+                    textBox.Text = m_MainViewModel.PG_RH.ToString();
+                    System.Diagnostics.Debug.WriteLine($"Error in OnHeightLostFocus: {ex.Message}");
+                }
+            }
+        }
+
+        private void OnWidthKeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                // Apply the same logic as LostFocus when Enter is pressed
+                OnWidthLostFocus(sender, new RoutedEventArgs());
+                
+                // Remove focus from the TextBox
+                if (sender is TextBox textBox)
+                {
+                    textBox.IsEnabled = false;
+                    textBox.IsEnabled = true;
+                }
+            }
+        }
+
+        private void OnHeightKeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                // Apply the same logic as LostFocus when Enter is pressed
+                OnHeightLostFocus(sender, new RoutedEventArgs());
+                
+                // Remove focus from the TextBox
+                if (sender is TextBox textBox)
+                {
+                    textBox.IsEnabled = false;
+                    textBox.IsEnabled = true;
+                }
+            }
         }
     }
 }
