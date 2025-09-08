@@ -47,6 +47,13 @@ namespace MockerProject.ViewModels
 
         public event EventHandler<bool>? ThemeChanged;
 
+        // Background color change tracking for undo functionality
+        public class BackgroundColorChange
+        {
+            public SolidColorBrush OldColor { get; set; }
+            public SolidColorBrush NewColor { get; set; }
+        }
+
         // Zoom properties for timeline slider and canvas scaling (1%..100%)
         private double _zoom = 1.0; // 1.0 => 100%
         public double Zoom
@@ -114,6 +121,24 @@ namespace MockerProject.ViewModels
                     else
                     {
                         // Index is out of range, just remove the history entry
+                        WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                    }
+                }
+                else if (w_Cmd == "BackgroundColor")
+                {
+                    // Handle background color undo
+                    if (w_ControlHistory.CustomData is BackgroundColorChange bgChange)
+                    {
+                        // Restore the old background color
+                        PageBackground = bgChange.OldColor;
+                        
+                        // Update the color picker in the platform view
+                        if (m_PlatformView != null)
+                        {
+                            m_PlatformView.colorButton.Color = bgChange.OldColor.Color;
+                        }
+                        
+                        // Move to redo list
                         WorkScreen.m_UndoList.Remove(w_ControlHistory);
                     }
                 }
@@ -832,6 +857,24 @@ namespace MockerProject.ViewModels
                             WorkScreen.m_UndoList.Remove(w_ControlHistory);
                         }
                     }
+                    else if (w_Cmd == "BackgroundColor")
+                    {
+                        // Handle background color undo
+                        if (w_ControlHistory.CustomData is BackgroundColorChange bgChange)
+                        {
+                            // Restore the old background color
+                            PageBackground = bgChange.OldColor;
+                            
+                            // Update the color picker in the platform view
+                            if (m_PlatformView != null)
+                            {
+                                m_PlatformView.colorButton.Color = bgChange.OldColor.Color;
+                            }
+                            
+                            // Move to redo list
+                            WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                        }
+                    }
                     WorkScreen.m_RedoList.Add(w_ControlHistory);
                     if (ContainerFlag > 0)
                         ContainerFlag = 0;
@@ -874,6 +917,24 @@ namespace MockerProject.ViewModels
                         else
                         {
                             // Invalid index, just remove the history entry
+                            WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                        }
+                    }
+                    else if (w_Cmd == "BackgroundColor")
+                    {
+                        // Handle background color redo
+                        if (w_ControlHistory.CustomData is BackgroundColorChange bgChange)
+                        {
+                            // Restore the new background color (redo the change)
+                            PageBackground = bgChange.NewColor;
+                            
+                            // Update the color picker in the platform view
+                            if (m_PlatformView != null)
+                            {
+                                m_PlatformView.colorButton.Color = bgChange.NewColor.Color;
+                            }
+                            
+                            // Move to undo list
                             WorkScreen.m_RedoList.Remove(w_ControlHistory);
                         }
                     }

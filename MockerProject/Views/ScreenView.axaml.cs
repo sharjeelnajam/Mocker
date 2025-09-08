@@ -23,6 +23,7 @@ namespace MockerProject.Views
         public Type type;
         public Control oldInfo;
         public Control curInfo;
+        public object? CustomData; // For storing background color changes
     }
 
     /// <summary>
