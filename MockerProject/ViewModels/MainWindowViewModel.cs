@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
@@ -20,10 +21,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 
 //using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Color = Avalonia.Media.Color;
@@ -375,6 +376,144 @@ namespace MockerProject.ViewModels
         public bool w_IsVerViewEnabled = true;
         public bool w_IsResponseVisible = false;
         public bool w_IsRulerVisible = true; public bool IsRulerVisible { get => w_IsRulerVisible; set => this.RaiseAndSetIfChanged(ref w_IsRulerVisible, value); }
+        
+        // Search functionality for UI controls
+        private string _searchText = "";
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _searchText, value);
+                FilterUIControls();
+            }
+        }
+
+        private void FilterUIControls()
+        {
+            if (string.IsNullOrWhiteSpace(_searchText))
+            {
+                ShowAllUIControls();
+            }
+            else
+            {
+                FilterUIControlsByText(_searchText.ToLower());
+            }
+        }
+
+        private void ShowAllUIControls()
+        {
+            var mainWindow = m_MainWindow;
+            if (mainWindow != null)
+            {
+                var uiControlView = FindUIControlView(mainWindow);
+                if (uiControlView != null)
+                {
+                    ShowAllControlsInView(uiControlView);
+                }
+            }
+        }
+
+        private void FilterUIControlsByText(string searchText)
+        {
+            var mainWindow = m_MainWindow;
+            if (mainWindow != null)
+            {
+                var uiControlView = FindUIControlView(mainWindow);
+                if (uiControlView != null)
+                {
+                    FilterControlsInView(uiControlView, searchText);
+                }
+            }
+        }
+
+        private UIControlView FindUIControlView(Window window)
+        {
+            return FindUIControlViewRecursive(window);
+        }
+
+        private UIControlView FindUIControlViewRecursive(Control parent)
+        {
+            if (parent is UIControlView uiControlView)
+                return uiControlView;
+
+            foreach (var child in parent.GetVisualChildren())
+            {
+                if (child is Control control)
+                {
+                    var result = FindUIControlViewRecursive(control);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
+        }
+
+        private void ShowAllControlsInView(UIControlView uiControlView)
+        {
+            var uniformGrids = FindUniformGridsRecursively(uiControlView);
+
+            foreach (var uniformGrid in uniformGrids)
+            {
+                uniformGrid.IsVisible = true;
+                
+                var stackPanels = uniformGrid.GetVisualChildren()
+                    .OfType<StackPanel>()
+                    .ToList();
+                    
+                foreach (var stackPanel in stackPanels)
+                {
+                    stackPanel.IsVisible = true;
+                }
+            }
+        }
+
+        private void FilterControlsInView(UIControlView uiControlView, string searchText)
+        {
+            var uniformGrids = FindUniformGridsRecursively(uiControlView);
+
+            foreach (var uniformGrid in uniformGrids)
+            {
+                bool hasVisibleControls = false;
+                
+                var stackPanels = uniformGrid.GetVisualChildren()
+                    .OfType<StackPanel>()
+                    .ToList();
+                    
+                foreach (var stackPanel in stackPanels)
+                {
+                    var textBlock = stackPanel.GetVisualChildren().OfType<TextBlock>().FirstOrDefault();
+                    if (textBlock != null)
+                    {
+                        bool matches = textBlock.Text.ToLower().Contains(searchText);
+                        stackPanel.IsVisible = matches;
+                        if (matches) hasVisibleControls = true;
+                    }
+                }
+                
+                uniformGrid.IsVisible = hasVisibleControls;
+            }
+        }
+
+        private List<UniformGrid> FindUniformGridsRecursively(Control parent)
+        {
+            var uniformGrids = new List<UniformGrid>();
+            
+            if (parent is UniformGrid uniformGrid)
+            {
+                uniformGrids.Add(uniformGrid);
+            }
+            
+            foreach (var child in parent.GetVisualChildren())
+            {
+                if (child is Control control)
+                {
+                    uniformGrids.AddRange(FindUniformGridsRecursively(control));
+                }
+            }
+            
+            return uniformGrids;
+        }
 
         public SolidColorBrush w_nPageBackground = new SolidColorBrush(new Color(255, 255, 255, 255));//Color.FromRgb(0,250,0);
         public SolidColorBrush PageBackground

@@ -214,7 +214,7 @@
       <Border Classes="ActionContainer" >
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="8 0" IsEnabled="{Binding IsWorkView}">
           <Image Source="{DynamicResource SearchIcon}" Width="16" Height="16" Margin="0,0,4,0"/>
-          <TextBox Classes="SearchBox" Watermark="Search"/>
+          <TextBox Classes="SearchBox" Watermark="Search" Text="{Binding SearchText, Mode=TwoWay}"/>
         </StackPanel>
       </Border>
 
