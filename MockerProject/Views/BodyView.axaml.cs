@@ -249,7 +249,7 @@ public partial class BodyView : UserControl
                         }
                         if (w_UIControlType == CONTROL_TYPE.TEXTAREA)
                         {
-                            m_Control.setText("This is \nTextArea");
+                            m_Control.setText("This is TextArea");
                             m_Control.setTextMultiEnable(true);
                             m_Control.setSize(200,70);
                         }
