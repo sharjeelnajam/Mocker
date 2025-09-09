@@ -28,10 +28,51 @@ namespace MockerProject.Views.UIControls
                 var item = vm.Items[e.Index];
                 string headerText = vm.TabHeaders[e.Index];
 
-                TextBlock textBlock = new TextBlock();
-                textBlock.Text = headerText;
-                textBlock.Foreground = new SolidColorBrush(new Color(255, 0, 0, 0));
-                tabItem.Header = textBlock;
+                var grid = new Grid();
+
+                var textBlock = new TextBlock
+                {
+                    Text = headerText,
+                    Foreground = new SolidColorBrush(new Color(255, 0, 0, 0))
+                };
+
+                var textBox = new TextBox
+                {
+                    Text = headerText,
+                    IsVisible = false
+                };
+
+                textBlock.DoubleTapped += (s, args) =>
+                {
+                    textBlock.IsVisible = false;
+                    textBox.IsVisible = true;
+                    textBox.Focus();
+                    textBox.CaretIndex = textBox.Text?.Length ?? 0;
+                };
+
+                textBox.KeyDown += (s, args) =>
+                {
+                    if (args.Key == Key.Enter)
+                    {
+                        textBlock.Text = textBox.Text;
+                        vm.TabHeaders[e.Index] = textBox.Text;
+                        textBox.IsVisible = false;
+                        textBlock.IsVisible = true;
+                    }
+                };
+
+                textBox.LostFocus += (s, args) =>
+                {
+                    textBlock.Text = textBox.Text;
+                    vm.TabHeaders[e.Index] = textBox.Text;
+                    textBox.IsVisible = false;
+                    textBlock.IsVisible = true;
+                };
+
+                grid.Children.Add(textBlock);
+                grid.Children.Add(textBox);
+
+                tabItem.Header = grid;
             }
         }
 
