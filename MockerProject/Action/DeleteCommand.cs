@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.VisualTree;
+using DynamicData;
 using MockerProject.ViewModels.UIViewModels;
 using MockerProject.Views;
 using MockerProject.Views.UIControls;
@@ -30,18 +31,41 @@ namespace MockerProject.Action
                 screenView.ClearSelection();
             }
 
-            // Handle TabControl deletion
             if (_element is TabViewControl tabControl)
             {
-                // Remove the entire TabControl
-                _canvas.Children.Remove(_element);
-
-                // Also remove any associated run controls
-                var runControls = _canvas.Children.OfType<TabViewRunControl>().ToList();
-                foreach (var runControl in runControls)
+                var viewModel = tabControl.DataContext as RepeaterControlViewModel;
+                if (viewModel != null && viewModel.Items.Count > 0)
                 {
-                    _canvas.Children.Remove(runControl);
+                    // Case 1: More than one tab remove the last one
+                    if (viewModel.Items.Count > 1)
+                    {
+                        int lastIndex = viewModel.Items.Count - 1;
+                        viewModel.Items.RemoveAt(lastIndex);
+
+                        if (lastIndex < viewModel.TabHeaders.Count)
+                            viewModel.TabHeaders.RemoveAt(lastIndex);
+
+                        var container = _canvas.Children
+                            .OfType<ContainerBoxControl>()
+                            .FirstOrDefault(c => c.DataContext == viewModel.Items.ElementAtOrDefault(lastIndex));
+                        if (container != null && container.Parent is Canvas pc)
+                            pc.Children.Remove(container);
+                    }
+                    else
+                    {
+                        // Case 2: Only one tab remove whole control
+                        var tabParent = tabControl.Parent as Canvas;
+                        tabParent?.Children.Remove(tabControl);
+
+                        var runControls = tabParent?.Children.OfType<TabViewRunControl>().ToList();
+                        if (runControls != null)
+                        {
+                            foreach (var runControl in runControls)
+                                tabParent.Children.Remove(runControl);
+                        }
+                    }
                 }
+
                 return;
             }
 

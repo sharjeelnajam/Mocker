@@ -8,6 +8,7 @@ using Avalonia.Media.Immutable;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using MockerProject.Action;
 using MockerProject.Models;
 using MockerProject.Services;
@@ -21,10 +22,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-
 //using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Color = Avalonia.Media.Color;
@@ -97,12 +97,6 @@ namespace MockerProject.ViewModels
 
         public void Undo()
         {
-            //if (_undoStack.Any())
-            //{
-            //    var action = _undoStack.Pop();
-            //    action.UnExecute();
-            //    _redoStack.Push(action);
-            //}
             int w_Count = WorkScreen.m_UndoList.Count;
             if (w_Count > 0)
             {
@@ -112,34 +106,62 @@ namespace MockerProject.ViewModels
 
                 if (w_Cmd == "New")
                 {
-                    // Validate index before accessing the collection
                     if (w_Index >= 0 && w_Index < WorkScreen.screenCanvas.Children.Count)
                     {
                         Control w_Control = WorkScreen.screenCanvas.Children[w_Index];
-                        WorkScreen.screenCanvas.Children.Remove(w_Control);
-                        WorkScreen.m_UndoList.Remove(w_ControlHistory);
+
+                        if (w_Control is TabViewControl tabControl)
+                        {
+                            var vm = tabControl.DataContext as RepeaterControlViewModel;
+                            if (vm != null && vm.Items.Count > 1)
+                            {
+                                int lastIndex = vm.Items.Count - 1;
+
+                                var removedItem = vm.Items[lastIndex];
+                                vm.Items.RemoveAt(lastIndex);
+
+                                if (vm.TabHeaders.Count > 0)
+                                {
+                                    int headerIndex = Math.Min(lastIndex, vm.TabHeaders.Count - 1);
+                                    vm.TabHeaders.RemoveAt(headerIndex);
+                                }
+
+                                var container = WorkScreen.screenCanvas.Children
+                                    .OfType<ContainerBoxControl>()
+                                    .FirstOrDefault(c => c.DataContext == removedItem);
+
+                                if (container != null && container.Parent is Canvas pc)
+                                    pc.Children.Remove(container);
+
+                                w_ControlHistory.CustomData = removedItem;
+                            }
+                            else
+                            {
+                                WorkScreen.screenCanvas.Children.Remove(w_Control);
+                            }
+
+                            WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                        }
+                        else
+                        {
+                            WorkScreen.screenCanvas.Children.Remove(w_Control);
+                            WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                        }
                     }
                     else
                     {
-                        // Index is out of range, just remove the history entry
                         WorkScreen.m_UndoList.Remove(w_ControlHistory);
                     }
                 }
                 else if (w_Cmd == "BackgroundColor")
                 {
-                    // Handle background color undo
                     if (w_ControlHistory.CustomData is BackgroundColorChange bgChange)
                     {
-                        // Restore the old background color
                         PageBackground = bgChange.OldColor;
-                        
-                        // Update the color picker in the platform view
                         if (m_PlatformView != null)
                         {
                             m_PlatformView.colorButton.Color = bgChange.OldColor.Color;
                         }
-                        
-                        // Move to redo list
                         WorkScreen.m_UndoList.Remove(w_ControlHistory);
                     }
                 }
@@ -151,13 +173,6 @@ namespace MockerProject.ViewModels
 
         public void Redo()
         {
-            //if (_redoStack.Any())
-            //{
-            //    var action = _redoStack.Pop();
-            //    action.Execute();
-            //    _undoStack.Push(action);
-            //}
-
             int w_Count = WorkScreen.m_RedoList.Count;
             if (w_Count > 0)
             {
@@ -166,24 +181,55 @@ namespace MockerProject.ViewModels
                 int w_Index = WorkScreen.m_RedoList[w_Count - 1].Index;
                 if (w_Cmd == "New")
                 {
-                    // Validate index before inserting
                     if (w_Index >= 0)
                     {
                         Control w_Control = w_ControlHistory.curInfo;
-                        // If index is beyond current count, append to end
-                        if (w_Index >= WorkScreen.screenCanvas.Children.Count)
+                        if (w_Control is TabViewControl tabControl)
                         {
-                            WorkScreen.screenCanvas.Children.Add(w_Control);
+                            var vm = tabControl.DataContext as RepeaterControlViewModel;
+                            if (vm != null)
+                            {
+                                var existingTab = WorkScreen.screenCanvas.Children
+                                    .OfType<TabViewControl>()
+                                    .FirstOrDefault(tc => ReferenceEquals(tc.DataContext, vm));
+
+                                if (existingTab != null && w_ControlHistory.CustomData is ContainerBoxControl removedItem)
+                                {
+                                    int insertIndex = vm.Items.Count;
+                                    vm.TabHeaders.Insert(insertIndex, $"Item {insertIndex + 1}");
+                                    vm.Items.Insert(insertIndex, removedItem);
+
+                                    WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                                }
+                                else
+                                {
+                                    if (!WorkScreen.screenCanvas.Children.Contains(tabControl))
+                                    {
+                                        if (w_Index >= WorkScreen.screenCanvas.Children.Count)
+                                            WorkScreen.screenCanvas.Children.Add(tabControl);
+                                        else
+                                            WorkScreen.screenCanvas.Children.Insert(w_Index, tabControl);
+                                    }
+                                }
+                            }
+
+                            WorkScreen.m_RedoList.Remove(w_ControlHistory);
                         }
                         else
                         {
-                            WorkScreen.screenCanvas.Children.Insert(w_Index, w_Control);
+                            if (w_Control.Parent is Panel oldParent)
+                                oldParent.Children.Remove(w_Control);
+
+                            if (w_Index >= WorkScreen.screenCanvas.Children.Count)
+                                WorkScreen.screenCanvas.Children.Add(w_Control);
+                            else
+                                WorkScreen.screenCanvas.Children.Insert(w_Index, w_Control);
+
+                            WorkScreen.m_RedoList.Remove(w_ControlHistory);
                         }
-                        WorkScreen.m_RedoList.Remove(w_ControlHistory);
                     }
                     else
                     {
-                        // Invalid index, just remove the history entry
                         WorkScreen.m_RedoList.Remove(w_ControlHistory);
                     }
                 }
@@ -376,7 +422,7 @@ namespace MockerProject.ViewModels
         public bool w_IsVerViewEnabled = true;
         public bool w_IsResponseVisible = false;
         public bool w_IsRulerVisible = true; public bool IsRulerVisible { get => w_IsRulerVisible; set => this.RaiseAndSetIfChanged(ref w_IsRulerVisible, value); }
-        
+
         // Search functionality for UI controls
         private string _searchText = "";
         public string SearchText
@@ -456,11 +502,11 @@ namespace MockerProject.ViewModels
             foreach (var uniformGrid in uniformGrids)
             {
                 uniformGrid.IsVisible = true;
-                
+
                 var stackPanels = uniformGrid.GetVisualChildren()
                     .OfType<StackPanel>()
                     .ToList();
-                    
+
                 foreach (var stackPanel in stackPanels)
                 {
                     stackPanel.IsVisible = true;
@@ -475,11 +521,11 @@ namespace MockerProject.ViewModels
             foreach (var uniformGrid in uniformGrids)
             {
                 bool hasVisibleControls = false;
-                
+
                 var stackPanels = uniformGrid.GetVisualChildren()
                     .OfType<StackPanel>()
                     .ToList();
-                    
+
                 foreach (var stackPanel in stackPanels)
                 {
                     var textBlock = stackPanel.GetVisualChildren().OfType<TextBlock>().FirstOrDefault();
@@ -490,7 +536,7 @@ namespace MockerProject.ViewModels
                         if (matches) hasVisibleControls = true;
                     }
                 }
-                
+
                 uniformGrid.IsVisible = hasVisibleControls;
             }
         }
@@ -498,12 +544,12 @@ namespace MockerProject.ViewModels
         private List<UniformGrid> FindUniformGridsRecursively(Control parent)
         {
             var uniformGrids = new List<UniformGrid>();
-            
+
             if (parent is UniformGrid uniformGrid)
             {
                 uniformGrids.Add(uniformGrid);
             }
-            
+
             foreach (var child in parent.GetVisualChildren())
             {
                 if (child is Control control)
@@ -511,7 +557,7 @@ namespace MockerProject.ViewModels
                     uniformGrids.AddRange(FindUniformGridsRecursively(control));
                 }
             }
-            
+
             return uniformGrids;
         }
 
@@ -777,7 +823,7 @@ namespace MockerProject.ViewModels
             onOpenProject = new AsyncRelayCommand(async () => await OpenProjFile());
             onOpenRecentProject = new AsyncRelayCommand<RecentProject>(async (project) => await OpenRecentProject(project));
             onSearchProject = new AsyncRelayCommand(async () => await OpenProjFile());
-           // RecentProjects = new AsyncRelayCommand(async () => await GetAllRecentProjects());
+            // RecentProjects = new AsyncRelayCommand(async () => await GetAllRecentProjects());
             _ = InitializeRecentProjects();
             DataContent = new TabItemModel[] {
                 new TabItemModel("One", "first"),
@@ -906,7 +952,7 @@ namespace MockerProject.ViewModels
                 IsStartMocker = true;
                 IsMenuOpened = false;
                 IsProjectOpened = false;
-                
+
                 // Refresh recent projects when returning to start screen
                 _ = Task.Run(async () => await GetAllRecentProjects());
             });
@@ -983,16 +1029,50 @@ namespace MockerProject.ViewModels
 
                     if (w_Cmd == "New")
                     {
-                        // Validate index before accessing the collection
                         if (w_Index >= 0 && w_Index < WorkScreen.screenCanvas.Children.Count)
                         {
                             Control w_Control = WorkScreen.screenCanvas.Children[w_Index];
-                            WorkScreen.screenCanvas.Children.Remove(w_Control);
-                            WorkScreen.m_UndoList.Remove(w_ControlHistory);
+
+                            if (w_Control is TabViewControl tabControl)
+                            {
+                                var vm = tabControl.DataContext as RepeaterControlViewModel;
+                                if (vm != null && vm.Items.Count > 1)
+                                {
+                                    int lastIndex = vm.Items.Count - 1;
+
+                                    var removedItem = vm.Items[lastIndex];
+                                    vm.Items.RemoveAt(lastIndex);
+
+                                    if (vm.TabHeaders.Count > 0)
+                                    {
+                                        int headerIndex = Math.Min(lastIndex, vm.TabHeaders.Count - 1);
+                                        vm.TabHeaders.RemoveAt(headerIndex);
+                                    }
+
+                                    var container = WorkScreen.screenCanvas.Children
+                                        .OfType<ContainerBoxControl>()
+                                        .FirstOrDefault(c => c.DataContext == removedItem);
+
+                                    if (container != null && container.Parent is Canvas pc)
+                                        pc.Children.Remove(container);
+
+                                    w_ControlHistory.CustomData = removedItem;
+                                }
+                                else
+                                {
+                                    WorkScreen.screenCanvas.Children.Remove(w_Control);
+                                }
+
+                                WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                            }
+                            else
+                            {
+                                WorkScreen.screenCanvas.Children.Remove(w_Control);
+                                WorkScreen.m_UndoList.Remove(w_ControlHistory);
+                            }
                         }
                         else
                         {
-                            // Index is out of range, just remove the history entry
                             WorkScreen.m_UndoList.Remove(w_ControlHistory);
                         }
                     }
@@ -1003,13 +1083,13 @@ namespace MockerProject.ViewModels
                         {
                             // Restore the old background color
                             PageBackground = bgChange.OldColor;
-                            
+
                             // Update the color picker in the platform view
                             if (m_PlatformView != null)
                             {
                                 m_PlatformView.colorButton.Color = bgChange.OldColor.Color;
                             }
-                            
+
                             // Move to redo list
                             WorkScreen.m_UndoList.Remove(w_ControlHistory);
                         }
@@ -1030,32 +1110,55 @@ namespace MockerProject.ViewModels
 
                     if (w_Cmd == "New")
                     {
-                        // Validate index before inserting
                         if (w_Index >= 0)
                         {
                             Control w_Control = w_ControlHistory.curInfo;
-
-                            // 🔑 Ensure it's not attached to another parent
-                            if (w_Control.Parent is Panel oldParent)
+                            if (w_Control is TabViewControl tabControl)
                             {
-                                oldParent.Children.Remove(w_Control);
-                            }
+                                var vm = tabControl.DataContext as RepeaterControlViewModel;
+                                if (vm != null)
+                                {
+                                    var existingTab = WorkScreen.screenCanvas.Children
+                                        .OfType<TabViewControl>()
+                                        .FirstOrDefault(tc => ReferenceEquals(tc.DataContext, vm));
 
-                            // Insert or append at index
-                            if (w_Index >= WorkScreen.screenCanvas.Children.Count)
-                            {
-                                WorkScreen.screenCanvas.Children.Add(w_Control);
+                                    if (existingTab != null && w_ControlHistory.CustomData is ContainerBoxControl removedItem)
+                                    {
+                                        int insertIndex = vm.Items.Count;
+                                        vm.TabHeaders.Insert(insertIndex, $"Item {insertIndex + 1}");
+                                        vm.Items.Insert(insertIndex, removedItem);
+
+                                        WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                                    }
+                                    else
+                                    {
+                                        if (!WorkScreen.screenCanvas.Children.Contains(tabControl))
+                                        {
+                                            if (w_Index >= WorkScreen.screenCanvas.Children.Count)
+                                                WorkScreen.screenCanvas.Children.Add(tabControl);
+                                            else
+                                                WorkScreen.screenCanvas.Children.Insert(w_Index, tabControl);
+                                        }
+                                    }
+                                }
+
+                                WorkScreen.m_RedoList.Remove(w_ControlHistory);
                             }
                             else
                             {
-                                WorkScreen.screenCanvas.Children.Insert(w_Index, w_Control);
-                            }
+                                if (w_Control.Parent is Panel oldParent)
+                                    oldParent.Children.Remove(w_Control);
 
-                            WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                                if (w_Index >= WorkScreen.screenCanvas.Children.Count)
+                                    WorkScreen.screenCanvas.Children.Add(w_Control);
+                                else
+                                    WorkScreen.screenCanvas.Children.Insert(w_Index, w_Control);
+
+                                WorkScreen.m_RedoList.Remove(w_ControlHistory);
+                            }
                         }
                         else
                         {
-                            // Invalid index, just remove the history entry
                             WorkScreen.m_RedoList.Remove(w_ControlHistory);
                         }
                     }
@@ -1066,13 +1169,13 @@ namespace MockerProject.ViewModels
                         {
                             // Restore the new background color (redo the change)
                             PageBackground = bgChange.NewColor;
-                            
+
                             // Update the color picker in the platform view
                             if (m_PlatformView != null)
                             {
                                 m_PlatformView.colorButton.Color = bgChange.NewColor.Color;
                             }
-                            
+
                             // Move to undo list
                             WorkScreen.m_RedoList.Remove(w_ControlHistory);
                         }
@@ -1125,24 +1228,24 @@ namespace MockerProject.ViewModels
                 // Get the main window size
                 var windowWidth = m_MainWindow.Width;
                 var windowHeight = m_MainWindow.Height;
-                
+
                 // Calculate center position for the work area (accounting for sidebars)
                 // The work area is typically in the middle column of the 3-column layout
                 var workAreaWidth = windowWidth * 0.5; // 50% of window width (middle column)
                 var workAreaHeight = windowHeight - 42; // Subtract header height
-                
+
                 // Calculate center position for the mobile device frame (PF_W x PF_H)
                 var centerX = (workAreaWidth - PF_W) / 2;
                 var centerY = (workAreaHeight - PF_H) / 2;
-                
+
                 // Set the platform position to center the mobile device frame
                 PF_X = (int)Math.Max(0, centerX);
                 PF_Y = (int)Math.Max(0, centerY);
-                
+
                 // Update page position accordingly (page is positioned relative to platform)
                 PG_X = PF_X + PF_LW;
                 PG_Y = PF_Y + PF_TH;
-                
+
                 // Set appropriate zoom based on platform type
                 if (m_nSelectedPlatFormIndex == 3 || m_nSelectedPlatFormIndex == 4 || m_nSelectedPlatFormIndex == 5 || m_nSelectedPlatFormIndex == 6) // iPad, Other Tablet, Browser, or Generic
                 {
@@ -1173,8 +1276,8 @@ namespace MockerProject.ViewModels
                 SmallScreens.RemoveAt(0);
                 m_lstWorkScreen.RemoveAt(0);
             }
-            if(flag)
-            createPage(null);
+            if (flag)
+                createPage(null);
         }
         public void setPlatform(int platformId)
         {
@@ -1288,7 +1391,7 @@ namespace MockerProject.ViewModels
             PF_BLY = PF_H - (PF_BH + m_PlatFormInfo[m_nSelectedPlatFormIndex].L_Size[1].H) / 2;
             PG_RW = PG_W;
             PG_RH = PG_H;
-            
+
             // Auto-center iPad, Other Tablet, Browser, and Generic when selected
             if (m_nSelectedPlatFormIndex == 3 || m_nSelectedPlatFormIndex == 4 || m_nSelectedPlatFormIndex == 5 || m_nSelectedPlatFormIndex == 6) // iPad, Other Tablet, Browser, or Generic
             {
@@ -1305,13 +1408,13 @@ namespace MockerProject.ViewModels
                 // Always use programmatically created black assets for Other Tablet
                 return CreateSimpleTabletAsset(fileName);
             }
-            
+
             // Create programmatic browser assets for Browser platform
             if (imagePath.Contains("Browser"))
             {
                 return CreateBrowserAsset(fileName);
             }
-            
+
             string path = Path.Combine(imagePath, fileName);
 
             if (File.Exists(path))
@@ -1356,7 +1459,7 @@ namespace MockerProject.ViewModels
 
             // Create a simple colored rectangle using RenderTargetBitmap
             var renderTargetBitmap = new RenderTargetBitmap(new PixelSize(width, height));
-            
+
             // Create a drawing context
             using (var drawingContext = renderTargetBitmap.CreateDrawingContext())
             {
@@ -1393,7 +1496,7 @@ namespace MockerProject.ViewModels
                     {
                         var x = startX + i * (buttonSize + buttonSpacing);
                         var y = centerY - buttonSize / 2;
-                        
+
                         // Draw circle using simple rectangle with rounded corners
                         drawingContext.FillRectangle(new SolidColorBrush(buttonColors[i]), new Rect(x, y, buttonSize, buttonSize));
                     }
@@ -1407,23 +1510,23 @@ namespace MockerProject.ViewModels
                     var addressBarY = (height - addressBarHeight) / 2;
 
                     // Address bar background (white)
-                    drawingContext.FillRectangle(new SolidColorBrush(Color.FromRgb(255, 255, 255)), 
+                    drawingContext.FillRectangle(new SolidColorBrush(Color.FromRgb(255, 255, 255)),
                         new Rect(addressBarX, addressBarY, addressBarWidth, addressBarHeight));
-                    
+
                     // Address bar border (light gray)
-                    drawingContext.DrawRectangle(new Pen(new SolidColorBrush(Color.FromRgb(200, 200, 200)), 1), 
+                    drawingContext.DrawRectangle(new Pen(new SolidColorBrush(Color.FromRgb(200, 200, 200)), 1),
                         new Rect(addressBarX, addressBarY, addressBarWidth, addressBarHeight));
 
                     // Draw a simple magnifying glass icon on the right side of address bar
                     var iconSize = 16.0;
                     var iconX = addressBarX + addressBarWidth - iconSize - 8;
                     var iconY = addressBarY + (addressBarHeight - iconSize) / 2;
-                    
+
                     // Simple magnifying glass (circle with handle)
                     // Draw circle outline using rectangle border
                     drawingContext.DrawRectangle(new Pen(new SolidColorBrush(Color.FromRgb(100, 100, 100)), 2), new Rect(iconX, iconY, iconSize, iconSize));
-                    drawingContext.DrawLine(new Pen(new SolidColorBrush(Color.FromRgb(100, 100, 100)), 2), 
-                        new Point(iconX + iconSize * 0.7, iconY + iconSize * 0.7), 
+                    drawingContext.DrawLine(new Pen(new SolidColorBrush(Color.FromRgb(100, 100, 100)), 2),
+                        new Point(iconX + iconSize * 0.7, iconY + iconSize * 0.7),
                         new Point(iconX + iconSize + 2, iconY + iconSize + 2));
                 }
                 else if (fileName == "Top_Right.png")
@@ -1439,13 +1542,13 @@ namespace MockerProject.ViewModels
                     {
                         var x = startX + i * (buttonSize + buttonSpacing);
                         var y = centerY - buttonSize / 2;
-                        
+
                         // Button background
-                        drawingContext.FillRectangle(new SolidColorBrush(Color.FromRgb(220, 220, 220)), 
+                        drawingContext.FillRectangle(new SolidColorBrush(Color.FromRgb(220, 220, 220)),
                             new Rect(x, y, buttonSize, buttonSize));
-                        
+
                         // Button border
-                        drawingContext.DrawRectangle(new Pen(new SolidColorBrush(Color.FromRgb(180, 180, 180)), 1), 
+                        drawingContext.DrawRectangle(new Pen(new SolidColorBrush(Color.FromRgb(180, 180, 180)), 1),
                             new Rect(x, y, buttonSize, buttonSize));
                     }
                 }
@@ -1477,7 +1580,7 @@ namespace MockerProject.ViewModels
 
             // Create a simple colored rectangle using RenderTargetBitmap
             var renderTargetBitmap = new RenderTargetBitmap(new PixelSize(width, height));
-            
+
             // Choose color based on the asset type
             Color color;
             if (fileName == "Top_Label.png" || fileName == "Bottom_Label.png")
@@ -1495,7 +1598,7 @@ namespace MockerProject.ViewModels
                 // Black color for top and bottom
                 color = Color.FromArgb(255, 0, 0, 0); // Pure black
             }
-            
+
             // Create a simple Border with the appropriate color
             var border = new Border
             {
@@ -1503,10 +1606,10 @@ namespace MockerProject.ViewModels
                 Height = height,
                 Background = new SolidColorBrush(color)
             };
-            
+
             // Apply layout
             border.Arrange(new Rect(0, 0, width, height));
-            
+
             // Render to bitmap
             renderTargetBitmap.Render(border);
 
@@ -1578,7 +1681,7 @@ namespace MockerProject.ViewModels
         {
             if (id < 0 || id >= m_ScreenSmallView.Count)
                 return;
-                
+
             /*if(id<0)
                 return;
             int height = 0;
@@ -1603,7 +1706,7 @@ namespace MockerProject.ViewModels
             image.Stretch = Stretch.Fill;*/
             m_ScreenSmallView[id].iamge.Source = getImage(id); //renderTargetBitmap;
         }
-        
+
         private async Task RenameCurrentScreen()
         {
             if (SmallScreenID < 0 || SmallScreenID >= m_lstWorkScreen.Count)
@@ -1640,30 +1743,30 @@ namespace MockerProject.ViewModels
 
             // Show dialog and get result
             await inputDialog.ShowDialog(m_MainWindow);
-            
+
             var newName = textBox.Text?.Trim();
             if (!string.IsNullOrWhiteSpace(newName) && newName != currentName)
             {
                 // Check if name already exists
                 bool nameExists = m_lstWorkScreen.Any(screen => screen.m_strName == newName);
-                
+
                 if (!nameExists)
                 {
                     // Update the screen name
                     currentScreen.m_strName = newName;
-                    
+
                     // Update the small screen view text
                     if (SmallScreenID < m_ScreenSmallView.Count)
                     {
                         m_ScreenSmallView[SmallScreenID].SmallCanvasText.Text = newName;
                     }
-                    
+
                     // Mark project as unsaved
                     IsProjectUnSaved = true;
                 }
             }
         }
-        
+
         private void DuplicateCurrentScreen()
         {
             if (SmallScreenID < 0 || SmallScreenID >= m_lstWorkScreen.Count)
@@ -1671,10 +1774,10 @@ namespace MockerProject.ViewModels
 
             var currentScreen = m_lstWorkScreen[SmallScreenID];
             var currentName = currentScreen.m_strName;
-            
+
             // Create a new unique name for the duplicate
             var newName = getPageName(currentName + " Copy");
-            
+
             // Create new screen view
             var newScreenView = new ScreenView();
             newScreenView.m_strName = newName;
@@ -1682,7 +1785,7 @@ namespace MockerProject.ViewModels
             newScreenView.m_Size = currentScreen.m_Size;
             newScreenView.m_background = new SolidColorBrush(currentScreen.m_background.Color);
             newScreenView.m_Opacity = currentScreen.m_Opacity;
-            
+
             // Copy all UI controls from the current screen to the new screen
             for (int i = 0; i < currentScreen.screenCanvas.Children.Count; i++)
             {
@@ -1697,48 +1800,48 @@ namespace MockerProject.ViewModels
                     }
                 }
             }
-            
+
             // Create new small screen view
             var newSmallScreenView = new ScreenSmallView();
             newSmallScreenView.SmallCanvasText.Text = newName;
-            
+
             // Add to collections
             m_lstWorkScreen.Add(newScreenView);
             m_ScreenSmallView.Add(newSmallScreenView);
             SmallScreens = m_ScreenSmallView;
-            
+
             // Set the new screen as the current one
             SmallScreenID = m_lstWorkScreen.Count - 1;
             WorkScreen = newScreenView;
-            
+
             // Mark project as unsaved
             IsProjectUnSaved = true;
         }
-        
+
         private UIControl CreateControlCopy(UIControl originalControl)
         {
             try
             {
                 // Create a new instance of the same type
                 var newControl = (UIControl)Activator.CreateInstance(originalControl.GetType());
-                
+
                 // Set the main view model reference
                 newControl.setMainVM(this);
-                
+
                 // Ensure the control is properly initialized
                 newControl.DataContext = newControl.m_ControlViewModel;
-                
+
                 // Copy basic properties using proper methods
                 newControl.setName(originalControl.m_strName + " Copy");
                 newControl.setText(originalControl.m_strText);
                 newControl.setPasswordChar(originalControl.m_strPasswordChar);
                 newControl.setType(originalControl.m_nUIControlType);
                 newControl.m_nIndex = originalControl.m_nIndex;
-                
+
                 // Copy size first
                 var originalWidth = originalControl.Width;
                 var originalHeight = originalControl.Height;
-                
+
                 if (double.IsNaN(originalWidth) || originalWidth <= 0)
                 {
                     originalWidth = 100; // Default width
@@ -1747,18 +1850,18 @@ namespace MockerProject.ViewModels
                 {
                     originalHeight = 30; // Default height
                 }
-                
+
                 newControl.setSize(originalWidth, originalHeight);
-                
+
                 // Copy position using the original position values (without offset)
                 var originalLeft = originalControl.m_nPositionX;
                 var originalTop = originalControl.m_nPositionY;
-                
+
                 if (double.IsNaN(originalLeft)) originalLeft = 0;
                 if (double.IsNaN(originalTop)) originalTop = 0;
-                
+
                 newControl.setPosition(originalLeft, originalTop);
-                
+
                 // Copy other properties based on control type
                 if (originalControl is ImageControl originalImage && newControl is ImageControl newImage)
                 {
@@ -1769,7 +1872,7 @@ namespace MockerProject.ViewModels
                         newImage.image.Source = originalImage.image.Source;
                     }
                 }
-                
+
                 return newControl;
             }
             catch (Exception ex)
@@ -1777,7 +1880,7 @@ namespace MockerProject.ViewModels
                 return null;
             }
         }
-        
+
         private static List<FilePickerFileType> GetCodeFileTypes()
         {
             return new List<FilePickerFileType>
@@ -1994,11 +2097,11 @@ namespace MockerProject.ViewModels
             for (int i = 0; i < w_DeviceInfo.PageCount; i++)
                 createPage(getPageName(w_DeviceInfo.Pages[i]));
         }
-        
+
         private async Task OpenRecentProject(RecentProject project)
         {
             if (project == null || string.IsNullOrEmpty(project.FilePath)) return;
-            
+
             try
             {
                 // Check if the file still exists
@@ -2012,18 +2115,18 @@ namespace MockerProject.ViewModels
 
                 // Create a file info object to pass to creatProject
                 var fileInfo = new FileInfo(project.FilePath);
-                
+
                 // Load the project using the existing logic
                 DeviceInfo w_DeviceInfo = await creatProjectFromPath(project.FilePath);
                 if (w_DeviceInfo == null) return;
-                
+
                 // Update the last opened time
                 project.LastOpened = DateTime.Now;
-                
+
                 // Create pages
                 for (int i = 0; i < w_DeviceInfo.PageCount; i++)
                     createPage(getPageName(w_DeviceInfo.Pages[i]));
-                    
+
                 IsMenuOpened = false;
             }
             catch (Exception ex)
@@ -2031,7 +2134,7 @@ namespace MockerProject.ViewModels
                 Debug.WriteLine($"Error opening recent project: {ex.Message}");
             }
         }
-        
+
         private async Task<DeviceInfo> creatProjectFromPath(string filePath)
         {
             try
@@ -2046,7 +2149,7 @@ namespace MockerProject.ViewModels
                 string w_strName = Path.GetFileNameWithoutExtension(filePath);
                 string w_strExtension = Path.GetExtension(filePath);
                 if (w_strExtension != ".dsproj") return null;
-                
+
                 init(false);
                 strProjectTitle = w_strName;
                 strProjectPath = Path.GetDirectoryName(filePath);
@@ -2145,7 +2248,7 @@ namespace MockerProject.ViewModels
             }
             else if (pageName is not null)
             {
-               // if(pageName == "Page1") pageName = "Page";
+                // if(pageName == "Page1") pageName = "Page";
                 if (!File.Exists(strProjectPath + "\\" + pageName + ".dspage")) return;
                 string json = File.ReadAllText(strProjectPath + "\\" + pageName + ".dspage");
                 List<PageInfo> pageInfos = JsonConvert.DeserializeObject<List<PageInfo>>(json);
@@ -2391,9 +2494,9 @@ namespace MockerProject.ViewModels
                 string json = JsonConvert.SerializeObject(w_DeviceInfo.ToArray());
                 System.IO.File.WriteAllText(filePath, json);
                 makeAssets(Path.Combine(path, "assets"));
-                
+
                 // Refresh recent projects list after saving
-               // _ = Task.Run(async () => await GetAllRecentProjects());
+                // _ = Task.Run(async () => await GetAllRecentProjects());
             }
             catch (Exception Ex)
             {
@@ -2850,7 +2953,7 @@ namespace MockerProject.ViewModels
                 }
             }
         }
-    
+
     }
     public class RecentProject
     {
