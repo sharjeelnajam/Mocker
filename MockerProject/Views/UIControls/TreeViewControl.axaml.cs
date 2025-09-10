@@ -115,6 +115,9 @@ namespace MockerProject.Views.UIControls
 
         public override void doubleClickHandler(object sender, TappedEventArgs e)
         {
+            // Mark the event as handled to prevent the base class from also opening a window
+            e.Handled = true;
+            
             Point cP = e.GetPosition(this);
             Point mP = e.GetPosition(m_MainViewModel.m_MainWindow);
             PixelPoint cPP = new PixelPoint((int)(mP.X - cP.X + m_nWidth), (int)(mP.Y - cP.Y));

@@ -16,6 +16,7 @@ namespace MockerProject.ViewModels.UIViewModels
         public ReactiveCommand<Unit, Unit> AddItems { get; }
         public ReactiveCommand<Unit, Unit> InsertAfter { get; }
         public ReactiveCommand<Unit, Unit> InsertBefore { get; }
+        public ReactiveCommand<Unit, Unit> AddSubItem { get; }
 
         private Node _SelectedItem;
         public Node SelectedItem
@@ -32,6 +33,7 @@ namespace MockerProject.ViewModels.UIViewModels
             AddItems = ReactiveCommand.Create(ExecuteAddItems);
             InsertAfter = ReactiveCommand.Create(InsertAfterItems);
             InsertBefore = ReactiveCommand.Create(InsertBeforeItems);
+            AddSubItem = ReactiveCommand.Create(ExecuteAddSubItem);
         }
 
         private void InsertAfterItems()
@@ -58,6 +60,16 @@ namespace MockerProject.ViewModels.UIViewModels
             newNode.iteration = "None";
             Items.Add( newNode);
             // Handle the click event logic here
+        }
+
+        private void ExecuteAddSubItem()
+        {
+            if (SelectedItem != null)
+            {
+                Node newNode = new Node("SubItem" + (SelectedItem.SubItems.Count + 1), SelectedItem);
+                newNode.iteration = "None";
+                SelectedItem.addSubItem(newNode);
+            }
         }
     }
 }

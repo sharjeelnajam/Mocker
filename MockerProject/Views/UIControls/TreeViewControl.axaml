@@ -44,9 +44,10 @@
 							       FontWeight="{Binding $parent[ListBox].((vm:ListBoxViewModel)DataContext).fontWeight}"
                      Text="{Binding text}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"
                      Margin="0" IsVisible="{Binding !Visible}" BorderThickness="0" />
-            <Grid Grid.Row="0" Grid.Column="1" RowDefinitions="15,15" ColumnDefinitions="Auto" Margin="3"  >
+            <Grid Grid.Row="0" Grid.Column="1" RowDefinitions="15,15,15" ColumnDefinitions="Auto" Margin="3"  >
               <Button Padding="0" Content="+" Margin="0" Grid.Row="0" Grid.Column="0" IsVisible="{Binding !Visible}" Background="YellowGreen" Command="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).InsertBefore}"  />
               <Button Padding="0" Content="+" Margin="0" Grid.Row="1" Grid.Column="0" IsVisible="{Binding !Visible}" Background="YellowGreen" Command="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).InsertAfter}"  />
+              <Button Padding="0" Content="▶" Margin="0" Grid.Row="2" Grid.Column="0" IsVisible="{Binding !Visible}" Background="LightBlue" Command="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).AddSubItem}"  />
             </Grid>
           </Grid>
         </Border>

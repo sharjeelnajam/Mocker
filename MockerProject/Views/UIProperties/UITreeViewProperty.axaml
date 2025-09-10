@@ -30,6 +30,13 @@
 						</Style>
 					</Button.Styles>
 				</Button>
+				<Button Name="AddSubItem" Content="Add Sub Item" Command="{Binding AddSubItem}" Width="240" FontStyle="Oblique" Margin="10, 5" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}" >
+					<Button.Styles>
+						<Style Selector="Button:pointerover">
+							<Setter Property="Foreground" Value="{DynamicResource ThemeDesignStudioTextColor}"/>
+						</Style>
+					</Button.Styles>
+				</Button>
 			</StackPanel>
 			<StackPanel Grid.Row="2" Orientation="Horizontal"  Background="{DynamicResource ThemeDesignStudioBorderBackground}" Margin="5 5 5 0">
 				<TextBlock Text="Item Property" TextAlignment="Left" Foreground="{DynamicResource PrimaryForeground}"></TextBlock>
