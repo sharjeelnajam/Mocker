@@ -401,7 +401,7 @@ public class UIControlViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref w_nPageID, value);
     }
 
-    public object IsTextPropertiesVisible { get; set; }
+    public bool IsTextPropertiesVisible { get; set; } = true;
     public bool m_IsMultiItemVisible = false;
     public bool IsMultiItemVisible { get=>m_IsMultiItemVisible; set => this.RaiseAndSetIfChanged(ref m_IsMultiItemVisible, value); }
     public ObservableCollection<IterationItem> iterationItems { get; set; }

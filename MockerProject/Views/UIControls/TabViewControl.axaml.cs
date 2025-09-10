@@ -76,7 +76,11 @@ namespace MockerProject.Views.UIControls
             }
         }
 
-        public override void doubleClickHandler(object sender, TappedEventArgs e) { }
+        public override void doubleClickHandler(object sender, TappedEventArgs e)
+        {
+            // Call base method to show property window like other controls
+            base.doubleClickHandler(sender, e);
+        }
 
         private void Binding(object? sender, Avalonia.Interactivity.RoutedEventArgs e) { }
 

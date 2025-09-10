@@ -296,7 +296,7 @@ namespace MockerProject.ViewModels.UIPropertyModels
             get => w_nPageID;
             set => this.RaiseAndSetIfChanged(ref w_nPageID, value);
         }
-        public object IsTextPropertiesVisible { get; set; }
+        public bool IsTextPropertiesVisible { get; set; } = true;
         public bool m_IsMultiItemVisible = false;
     }   
 }

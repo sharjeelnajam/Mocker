@@ -36,60 +36,45 @@ namespace MockerProject.Views.UIControls
             t_sender = sender;
             if (closeBtn.IsVisible)
             {
-                //base.doubleClickHandler(sender, e);
+                // If in edit mode, show property window instead of base behavior
+                Click_EditButton(sender, e);
             } 
             else 
             {
-                closeBtn.IsVisible = true;
-                editBtn.IsVisible = true;
-                Canvas.SetLeft(closeBtn, -closeBtn.Width);
-                Canvas.SetLeft(editBtn, closeBtn.Width);
-                double left = Canvas.GetLeft(this);
-                double top = Canvas.GetTop(this);
-                System.Type type = this.Parent.GetType();
-
-                this.Width = 2000;// ((Canvas)this.Parent).Width;
-                this.Height = 2000;// ((Canvas)this.Parent).Height;
-                backCanvas.Width = 2000;//((Canvas)this.Parent).Width;
-                backCanvas.Height = 2000;//((Canvas)this.Parent).Height;
-                int width = (int) container.Width;
-                int height = (int)container.Height;
-
-                Canvas.SetLeft(this, 0);
-                Canvas.SetTop(this, 0);
-
-                backCanvas.Background = new SolidColorBrush(new Color(255, 100, 100, 100));
-
-                Canvas.SetLeft(border, left);
-                Canvas.SetTop(border, top);
-                
-                if (((ContainerBoxControl)sender).closeBtn.IsVisible)
-                {
-                    m_ControlViewModel.m_MainVM.ContainerFlag++;
-                    m_ControlViewModel.m_MainVM.ContainerCanvas.Add(container);
-                }
+                // Show property window on double-click like other controls
+                base.doubleClickHandler(sender, e);
             }
         }
 
         public override void KeyPressEvent(object sender, KeyEventArgs e)
         {
+            // Enter edit mode with Ctrl+E
+            if (e.Key == Key.E && e.KeyModifiers == KeyModifiers.Control)
+            {
+                EnterEditMode();
+            }
         }
 
         public override void MousePressEvent(object sender, PointerEventArgs e)
         {
-            if (!closeBtn.IsVisible)
-            {
-                base.MousePressEvent(sender, e);
-            }
+            // Always call base method for proper selection handling
+            base.MousePressEvent(sender, e);
             
+            // Check for right-click to enter edit mode
+            var properties = e.GetCurrentPoint(this).Properties;
+            if (properties.IsRightButtonPressed)
+            {
+                EnterEditMode();
+            }
         }
 
         public override void MouseMoveEvent(object sender, PointerEventArgs e)
         {
-            if (!closeBtn.IsVisible)
-            {
-                base.MouseMoveEvent(sender, e);
-            }
+            // Always call base method for proper drag handling
+            base.MouseMoveEvent(sender, e);
+            
+            // Additional logic for edit mode can be added here if needed
+            // but dragging should work regardless of edit mode state
         }
 
         public void Click_CloseButton(object sender, RoutedEventArgs e)
@@ -112,6 +97,35 @@ namespace MockerProject.Views.UIControls
             Canvas.SetTop(this, top);
             Canvas.SetLeft(border, 0);
             Canvas.SetTop(border, 0);
+        }
+
+        private void EnterEditMode()
+        {
+            if (!closeBtn.IsVisible)
+            {
+                closeBtn.IsVisible = true;
+                editBtn.IsVisible = true;
+                Canvas.SetLeft(closeBtn, -closeBtn.Width);
+                Canvas.SetLeft(editBtn, closeBtn.Width);
+                double left = Canvas.GetLeft(this);
+                double top = Canvas.GetTop(this);
+
+                this.Width = 2000;
+                this.Height = 2000;
+                backCanvas.Width = 2000;
+                backCanvas.Height = 2000;
+
+                Canvas.SetLeft(this, 0);
+                Canvas.SetTop(this, 0);
+
+                backCanvas.Background = new SolidColorBrush(new Color(255, 100, 100, 100));
+
+                Canvas.SetLeft(border, left);
+                Canvas.SetTop(border, top);
+                
+                m_ControlViewModel.m_MainVM.ContainerFlag++;
+                m_ControlViewModel.m_MainVM.ContainerCanvas.Add(container);
+            }
         }
 
         public void Click_EditButton(object sender, RoutedEventArgs e)
