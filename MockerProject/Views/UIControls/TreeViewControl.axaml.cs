@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.VisualTree;
 using MockerProject.Models;
@@ -111,6 +112,15 @@ namespace MockerProject.Views.UIControls
         private void TreeView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void RemoveItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is Node itemToRemove)
+            {
+                var viewModel = (TreeViewViewModel)m_ControlViewModel;
+                viewModel.RemoveSpecificItem(itemToRemove);
+            }
         }
 
         public override void doubleClickHandler(object sender, TappedEventArgs e)
