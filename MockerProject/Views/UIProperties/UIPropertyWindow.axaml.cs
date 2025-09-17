@@ -11,7 +11,9 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using MockerProject.ViewModels;
+using MockerProject.ViewModels.UIViewModels;
 using MockerProject.Views.UIControls;
+using ReactiveUI;
 
 namespace MockerProject.Views
 {
@@ -68,7 +70,77 @@ namespace MockerProject.Views
                 if (m_UIControl.GetType() == typeof(ListBoxControl))
                     ((ListBoxControl)m_UIControl).setAddItem();
             });
+            
         }
+
+        private void OnMainTextChanged(object? sender, TextChangedEventArgs e)
+        {
+            if (m_UIControl is TabViewControl tabViewControl && sender is TextBox textBox)
+            {
+                var viewModel = (RepeaterControlViewModel)tabViewControl.DataContext;
+                
+                // Update tab text when the main text field changes
+                if (textBox.Text != null && textBox.Text != viewModel.SelectedTabText)
+                {
+                    // If we have a selected tab, update it (allow empty text)
+                    if (viewModel.SelectedTabIndex >= 0 && viewModel.SelectedTabIndex < viewModel.TabHeaders.Count)
+                    {
+                        viewModel.UpdateTabText(textBox.Text);
+                        // Refresh the tab headers to update the UI
+                        tabViewControl.RefreshTabHeaders();
+                    }
+                    else if (textBox.Text != null && !viewModel.TabHeaders.Contains(textBox.Text))
+                    {
+                        // If no tab is selected but we have text that doesn't exist, create a new tab
+                        // Only create new tab if text is not empty
+                        if (!string.IsNullOrEmpty(textBox.Text))
+                        {
+                            viewModel.AddNewTabWithText(textBox.Text);
+                            // Refresh the tab headers to update the UI
+                            tabViewControl.RefreshTabHeaders();
+                        }
+                    }
+                    
+                    // Update the base text property to keep it in sync
+                    viewModel.text = textBox.Text;
+                }
+            }
+        }
+
+        private void OnMainTextLostFocus(object? sender, RoutedEventArgs e)
+        {
+            if (m_UIControl is TabViewControl tabViewControl && sender is TextBox textBox)
+            {
+                var viewModel = (RepeaterControlViewModel)tabViewControl.DataContext;
+                
+                // Apply text changes when focus is lost
+                if (textBox.Text != null && textBox.Text != viewModel.SelectedTabText)
+                {
+                    // If we have a selected tab, update it (allow empty text)
+                    if (viewModel.SelectedTabIndex >= 0 && viewModel.SelectedTabIndex < viewModel.TabHeaders.Count)
+                    {
+                        viewModel.UpdateTabText(textBox.Text);
+                        // Refresh the tab headers to update the UI
+                        tabViewControl.RefreshTabHeaders();
+                    }
+                    else if (textBox.Text != null && !viewModel.TabHeaders.Contains(textBox.Text))
+                    {
+                        // If no tab is selected but we have text that doesn't exist, create a new tab
+                        // Only create new tab if text is not empty
+                        if (!string.IsNullOrEmpty(textBox.Text))
+                        {
+                            viewModel.AddNewTabWithText(textBox.Text);
+                            // Refresh the tab headers to update the UI
+                            tabViewControl.RefreshTabHeaders();
+                        }
+                    }
+                    
+                    // Update the base text property to keep it in sync
+                    viewModel.text = textBox.Text;
+                }
+            }
+        }
+
         public void setMainViewModel(MainWindowViewModel mainViewModel)
         {
             m_MainVM = mainViewModel;
@@ -111,6 +183,36 @@ namespace MockerProject.Views
             BGButton.Color = controlViewModel.background.Color;
             BCButton.Color = controlViewModel.borderColor.Color;
             FGButton.Color = controlViewModel.foreground.Color;
+
+            // Show remove tab button only for TabView controls
+            RemoveTab.IsVisible = (control.GetType() == typeof(TabViewControl));
+            
+            // Set up text binding for TabView controls
+            if (control.GetType() == typeof(TabViewControl))
+            {
+                var tabViewModel = (RepeaterControlViewModel)controlViewModel;
+                // Initialize the text field with the selected tab text
+                if (tabViewModel.SelectedTabIndex >= 0 && tabViewModel.SelectedTabIndex < tabViewModel.TabHeaders.Count)
+                {
+                    tabViewModel.SelectedTabText = tabViewModel.TabHeaders[tabViewModel.SelectedTabIndex];
+                    // Set the text property to show in the text field
+                    controlViewModel.text = tabViewModel.SelectedTabText;
+                }
+                // Show text properties for TabView controls
+                controlViewModel.IsTextPropertiesVisible = true;
+                
+                // Subscribe to tab selection changes to update the text field
+                tabViewModel.PropertyChanged += (sender, e) =>
+                {
+                    if (e.PropertyName == nameof(tabViewModel.SelectedTabIndex))
+                    {
+                        if (tabViewModel.SelectedTabIndex >= 0 && tabViewModel.SelectedTabIndex < tabViewModel.TabHeaders.Count)
+                        {
+                            controlViewModel.text = tabViewModel.TabHeaders[tabViewModel.SelectedTabIndex];
+                        }
+                    }
+                };
+            }
 
             int index = 0;
             ComboBoxItem item0 = new ComboBoxItem();
@@ -477,6 +579,15 @@ namespace MockerProject.Views
         private void onDisable(object? sender, RoutedEventArgs e)
         {
             m_UIControl.m_bDisable = (Disable.IsChecked == true);
+        }
+
+        private void RemoveTab_Click(object? sender, RoutedEventArgs e)
+        {
+            if (m_UIControl is TabViewControl tabViewControl)
+            {
+                var viewModel = (RepeaterControlViewModel)tabViewControl.DataContext;
+                viewModel.RemoveTab.Execute().Subscribe();
+            }
         }
 
         

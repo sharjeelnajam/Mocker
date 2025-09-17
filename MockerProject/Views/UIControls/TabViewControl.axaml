@@ -23,7 +23,7 @@
 						 IsEnabled="{Binding isEnabled}">
 
   <StackPanel Margin="0">
-    <TabControl ItemsSource="{Binding Items}" Name="tabControl" Foreground="{Binding foreground}" ContainerPrepared="tabControl_ContainerPrepared">
+    <TabControl ItemsSource="{Binding Items}" Name="tabControl" Foreground="{Binding foreground}" ContainerPrepared="tabControl_ContainerPrepared" SelectedIndex="{Binding SelectedTabIndex}" SelectionChanged="TabControl_SelectionChanged">
       <TabControl.Styles>
         <Style Selector="TabItem.Header">
           <Setter Property="Foreground" Value="Black"/>

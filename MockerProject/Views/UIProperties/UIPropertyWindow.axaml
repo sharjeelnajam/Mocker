@@ -52,13 +52,21 @@
           </Style>
         </TextBlock.Styles>
       </TextBlock>
+      <Button Name="RemoveTab" Content="Remove Tab" Width="240" FontStyle="Oblique" Margin="10, 5" Background="Red" Foreground="White" BorderBrush="DarkRed" IsVisible="False" Click="RemoveTab_Click">
+        <Button.Styles>
+          <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="DarkRed"/>
+            <Setter Property="Foreground" Value="White"/>
+          </Style>
+        </Button.Styles>
+      </Button>
       <StackPanel Grid.Row="2" Orientation="Horizontal">
         <TextBlock Text="PROPERTIES" TextAlignment="Left" Width="240" Background="{DynamicResource ThemeDesignStudioBorderBackground}" Foreground="{DynamicResource PrimaryForeground}" Margin="5 5 5 0"></TextBlock>
       </StackPanel>
       <StackPanel Orientation="Vertical" Background="{DynamicResource ControlBackground}" Margin="5 0 5 5">
         <StackPanel Orientation="Horizontal" Margin="5 10 5 5" IsVisible="{Binding IsTextPropertiesVisible}">
           <TextBlock Grid.Column="0" Text="Text" VerticalAlignment="Center" Margin="5 0" Foreground="{DynamicResource PrimaryForeground}"/>
-			<TextBox Grid.Column="1" Text="{Binding text}"  AcceptsReturn="{Binding IsTextMultiEnable}" Width="180" Height="20" Margin="5 0" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}"></TextBox>
+			<TextBox Name="MainText" Grid.Column="1" Text="{Binding text}"  AcceptsReturn="{Binding IsTextMultiEnable}" Width="180" Height="20" Margin="5 0" Background="{DynamicResource ControlBackground}" Foreground="{DynamicResource PrimaryForeground}" BorderBrush="{DynamicResource ControlBorderBrush}" TextChanged="OnMainTextChanged" LostFocus="OnMainTextLostFocus"></TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin=" 5">
           <StackPanel Orientation="Vertical" Margin="0 0 10 0">

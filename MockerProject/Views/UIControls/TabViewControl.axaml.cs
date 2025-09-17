@@ -84,6 +84,15 @@ namespace MockerProject.Views.UIControls
 
         private void Binding(object? sender, Avalonia.Interactivity.RoutedEventArgs e) { }
 
+        private void TabControl_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            if (sender is TabControl tabControl && m_ControlViewModel is RepeaterControlViewModel viewModel)
+            {
+                // Update the SelectedTabIndex when the user selects a different tab
+                viewModel.SelectedTabIndex = tabControl.SelectedIndex;
+            }
+        }
+
         public override void MousePressEvent(object sender, PointerEventArgs e)
         {
             foreach (ContainerBoxControl item in ((RepeaterControlViewModel)m_ControlViewModel).Items)
@@ -91,6 +100,25 @@ namespace MockerProject.Views.UIControls
                 if (item.closeBtn.IsVisible) return;
             }
             base.MousePressEvent(sender, e);
+        }
+
+        public void RefreshTabHeaders()
+        {
+            if (m_ControlViewModel is RepeaterControlViewModel viewModel)
+            {
+                // Force the TabControl to refresh by temporarily clearing and restoring the ItemsSource
+                var items = viewModel.Items;
+                var selectedIndex = viewModel.SelectedTabIndex;
+                
+                // Temporarily clear the ItemsSource
+                tabControl.ItemsSource = null;
+                
+                // Restore the ItemsSource
+                tabControl.ItemsSource = items;
+                
+                // Restore the selected index
+                tabControl.SelectedIndex = selectedIndex;
+            }
         }
 
         public override void MouseMoveEvent(object sender, PointerEventArgs e)
