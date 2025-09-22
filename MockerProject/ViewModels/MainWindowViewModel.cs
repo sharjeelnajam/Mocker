@@ -423,7 +423,7 @@ namespace MockerProject.ViewModels
         public bool w_IsResponseVisible = false;
         public bool w_IsRulerVisible = true; public bool IsRulerVisible { get => w_IsRulerVisible; set => this.RaiseAndSetIfChanged(ref w_IsRulerVisible, value); }
 
-        // Search functionality for UI controls
+        // Search functionality for UI controls and Platforms
         private string _searchText = "";
         public string SearchText
         {
@@ -432,6 +432,7 @@ namespace MockerProject.ViewModels
             {
                 this.RaiseAndSetIfChanged(ref _searchText, value);
                 FilterUIControls();
+                FilterPlatforms();
             }
         }
 
@@ -444,6 +445,18 @@ namespace MockerProject.ViewModels
             else
             {
                 FilterUIControlsByText(_searchText.ToLower());
+            }
+        }
+
+        private void FilterPlatforms()
+        {
+            if (string.IsNullOrWhiteSpace(_searchText))
+            {
+                ShowAllPlatforms();
+            }
+            else
+            {
+                FilterPlatformsByText(_searchText.ToLower());
             }
         }
 
@@ -559,6 +572,127 @@ namespace MockerProject.ViewModels
             }
 
             return uniformGrids;
+        }
+
+        private void ShowAllPlatforms()
+        {
+            var mainWindow = m_MainWindow;
+            if (mainWindow != null)
+            {
+                var platformView = FindPlatformView(mainWindow);
+                if (platformView != null)
+                {
+                    ShowAllPlatformsInView(platformView);
+                }
+            }
+        }
+
+        private void FilterPlatformsByText(string searchText)
+        {
+            var mainWindow = m_MainWindow;
+            if (mainWindow != null)
+            {
+                var platformView = FindPlatformView(mainWindow);
+                if (platformView != null)
+                {
+                    FilterPlatformsInView(platformView, searchText);
+                }
+            }
+        }
+
+        private PlatformView FindPlatformView(Window window)
+        {
+            return FindPlatformViewRecursive(window);
+        }
+
+        private PlatformView FindPlatformViewRecursive(Control parent)
+        {
+            if (parent is PlatformView platformView)
+                return platformView;
+
+            foreach (var child in parent.GetVisualChildren())
+            {
+                if (child is Control control)
+                {
+                    var result = FindPlatformViewRecursive(control);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
+        }
+
+        private void ShowAllPlatformsInView(PlatformView platformView)
+        {
+            var toggleButtons = FindToggleButtonsRecursively(platformView);
+
+            foreach (var toggleButton in toggleButtons)
+            {
+                toggleButton.IsVisible = true;
+            }
+        }
+
+        private void FilterPlatformsInView(PlatformView platformView, string searchText)
+        {
+            var toggleButtons = FindToggleButtonsRecursively(platformView);
+
+            foreach (var toggleButton in toggleButtons)
+            {
+                // Get the TextBlock inside the ToggleButton
+                var textBlock = FindTextBlockInToggleButton(toggleButton);
+                if (textBlock != null)
+                {
+                    bool matches = textBlock.Text.ToLower().Contains(searchText);
+                    toggleButton.IsVisible = matches;
+                }
+                else
+                {
+                    // If no TextBlock found, hide the button
+                    toggleButton.IsVisible = false;
+                }
+            }
+        }
+
+        private List<ToggleButton> FindToggleButtonsRecursively(Control parent)
+        {
+            var toggleButtons = new List<ToggleButton>();
+
+            if (parent is ToggleButton toggleButton)
+            {
+                toggleButtons.Add(toggleButton);
+            }
+
+            foreach (var child in parent.GetVisualChildren())
+            {
+                if (child is Control control)
+                {
+                    toggleButtons.AddRange(FindToggleButtonsRecursively(control));
+                }
+            }
+
+            return toggleButtons;
+        }
+
+        private TextBlock FindTextBlockInToggleButton(ToggleButton toggleButton)
+        {
+            return FindTextBlockRecursively(toggleButton);
+        }
+
+        private TextBlock FindTextBlockRecursively(Control parent)
+        {
+            if (parent is TextBlock textBlock)
+                return textBlock;
+
+            foreach (var child in parent.GetVisualChildren())
+            {
+                if (child is Control control)
+                {
+                    var result = FindTextBlockRecursively(control);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
         }
 
         public SolidColorBrush w_nPageBackground = new SolidColorBrush(new Color(255, 255, 255, 255));//Color.FromRgb(0,250,0);

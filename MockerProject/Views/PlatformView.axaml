@@ -15,7 +15,7 @@
                 Background="{DynamicResource HeaderBackground}">
     <Grid RowDefinitions="Auto,Auto,Auto,Auto" Background="{DynamicResource HeaderBackground}" Margin="20">
 
-      <Border  BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Padding="7 0">
+      <Border BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Padding="7 0">
         <Grid ColumnDefinitions="Auto,Auto,Auto" Margin="0 10">
           <ToggleButton Margin="10" ToolTip.Tip = "iPhone 7" Width="80" IsChecked="{Binding IsPlatForm1}" Command="{Binding onPlatForm1}">
             <Grid RowDefinitions="Auto,Auto">
