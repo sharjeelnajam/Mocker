@@ -1,6 +1,8 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
+using Avalonia.Styling;
 using MockerProject.ViewModels.UIViewModels;
 
 namespace MockerProject.Views.UIControls
@@ -128,6 +130,16 @@ namespace MockerProject.Views.UIControls
                 if (item.closeBtn.IsVisible) return;
             }
             base.MouseMoveEvent(sender, e);
+        }
+
+        public void UpdateTabContentBackground(SolidColorBrush color)
+        {
+            if (tabControl != null)
+            {
+                // The background binding in XAML will handle updating the selected tab content area
+                // This method is called when the background property changes
+                // The XAML binding will automatically update the selected tab's background
+            }
         }
     }
 }

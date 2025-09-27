@@ -23,25 +23,33 @@
 						 IsEnabled="{Binding isEnabled}">
 
   <StackPanel Margin="0">
-    <TabControl ItemsSource="{Binding Items}" Name="tabControl" Foreground="{Binding foreground}" ContainerPrepared="tabControl_ContainerPrepared" SelectedIndex="{Binding SelectedTabIndex}" SelectionChanged="TabControl_SelectionChanged">
+    <TabControl ItemsSource="{Binding Items}" Name="tabControl" Foreground="{Binding foreground}" ContainerPrepared="tabControl_ContainerPrepared" SelectedIndex="{Binding SelectedTabIndex}" SelectionChanged="TabControl_SelectionChanged" Background="Transparent">
       <TabControl.Styles>
         <Style Selector="TabItem.Header">
           <Setter Property="Foreground" Value="Black"/>
+          <Setter Property="Background" Value="White"/>
         </Style>
         <Style Selector="TabItem:selected">
-          <Setter Property="Background" Value="Transparent"/>
+          <Setter Property="Background" Value="{Binding background}"/>
           <Setter Property="Foreground" Value="Black"/>
         </Style>
         <Style Selector="TabItem:pointerover">
-          <Setter Property="Background" Value="#E0E0E0"/>
+          <Setter Property="Background" Value="White"/>
           <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        <Style Selector="TabItem">
+          <Setter Property="Background" Value="White"/>
+          <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        <Style Selector="TabControl /template/ ContentPresenter">
+          <Setter Property="Background" Value="{Binding background}"/>
         </Style>
       </TabControl.Styles>
     </TabControl>
     <Button Name="closeBtn"
             HorizontalAlignment="Left"
-            Background="Transparent"
-            Foreground="{Binding foreground}"
+            Background="White"
+            Foreground="Black"
             Command="{Binding AddItems}">
       AddItems
 
@@ -49,10 +57,10 @@
         <Style Selector="Button">
           <Setter Property="Template">
             <ControlTemplate>
-              <Border Background="{Binding background}"
-                      BorderBrush="{Binding borderColor}"
-                      BorderThickness="{Binding borderThickness}"
-                      CornerRadius="{Binding borderRound}">
+              <Border Background="White"
+                      BorderBrush="Gray"
+                      BorderThickness="1"
+                      CornerRadius="3">
                 <ContentPresenter Padding="{TemplateBinding Padding}"
                                   Content="{TemplateBinding Content}"
                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -66,19 +74,19 @@
           </Setter>
         </Style>
         <Style Selector="Button">
-          <Setter Property="Foreground" Value="{Binding foreground}" />
+          <Setter Property="Foreground" Value="Black" />
         </Style>
-        <!-- No hover/pressed overrides -->
+        <!-- Hover effect -->
         <Style Selector="Button:pointerover">
-          <Setter Property="Background" Value="{Binding background}" />
-          <Setter Property="BorderBrush" Value="{Binding borderColor}" />
-          <Setter Property="Foreground" Value="{Binding foreground}" />
+          <Setter Property="Background" Value="#F0F0F0" />
+          <Setter Property="BorderBrush" Value="DarkGray" />
+          <Setter Property="Foreground" Value="Black" />
         </Style>
 
         <Style Selector="Button:pressed">
-          <Setter Property="Background" Value="{Binding background}" />
-          <Setter Property="BorderBrush" Value="{Binding borderColor}" />
-          <Setter Property="Foreground" Value="{Binding foreground}" />
+          <Setter Property="Background" Value="#E0E0E0" />
+          <Setter Property="BorderBrush" Value="DarkGray" />
+          <Setter Property="Foreground" Value="Black" />
         </Style>
       </Button.Styles>
       

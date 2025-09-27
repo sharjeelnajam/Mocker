@@ -1,4 +1,5 @@
-﻿using MockerProject.Views;
+﻿using Avalonia.Media;
+using MockerProject.Views;
 using MockerProject.Views.UIControls;
 using ReactiveUI;
 using System.Collections.ObjectModel;
@@ -23,6 +24,21 @@ namespace MockerProject.ViewModels.UIViewModels
             RemoveTab = ReactiveCommand.Create(ExecuteRemoveTab);
             RenameTab = ReactiveCommand.Create<string>(ExecuteRenameTab);
             ExecuteAddItems();
+        }
+
+        // Override background property to update tab content background
+        public new SolidColorBrush background
+        {
+            get => base.background;
+            set 
+            { 
+                base.background = value;
+                // Update tab content background when background changes
+                if (m_UIControl is TabViewControl tabControl)
+                {
+                    tabControl.UpdateTabContentBackground(value);
+                }
+            }
         }
 
         private void InsertAfterItems()
@@ -135,5 +151,6 @@ namespace MockerProject.ViewModels.UIViewModels
                 text = tabText;
             }
         }
+
     }
 }
