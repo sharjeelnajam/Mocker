@@ -13,6 +13,7 @@
 			  Width="{Binding width}"
 			  Height="{Binding height}"
 			  Background="{Binding background}"
+              HorizontalAlignment="Stretch"
 			  Foreground="{Binding foreground}"
 			  BorderBrush="{Binding borderColor}"
 			  BorderThickness="{Binding borderThickness}"
@@ -21,7 +22,7 @@
 			  FontWeight="{Binding fontWeight}"
 			  FontStyle="{Binding fontStyle}"
 			  FontFamily="{Binding fontFamily}"
-			  FontStretch="Expanded"
+        FontStretch="Expanded"
 			  IsEnabled="{Binding isEnabled}"
 			  ItemsSource="{Binding Items}"
 			  SelectionChanged="TreeView_SelectionChanged"
@@ -33,8 +34,8 @@
 
     <TreeView.ItemTemplate>
       <TreeDataTemplate ItemsSource="{Binding SubItems}" >
-        <Border CornerRadius="4" Padding="4">
-          <Grid ColumnDefinitions="75*,25*" RowDefinitions="25*" Margin="0"  >
+        <Border CornerRadius="4" Padding="4" Background="{Binding background}" HorizontalAlignment="Stretch">
+          <Grid ColumnDefinitions="75*,25*" RowDefinitions="25*" Margin="0" HorizontalAlignment="Stretch" >
             <TextBlock FontSize="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).fontSize}"
 						           FontWeight="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).fontWeight}"
                        Foreground="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).foreground}"
@@ -57,7 +58,15 @@
     <TreeView.Styles>
       <Style Selector="TreeViewItem">
         <Setter Property="Padding" Value="0" />
-        <Setter Property="Background" Value="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).itemBackground}" />
+      </Style>
+      <Style Selector="TreeViewItem:selected">
+        <Setter Property="Background" Value="Transparent" />
+      </Style>
+      <Style Selector="TreeViewItem:pointerover">
+        <Setter Property="Background" Value="Transparent" />
+      </Style>
+      <Style Selector="TreeViewItem:focus">
+        <Setter Property="Background" Value="Transparent" />
       </Style>
     </TreeView.Styles>
 

@@ -30,7 +30,7 @@ namespace MockerProject.Views.UIControls
             m_ControlViewModel.iterationItems.Insert(0, item);
             setWidth(300);
             setHeight(400);
-            setBackground(new SolidColorBrush(new Color(0,0 , 200, 200)));
+            setBackground(new SolidColorBrush(new Color(0, 0, 200, 200)));
             setForeground(new SolidColorBrush(new Color(255, 33, 33, 33)));
             setBorderColor(new SolidColorBrush(new Color(255, 77, 77, 77)));
             setBorderThickness(1);
@@ -128,6 +128,12 @@ namespace MockerProject.Views.UIControls
             // Mark the event as handled to prevent the base class from also opening a window
             e.Handled = true;
             
+            // Ensure any generic property window is closed to avoid duplicate windows
+            if (m_MainViewModel != null && m_MainViewModel.m_wndUIProperty != null && m_MainViewModel.m_wndUIProperty.IsVisible)
+            {
+                m_MainViewModel.m_wndUIProperty.Close();
+            }
+
             Point cP = e.GetPosition(this);
             Point mP = e.GetPosition(m_MainViewModel.m_MainWindow);
             PixelPoint cPP = new PixelPoint((int)(mP.X - cP.X + m_nWidth), (int)(mP.Y - cP.Y));

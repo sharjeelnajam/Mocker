@@ -178,6 +178,47 @@ namespace MockerProject.Models
             }
         }
 
+        // Per-item background support
+        private IBrush _background;
+        public IBrush background
+        {
+            get { return _background; }
+            set
+            {
+                if (_background != value)
+                {
+                    _background = value;
+                    OnPropertyChanged(nameof(background));
+                    // keep color in sync when background changes
+                    if (_background is SolidColorBrush scb)
+                    {
+                        if (_color != scb.Color)
+                        {
+                            _color = scb.Color;
+                            OnPropertyChanged(nameof(color));
+                        }
+                    }
+                }
+            }
+        }
+
+        private Color _color;
+        public Color color
+        {
+            get { return _color; }
+            set
+            {
+                if (_color != value)
+                {
+                    _color = value;
+                    // update background brush to reflect color changes
+                    _background = new SolidColorBrush(_color);
+                    OnPropertyChanged(nameof(color));
+                    OnPropertyChanged(nameof(background));
+                }
+            }
+        }
+
         public string _iteration = "";
         public string iteration
         {
