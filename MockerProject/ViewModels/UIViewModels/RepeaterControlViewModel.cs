@@ -41,14 +41,38 @@ namespace MockerProject.ViewModels.UIViewModels
             }
         }
 
-        private void InsertAfterItems()
+        public void InsertAfterItems()
         {
-            // Handle the click event logic here
+            System.Diagnostics.Debug.WriteLine("InsertAfterItems called!");
+            // Insert a new tab after the currently selected tab
+            int insertIndex = SelectedTabIndex + 1;
+            if (insertIndex > Items.Count) insertIndex = Items.Count;
+            
+            TabHeaders.Insert(insertIndex, "Item " + (Items.Count + 1));
+            ContainerBoxControl containerBoxControl = new ContainerBoxControl();
+            containerBoxControl.setMainVM(this.m_MainVM);
+            containerBoxControl.m_nUIControlType = Models.CONTROL_TYPE.CONTAINERBOX;
+            Items.Insert(insertIndex, containerBoxControl);
+            
+            // Select the newly created tab
+            SelectedTabIndex = insertIndex;
         }
 
-        private void InsertBeforeItems()
+        public void InsertBeforeItems()
         {
-            // Handle the click event logic here
+            System.Diagnostics.Debug.WriteLine("InsertBeforeItems called!");
+            // Insert a new tab after the currently selected tab (same as InsertAfter)
+            int insertIndex = SelectedTabIndex + 1;
+            if (insertIndex > Items.Count) insertIndex = Items.Count;
+            
+            TabHeaders.Insert(insertIndex, "Item " + (Items.Count + 1));
+            ContainerBoxControl containerBoxControl = new ContainerBoxControl();
+            containerBoxControl.setMainVM(this.m_MainVM);
+            containerBoxControl.m_nUIControlType = Models.CONTROL_TYPE.CONTAINERBOX;
+            Items.Insert(insertIndex, containerBoxControl);
+            
+            // Select the newly created tab
+            SelectedTabIndex = insertIndex;
         }
 
         private void ExecuteAddItems()

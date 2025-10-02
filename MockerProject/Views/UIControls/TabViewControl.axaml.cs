@@ -30,18 +30,92 @@ namespace MockerProject.Views.UIControls
                 var item = vm.Items[e.Index];
                 string headerText = vm.TabHeaders[e.Index];
 
-                var grid = new Grid();
+                // Create main container for the tab header with top positioning
+                var mainGrid = new Grid();
+                mainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Top row for + buttons
+                mainGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }); // Tab content row
+                mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Tab content
+
+                // Left + button (top-left) - Using Border with TextBlock for better control
+                var leftAddButton = new Border
+                {
+                    Width = 14,
+                    Height = 14,
+                    Margin = new Thickness(1, 1, 0, 0),
+                    Background = new SolidColorBrush(Color.FromRgb(255, 165, 0)), // Orange background
+                    CornerRadius = new CornerRadius(2),
+                    HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Left,
+                    VerticalAlignment = Avalonia.Layout.VerticalAlignment.Top,
+                    IsEnabled = true,
+                    IsVisible = true,
+                    Child = new TextBlock
+                    {
+                        Text = "+",
+                        Foreground = new SolidColorBrush(Colors.Black), // Black + sign
+                        FontWeight = FontWeight.Bold,
+                        FontSize = 10,
+                        HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+                        VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
+                    }
+                };
+                
+                // Add click event to the border
+                leftAddButton.PointerPressed += (s, args) => 
+                {
+                    System.Diagnostics.Debug.WriteLine("Left + button clicked!");
+                    vm.SelectedTabIndex = e.Index;
+                    vm.InsertBeforeItems();
+                };
+
+                // Right + button (top-right) - Using Border with TextBlock for better control
+                var rightAddButton = new Border
+                {
+                    Width = 14,
+                    Height = 14,
+                    Margin = new Thickness(0, 1, 1, 0),
+                    Background = new SolidColorBrush(Color.FromRgb(255, 165, 0)), // Orange background
+                    CornerRadius = new CornerRadius(2),
+                    HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right,
+                    VerticalAlignment = Avalonia.Layout.VerticalAlignment.Top,
+                    IsEnabled = true,
+                    IsVisible = true,
+                    Child = new TextBlock
+                    {
+                        Text = "+",
+                        Foreground = new SolidColorBrush(Colors.Black), // Black + sign
+                        FontWeight = FontWeight.Bold,
+                        FontSize = 10,
+                        HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+                        VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
+                    }
+                };
+                
+                // Add click event to the border
+                rightAddButton.PointerPressed += (s, args) => 
+                {
+                    System.Diagnostics.Debug.WriteLine("Right + button clicked!");
+                    vm.SelectedTabIndex = e.Index;
+                    vm.InsertAfterItems();
+                };
+
+                // Tab content area
+                var contentGrid = new Grid();
+                contentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
                 var textBlock = new TextBlock
                 {
                     Text = headerText,
-                    Foreground = new SolidColorBrush(new Color(255, 0, 0, 0))
+                    Foreground = new SolidColorBrush(new Color(255, 0, 0, 0)),
+                    VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
+                    HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center
                 };
 
                 var textBox = new TextBox
                 {
                     Text = headerText,
-                    IsVisible = false
+                    IsVisible = false,
+                    VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
+                    HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center
                 };
 
                 textBlock.DoubleTapped += (s, args) =>
@@ -71,10 +145,26 @@ namespace MockerProject.Views.UIControls
                     textBlock.IsVisible = true;
                 };
 
-                grid.Children.Add(textBlock);
-                grid.Children.Add(textBox);
+                // Add elements to content grid
+                Grid.SetColumn(textBlock, 0);
+                Grid.SetColumn(textBox, 0);
+                
+                contentGrid.Children.Add(textBlock);
+                contentGrid.Children.Add(textBox);
 
-                tabItem.Header = grid;
+                // Add elements to main grid
+                Grid.SetRow(leftAddButton, 0);
+                Grid.SetColumn(leftAddButton, 0);
+                Grid.SetRow(rightAddButton, 0);
+                Grid.SetColumn(rightAddButton, 0);
+                Grid.SetRow(contentGrid, 1);
+                Grid.SetColumn(contentGrid, 0);
+                
+                mainGrid.Children.Add(leftAddButton);
+                mainGrid.Children.Add(rightAddButton);
+                mainGrid.Children.Add(contentGrid);
+
+                tabItem.Header = mainGrid;
             }
         }
 
