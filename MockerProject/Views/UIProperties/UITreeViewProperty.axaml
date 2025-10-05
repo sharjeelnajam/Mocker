@@ -37,7 +37,7 @@
 						</Style>
 					</Button.Styles>
 				</Button>
-				<Button Name="RemoveItem" Content="Remove" Command="{Binding RemoveItem}" Width="240" FontStyle="Oblique" Margin="10, 5" Background="Red" Foreground="White" BorderBrush="DarkRed" >
+				<Button Name="RemoveItem" Content="Remove" Command="{Binding RemoveItem}" Width="240" FontStyle="Oblique" Margin="10, 5" Background="Red" Foreground="White" BorderBrush="DarkRed" IsEnabled="{Binding CanRemoveItem}" >
 					<Button.Styles>
 						<Style Selector="Button:pointerover">
 							<Setter Property="Background" Value="DarkRed"/>

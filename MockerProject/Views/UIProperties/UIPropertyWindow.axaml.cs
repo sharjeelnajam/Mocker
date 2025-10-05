@@ -184,8 +184,7 @@ namespace MockerProject.Views
             BCButton.Color = controlViewModel.borderColor.Color;
             FGButton.Color = controlViewModel.foreground.Color;
 
-            // Show remove tab button only for TabView controls
-            RemoveTab.IsVisible = (control.GetType() == typeof(TabViewControl));
+            // Remove Tab button visibility is now controlled by data binding to CanRemoveTab property
             
             // Set up text binding for TabView controls
             if (control.GetType() == typeof(TabViewControl))

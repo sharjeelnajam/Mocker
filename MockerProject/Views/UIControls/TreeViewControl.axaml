@@ -49,7 +49,7 @@
               <Button Padding="0" Content="+" Margin="0" Grid.Row="0" Grid.Column="0" IsVisible="{Binding !Visible}" Background="YellowGreen" Command="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).InsertBefore}"  />
               <Button Padding="0" Content="+" Margin="0" Grid.Row="1" Grid.Column="0" IsVisible="{Binding !Visible}" Background="YellowGreen" Command="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).InsertAfter}"  />
               <Button Padding="0" Content="▶" Margin="0" Grid.Row="2" Grid.Column="0" IsVisible="{Binding !Visible}" Background="LightBlue" Command="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).AddSubItem}"  />
-              <Button Padding="0" Content="×" Margin="0" Grid.Row="3" Grid.Column="0" IsVisible="{Binding !Visible}" Background="Red" Foreground="White" Click="RemoveItem_Click"  />
+              <Button Padding="0" Content="×" Margin="0" Grid.Row="3" Grid.Column="0" IsEnabled="{Binding $parent[TreeView].((vm:TreeViewViewModel)DataContext).CanRemoveItem}" Background="Red" Foreground="White" Click="RemoveItem_Click"  />
             </Grid>
           </Grid>
         </Border>

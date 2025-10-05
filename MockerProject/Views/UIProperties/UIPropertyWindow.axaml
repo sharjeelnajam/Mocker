@@ -52,7 +52,7 @@
           </Style>
         </TextBlock.Styles>
       </TextBlock>
-      <Button Name="RemoveTab" Content="Remove Tab" Width="240" FontStyle="Oblique" Margin="10, 5" Background="Red" Foreground="White" BorderBrush="DarkRed" IsVisible="False" Click="RemoveTab_Click">
+      <Button Name="RemoveTab" Content="Remove Tab" Width="240" FontStyle="Oblique" Margin="10, 5" Background="Red" Foreground="White" BorderBrush="DarkRed" IsEnabled="{Binding CanRemoveTab}" Click="RemoveTab_Click">
         <Button.Styles>
           <Style Selector="Button:pointerover">
             <Setter Property="Background" Value="DarkRed"/>

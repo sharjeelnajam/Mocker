@@ -404,6 +404,11 @@ public class UIControlViewModel : ReactiveObject
     public bool IsTextPropertiesVisible { get; set; } = true;
     public bool m_IsMultiItemVisible = false;
     public bool IsMultiItemVisible { get=>m_IsMultiItemVisible; set => this.RaiseAndSetIfChanged(ref m_IsMultiItemVisible, value); }
+    
+    // Virtual property to control Remove button visibility, can be overridden by derived classes
+    public virtual bool CanRemoveTab => true;
+    public virtual bool CanRemoveItem => true;
+    
     public ObservableCollection<IterationItem> iterationItems { get; set; }
 
 

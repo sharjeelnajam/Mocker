@@ -26,6 +26,9 @@ namespace MockerProject.ViewModels.UIViewModels
             set { this.RaiseAndSetIfChanged(ref _SelectedItem, value); }
         }
 
+        // Override property to control Remove button visibility - only show when there are items other than root
+        public override bool CanRemoveItem => Items.Count > 1;
+
         public TreeViewViewModel(UIControl uiControl) : base(uiControl)
         {
             m_UIControl = uiControl;
@@ -44,6 +47,9 @@ namespace MockerProject.ViewModels.UIViewModels
             Node newNode = new Node("Item" + Items.Count, SelectedItem.parent);
             newNode.iteration = "None";
             Items.Insert(index+1, newNode);
+            
+            // Raise CanRemoveItem property change
+            this.RaisePropertyChanged(nameof(CanRemoveItem));
             // Handle the click event logic here
         }
 
@@ -53,6 +59,9 @@ namespace MockerProject.ViewModels.UIViewModels
             Node newNode = new Node("Item" + Items.Count, SelectedItem.parent);
             newNode.iteration = "None";
             Items.Insert(index, newNode);
+            
+            // Raise CanRemoveItem property change
+            this.RaisePropertyChanged(nameof(CanRemoveItem));
             // Handle the click event logic here
         }
 
@@ -61,6 +70,9 @@ namespace MockerProject.ViewModels.UIViewModels
             Node newNode = new Node("Item" + Items.Count, null);
             newNode.iteration = "None";
             Items.Add( newNode);
+            
+            // Raise CanRemoveItem property change
+            this.RaisePropertyChanged(nameof(CanRemoveItem));
             // Handle the click event logic here
         }
 
@@ -91,6 +103,9 @@ namespace MockerProject.ViewModels.UIViewModels
                 
                 // Clear the selected item
                 SelectedItem = null;
+                
+                // Raise CanRemoveItem property change
+                this.RaisePropertyChanged(nameof(CanRemoveItem));
             }
         }
 
@@ -114,6 +129,9 @@ namespace MockerProject.ViewModels.UIViewModels
                 {
                     SelectedItem = null;
                 }
+                
+                // Raise CanRemoveItem property change
+                this.RaisePropertyChanged(nameof(CanRemoveItem));
             }
         }
     }

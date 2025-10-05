@@ -56,6 +56,9 @@ namespace MockerProject.ViewModels.UIViewModels
             
             // Select the newly created tab
             SelectedTabIndex = insertIndex;
+            
+            // Raise CanRemoveTab property change
+            this.RaisePropertyChanged(nameof(CanRemoveTab));
         }
 
         public void InsertBeforeItems()
@@ -73,6 +76,9 @@ namespace MockerProject.ViewModels.UIViewModels
             
             // Select the newly created tab
             SelectedTabIndex = insertIndex;
+            
+            // Raise CanRemoveTab property change
+            this.RaisePropertyChanged(nameof(CanRemoveTab));
         }
 
         private void ExecuteAddItems()
@@ -82,6 +88,9 @@ namespace MockerProject.ViewModels.UIViewModels
             containerBoxControl.setMainVM(this.m_MainVM);
             containerBoxControl.m_nUIControlType = Models.CONTROL_TYPE.CONTAINERBOX;
             Items.Add(containerBoxControl);
+            
+            // Raise CanRemoveTab property change
+            this.RaisePropertyChanged(nameof(CanRemoveTab));
         }
 
         private void ExecuteRemoveTab()
@@ -97,6 +106,9 @@ namespace MockerProject.ViewModels.UIViewModels
                 {
                     SelectedTabIndex = Items.Count - 1;
                 }
+                
+                // Raise CanRemoveTab property change
+                this.RaisePropertyChanged(nameof(CanRemoveTab));
             }
         }
 
@@ -113,7 +125,11 @@ namespace MockerProject.ViewModels.UIViewModels
         public ObservableCollection<ContainerBoxControl> Items
         {
             get { return _Items; }
-            set { this.RaiseAndSetIfChanged(ref _Items, value); }
+            set { 
+                this.RaiseAndSetIfChanged(ref _Items, value);
+                // Raise CanRemoveTab property change when Items collection changes
+                this.RaisePropertyChanged(nameof(CanRemoveTab));
+            }
         }
 
         public ObservableCollection<string> _TabHeaders = new ObservableCollection<string>();
@@ -146,6 +162,9 @@ namespace MockerProject.ViewModels.UIViewModels
             set { this.RaiseAndSetIfChanged(ref _SelectedTabText, value); }
         }
 
+        // Override property to control Remove Tab button visibility
+        public override bool CanRemoveTab => Items.Count > 1;
+
         // Handle text changes for tab renaming
         public void UpdateTabText(string newText)
         {
@@ -173,6 +192,9 @@ namespace MockerProject.ViewModels.UIViewModels
                 SelectedTabIndex = Items.Count - 1;
                 SelectedTabText = tabText;
                 text = tabText;
+                
+                // Raise CanRemoveTab property change
+                this.RaisePropertyChanged(nameof(CanRemoveTab));
             }
         }
 
