@@ -10,6 +10,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using MockerProject.Models;
 using MockerProject.ViewModels;
 using MockerProject.ViewModels.UIViewModels;
 using MockerProject.Views.UIControls;
@@ -186,6 +187,9 @@ namespace MockerProject.Views
 
             // Remove Tab button visibility is now controlled by data binding to CanRemoveTab property
             
+            // Set up interaction dropdown based on control type
+            SetupInteractionDropdown(control);
+            
             // Set up text binding for TabView controls
             if (control.GetType() == typeof(TabViewControl))
             {
@@ -293,6 +297,24 @@ namespace MockerProject.Views
             if(m_UIControl==null) return;
             ComboBox comboBox = (ComboBox)sender;
             int index = 0;
+            
+            // Handle checkbox-specific interactions
+            if (m_UIControl.m_nUIControlType == CONTROL_TYPE.CHECK)
+            {
+                if (comboBox.SelectedIndex == 0) // "Checks"
+                {
+                    // Set checkbox to checked
+                    m_UIControl.m_ControlViewModel.isChecked = true;
+                }
+                else if (comboBox.SelectedIndex == 1) // "Unchecks"
+                {
+                    // Set checkbox to unchecked
+                    m_UIControl.m_ControlViewModel.isChecked = false;
+                }
+                return;
+            }
+            
+            // Handle standard interactions for other controls
             if (comboBox.SelectedIndex == 0)
                 index = selectPage(m_UIControl.m_TapEvent);
             else if(comboBox.SelectedIndex == 1)
@@ -587,6 +609,34 @@ namespace MockerProject.Views
                 var viewModel = (RepeaterControlViewModel)tabViewControl.DataContext;
                 viewModel.RemoveTab.Execute().Subscribe();
             }
+        }
+
+        private void SetupInteractionDropdown(UIControl control)
+        {
+            // Clear existing items
+            Event.Items.Clear();
+            
+            // Add items based on control type
+            if (control.m_nUIControlType == CONTROL_TYPE.CHECK)
+            {
+                // Add checkbox-specific interactions
+                Event.Items.Add(new ComboBoxItem { Content = "Checks", Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)) });
+                Event.Items.Add(new ComboBoxItem { Content = "Unchecks", Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)) });
+            }
+            else
+            {
+                // Add standard interactions for other controls
+                Event.Items.Add(new ComboBoxItem { Content = "Tapped", Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)) });
+                Event.Items.Add(new ComboBoxItem { Content = "Double Tapped", Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)) });
+                Event.Items.Add(new ComboBoxItem { Content = "Presses and holds", Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)) });
+                Event.Items.Add(new ComboBoxItem { Content = "SwipeLeft", Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)) });
+                Event.Items.Add(new ComboBoxItem { Content = "SwipeRight", Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)) });
+                Event.Items.Add(new ComboBoxItem { Content = "SwipeUp", Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)) });
+                Event.Items.Add(new ComboBoxItem { Content = "SwipeDown", Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)) });
+            }
+            
+            // Set default selection
+            Event.SelectedIndex = 0;
         }
 
         
