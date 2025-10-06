@@ -33,13 +33,13 @@ namespace MockerProject.Views
             setBorderColor(new SolidColorBrush(new Color(255, 77, 77, 77)));
             setBorderThickness(0);
 
-            image.AddHandler(TextBox.DoubleTappedEvent, async (sender, e) =>
-            {
-                //m_MainViewModel.m_wndUIProperty.Hide();
-                //m_IsDoubleTapped = true;
-                setImage(null);
-                base.doubleClickHandler(sender, e);
-            }, handledEventsToo: true);
+        }
+
+        public override void doubleClickHandler(object sender, TappedEventArgs e)
+        {
+            // Override base behavior to prevent properties panel from opening
+            // Only open image selector, don't call base.doubleClickHandler
+            setImage(null);
         }
 
         public async void setImage([AllowNull] string src)
